@@ -28,4 +28,28 @@ class Category extends Model
     {
         return $this->belongsToMany(Product::class);
     }
+
+    /**
+     * Get the parent_category that owns the category.
+     */
+    public function parent()
+    {
+        return $this->belongsTo('Category', 'parent_id');
+    }
+
+    /**
+     * Get the sub-categories for the category.
+     */
+    public function children()
+    {
+        return $this->hasMany('Category', 'parent_id');
+    }
+
+    /**
+     * Get all of the images for the category.
+     */
+    public function images()
+    {
+        return $this->morphToMany(Category::class, 'imageable');
+    }
 }
