@@ -20,4 +20,12 @@ class Comment extends Model
         'likes',
         'dislikes'
     ];
+
+    /**
+     * Get the user that owns the comment.
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
