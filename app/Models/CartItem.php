@@ -18,4 +18,12 @@ class CartItem extends Model
         'quantity',
         'price'
     ];
+
+    /**
+     * Get the cart that owns the cart item.
+     */
+    public function cart()
+    {
+        return $this->belongsTo(Cart::class);
+    }
 }

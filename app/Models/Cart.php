@@ -42,4 +42,12 @@ class Cart extends Model
     {
         return $this->belongsTo(Discount::class);
     }
+
+    /**
+     * Get the cart items for the cart.
+     */
+    public function cart_items()
+    {
+        return $this->hasMany(CartItem::class);
+    }
 }
