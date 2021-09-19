@@ -24,7 +24,6 @@ class User extends Authenticatable
         'phone',
         'password',
         'role',
-        'addresses',
         'latest_categories',
         'latest_products',
         'favorite_products',
@@ -71,5 +70,13 @@ class User extends Authenticatable
     public function comments()
     {
         return $this->hasMany(Comment::class);
+    }
+
+    /**
+     * Get the addresses for the user.
+     */
+    public function addresses()
+    {
+        return $this->hasMany(Address::class);
     }
 }
