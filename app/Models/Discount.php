@@ -22,4 +22,12 @@ class Discount extends Model
         'inventory',
         'sales',
     ];
+
+    /**
+     * Get the carts for the discount.
+     */
+    public function carts()
+    {
+        return $this->hasMany(Cart::class);
+    }
 }

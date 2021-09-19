@@ -34,4 +34,12 @@ class Cart extends Model
     {
         return $this->hasOne(Order::class);
     }
+
+    /**
+     * Get the discount that owns the cart.
+     */
+    public function discount()
+    {
+        return $this->belongsTo(Discount::class);
+    }
 }
