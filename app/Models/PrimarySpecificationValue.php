@@ -17,4 +17,12 @@ class PrimarySpecificationValue extends Model
     protected $fillable = [
         'value'
     ];
+
+    /**
+     * The products that belong to the primary_specification_value.
+     */
+    public function products()
+    {
+        return $this->belongsToMany(Product::class, 'product_spec', 'spec_id', 'product_id');
+    }
 }
