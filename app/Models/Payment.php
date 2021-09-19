@@ -18,4 +18,12 @@ class Payment extends Model
         'amount',
         'payment_gateway'
     ];
+
+    /**
+     * Get the user that owns the payment.
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

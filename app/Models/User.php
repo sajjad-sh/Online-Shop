@@ -56,4 +56,12 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Cart::class);
     }
+
+    /**
+     * Get the payments for the user.
+     */
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
+    }
 }
