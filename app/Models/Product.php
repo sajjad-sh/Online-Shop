@@ -59,8 +59,24 @@ class Product extends Model
     /**
      * The amazings that belong to the product.
      */
-    public function amazings()
+    public function amazing()
     {
-        return $this->belongsToMany(Amazing::class);
+        return $this->belongsTo(Amazing::class);
+    }
+
+    /**
+     * Get all of the images for the product.
+     */
+    public function images()
+    {
+        return $this->morphToMany(Product::class, 'imageable');
+    }
+
+    /**
+     * The primary specification values that belong to the product.
+     */
+    public function primary_specification_values()
+    {
+        return $this->belongsToMany(PrimarySpecificationValue::class, 'product_spec', 'product_id', 'spec_id');
     }
 }
