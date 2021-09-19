@@ -30,4 +30,12 @@ class Order extends Model
     {
         return $this->belongsTo(Cart::class);
     }
+
+    /**
+     * Get the address that owns the Order.
+     */
+    public function address()
+    {
+        return $this->belongsTo(Address::class);
+    }
 }
