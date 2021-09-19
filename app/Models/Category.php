@@ -20,4 +20,12 @@ class Category extends Model
         'description',
         'icon'
     ];
+
+    /**
+     * The products that belong to the category.
+     */
+    public function products()
+    {
+        return $this->belongsToMany(Product::class);
+    }
 }
