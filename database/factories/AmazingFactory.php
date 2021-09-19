@@ -2,17 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\AmazingProduct;
+use App\Models\Amazing;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class AmazingProductFactory extends Factory
+class AmazingFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = AmazingProduct::class;
+    protected $model = Amazing::class;
 
     /**
      * Define the model's default state.

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\AmazingProduct;
+use App\Models\Amazing;
 use Illuminate\Http\Request;
 
-class AmazingProductController extends Controller
+class AmazingController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class AmazingProductController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\AmazingProduct  $amazingProduct
+     * @param  \App\Models\Amazing  $amazingProduct
      * @return \Illuminate\Http\Response
      */
-    public function show(AmazingProduct $amazingProduct)
+    public function show(Amazing $amazingProduct)
     {
         //
     }
@@ -52,10 +52,10 @@ class AmazingProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\AmazingProduct  $amazingProduct
+     * @param  \App\Models\Amazing  $amazingProduct
      * @return \Illuminate\Http\Response
      */
-    public function edit(AmazingProduct $amazingProduct)
+    public function edit(Amazing $amazingProduct)
     {
         //
     }
@@ -64,10 +64,10 @@ class AmazingProductController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\AmazingProduct  $amazingProduct
+     * @param  \App\Models\Amazing  $amazingProduct
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, AmazingProduct $amazingProduct)
+    public function update(Request $request, Amazing $amazingProduct)
     {
         //
     }
@@ -75,10 +75,10 @@ class AmazingProductController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\AmazingProduct  $amazingProduct
+     * @param  \App\Models\Amazing  $amazingProduct
      * @return \Illuminate\Http\Response
      */
-    public function destroy(AmazingProduct $amazingProduct)
+    public function destroy(Amazing $amazingProduct)
     {
         //
     }

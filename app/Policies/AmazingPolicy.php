@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\AmazingProduct;
+use App\Models\Amazing;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class AmazingProductPolicy
+class AmazingPolicy
 {
     use HandlesAuthorization;
 
@@ -25,10 +25,10 @@ class AmazingProductPolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\AmazingProduct  $amazingProduct
+     * @param  \App\Models\Amazing  $amazingProduct
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, AmazingProduct $amazingProduct)
+    public function view(User $user, Amazing $amazingProduct)
     {
         //
     }
@@ -48,10 +48,10 @@ class AmazingProductPolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\AmazingProduct  $amazingProduct
+     * @param  \App\Models\Amazing  $amazingProduct
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, AmazingProduct $amazingProduct)
+    public function update(User $user, Amazing $amazingProduct)
     {
         //
     }
@@ -60,10 +60,10 @@ class AmazingProductPolicy
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\AmazingProduct  $amazingProduct
+     * @param  \App\Models\Amazing  $amazingProduct
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, AmazingProduct $amazingProduct)
+    public function delete(User $user, Amazing $amazingProduct)
     {
         //
     }
@@ -72,10 +72,10 @@ class AmazingProductPolicy
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\AmazingProduct  $amazingProduct
+     * @param  \App\Models\Amazing  $amazingProduct
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, AmazingProduct $amazingProduct)
+    public function restore(User $user, Amazing $amazingProduct)
     {
         //
     }
@@ -84,10 +84,10 @@ class AmazingProductPolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\AmazingProduct  $amazingProduct
+     * @param  \App\Models\Amazing  $amazingProduct
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, AmazingProduct $amazingProduct)
+    public function forceDelete(User $user, Amazing $amazingProduct)
     {
         //
     }
