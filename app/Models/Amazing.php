@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class AmazingProduct extends Model
+class Amazing extends Model
 {
     use HasFactory;
 
@@ -19,4 +19,12 @@ class AmazingProduct extends Model
         'amount',
         'ending_time'
     ];
+
+    /**
+     * The products that belong to the amazing.
+     */
+    public function products()
+    {
+        return $this->belongsToMany(Product::class);
+    }
 }

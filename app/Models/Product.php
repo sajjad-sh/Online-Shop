@@ -47,4 +47,20 @@ class Product extends Model
     {
         return $this->belongsToMany(Category::class);
     }
+
+    /**
+     * Get the comments for the product.
+     */
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    /**
+     * The amazings that belong to the product.
+     */
+    public function amazings()
+    {
+        return $this->belongsToMany(Amazing::class);
+    }
 }
