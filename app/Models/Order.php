@@ -22,4 +22,12 @@ class Order extends Model
         'payment_method',
         'cancel_reason',
     ];
+
+    /**
+     * Get the cart that owns the order.
+     */
+    public function cart()
+    {
+        return $this->belongsTo(Cart::class);
+    }
 }

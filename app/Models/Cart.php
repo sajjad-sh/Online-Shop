@@ -26,4 +26,12 @@ class Cart extends Model
     {
         return $this->hasOne(User::class);
     }
+
+    /**
+     * Get the order associated with the cart.
+     */
+    public function order()
+    {
+        return $this->hasOne(Order::class);
+    }
 }
