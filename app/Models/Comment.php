@@ -28,4 +28,12 @@ class Comment extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    /**
+     * Get the product that owns the comment.
+     */
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
 }
