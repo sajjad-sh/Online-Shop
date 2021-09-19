@@ -48,4 +48,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Get the cart that owns the user.
+     */
+    public function cart()
+    {
+        return $this->belongsTo(Cart::class);
+    }
 }

@@ -18,4 +18,12 @@ class Cart extends Model
         'total_price',
         'net_price'
     ];
+
+    /**
+     * Get the user associated with the cart.
+     */
+    public function user()
+    {
+        return $this->hasOne(User::class);
+    }
 }
