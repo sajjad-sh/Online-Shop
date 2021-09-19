@@ -31,4 +31,12 @@ class Product extends Model
     ];
 
     //TODO: casts?
+
+    /**
+     * Get the card items for the product.
+     */
+    public function cart_items()
+    {
+        return $this->hasMany(CartItem::class);
+    }
 }
