@@ -18,7 +18,7 @@ class CreateProductSpecTable extends Migration
         Schema::create('product_spec', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignIdFor(Product::class)->constrained();
+            $table->foreignIdFor(Product::class);
             $table->foreignId('spec_id')->constrained('primary_specification_values');
 
             $table->timestamps();

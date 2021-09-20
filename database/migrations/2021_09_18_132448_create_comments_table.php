@@ -18,8 +18,8 @@ class CreateCommentsTable extends Migration
         Schema::create('comments', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignIdFor(User::class)->constrained();
-            $table->foreignIdFor(Product::class)->constrained();
+            $table->foreignIdFor(User::class);
+            $table->foreignIdFor(Product::class);
             $table->text('content');
             $table->boolean('is_verify')->default(0);
             $table->unsignedInteger('likes')->default(0);

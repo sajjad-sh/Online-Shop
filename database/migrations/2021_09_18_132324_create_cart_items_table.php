@@ -21,8 +21,8 @@ class CreateCartItemsTable extends Migration
         Schema::create('cart_items', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignIdFor(Cart::class)->constrained();
-            $table->foreignIdFor(Product::class)->constrained();
+            $table->foreignIdFor(Cart::class);
+            $table->foreignIdFor(Product::class);
             $table->unsignedInteger('quantity')->default(1);
             $table->unsignedDouble('price')->default(0);
             $table->json('multiple_selection_specifications')->nullable();

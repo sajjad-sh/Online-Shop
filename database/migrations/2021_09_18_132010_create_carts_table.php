@@ -17,7 +17,7 @@ class CreateCartsTable extends Migration
         Schema::create('carts', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignIdFor(Discount::class)->constrained();
+            $table->foreignIdFor(Discount::class);
             $table->unsignedDouble('total_price')->default(0);
             $table->unsignedDouble('net_price')->default(0);
 
