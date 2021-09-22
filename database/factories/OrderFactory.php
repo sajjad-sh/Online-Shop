@@ -22,7 +22,11 @@ class OrderFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'cart_id' => $this->faker->randomNumber(),
+            'address_id' => $this->faker->randomNumber(),
+            'status' => $this->faker->numberBetween(0, 5),
+            'payment_method' => $this->faker->numberBetween(0, 10),
+            'cancel_reason' => $this->faker->unique()->text(),
         ];
     }
 }
