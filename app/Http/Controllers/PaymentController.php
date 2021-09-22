@@ -14,7 +14,10 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        //
+        $payments = Payment::all();
+
+        return view('admin.payments.index')
+            ->with('payments', $payments);
     }
 
     /**
