@@ -17,7 +17,7 @@ class CreatePrimarySpecificationValuesTable extends Migration
         Schema::create('primary_specification_values', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId(PrimarySpecificationTitle::class);
+            $table->foreignId('spec_title_id')->references('id')->on('primary_specification_titles');
             $table->string('value');
 
             $table->timestamps();
