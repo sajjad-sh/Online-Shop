@@ -22,7 +22,9 @@ class PaymentFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'user_id' => $this->faker->randomNumber(),
+            'amount' => $this->faker->numberBetween(1000, 8000),
+            'payment_gateway' => $this->faker->numberBetween(0, 10),
         ];
     }
 }
