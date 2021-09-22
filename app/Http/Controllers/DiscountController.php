@@ -14,7 +14,10 @@ class DiscountController extends Controller
      */
     public function index()
     {
-        //
+        $discounts = Discount::all();
+
+        return view('admin.discounts.index')
+            ->with('discounts', $discounts);
     }
 
     /**
