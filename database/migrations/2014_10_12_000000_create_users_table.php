@@ -24,8 +24,8 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('phone')->nullable();
             $table->string('password');
+            //TODO: laravel-permission (spotty)
             $table->tinyInteger('role')->default(0);
-            $table->json('addresses')->nullable();
             $table->json('latest_categories')->nullable();
             $table->json('latest_products')->nullable();
             $table->json('favorite_products')->nullable();
