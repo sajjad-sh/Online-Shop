@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateProductRequest;
+use App\Models\PrimarySpecificationTitle;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -14,7 +16,10 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $products = Product::withTrashed()->get();
+
+        return view('admin.shop.products.index')
+            ->with('products', $products);
     }
 
     /**
@@ -55,9 +60,18 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function edit(Product $product)
+    public function edit($id)
     {
-        //
+        $product = Product::findOrFail($id);
+        $special_specifications = json_decode($product->special_specifications, true);
+
+        $primary_specification_titles = PrimarySpecificationTitle::with(['primary_specification_values'])
+            ->get();
+
+        return view('admin.shop.products.edit')
+            ->with('product', $product)
+            ->with('special_specifications', $special_specifications)
+            ->with('primary_specification_titles', $primary_specification_titles);
     }
 
     /**
@@ -65,11 +79,14 @@ class ProductController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, Product $product)
+    public function update(UpdateProductRequest $request, Product $product)
     {
-        //
+        if ($product->update($request->validated()))
+            return redirect()->route('admin.shop.products.index');
+
+        return back();
     }
 
     /**
@@ -78,8 +95,26 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product)
+    public function destroy($id)
     {
-        //
+        Product::find($id)->delete();
+
+        return back();
+    }
+
+    public function forceDelete($id)
+    {
+        $product = Product::withTrashed()->find($id);
+
+        $product->forceDelete();
+
+        return back();
+    }
+
+    public function restore($id)
+    {
+        Product::withTrashed()->find($id)->restore();
+
+        return back();
     }
 }
