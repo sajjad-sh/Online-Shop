@@ -25,4 +25,12 @@ class PrimarySpecificationValue extends Model
     {
         return $this->belongsToMany(Product::class, 'product_spec', 'spec_id', 'product_id');
     }
+
+    /**
+     * Get the user that owns the address.
+     */
+    public function primary_specification_title()
+    {
+        return $this->belongsTo(PrimarySpecificationTitle::class, 'spec_title_id');
+    }
 }
