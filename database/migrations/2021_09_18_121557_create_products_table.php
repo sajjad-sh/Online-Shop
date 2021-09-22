@@ -25,6 +25,7 @@ class CreateProductsTable extends Migration
             $table->unsignedInteger('inventory')->default(0);
             $table->unsignedInteger('sales')->default(0);
             $table->unsignedInteger('visits')->default(0);
+            $table->unsignedInteger('rate')->default(0);
             $table->text('review')->nullable();
             $table->json('special_specifications')->nullable();
             $table->unsignedTinyInteger('status')->default(1);
