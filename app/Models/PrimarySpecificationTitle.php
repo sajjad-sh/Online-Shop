@@ -18,4 +18,12 @@ class PrimarySpecificationTitle extends Model
         'key',
         'title'
     ];
+
+    /**
+     * Get the primary_specification_values for the primary_specification_titles.
+     */
+    public function primary_specification_values()
+    {
+        return $this->hasMany(PrimarySpecificationValue::class, 'spec_title_id');
+    }
 }
