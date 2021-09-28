@@ -52,4 +52,9 @@ class Category extends Model
     {
         return $this->morphToMany(Category::class, 'imageable');
     }
+
+    public function setSlugAttribute($value)
+    {
+        $this->attributes['slug'] = strtolower($value);
+    }
 }
