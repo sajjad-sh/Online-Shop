@@ -23,17 +23,12 @@ class UpdateProductRequest extends FormRequest
      */
     public function rules()
     {
-
         return [
-            'fa_title' => 'required|min:3',
+            'fa_title' => 'required|min:3|max:50',
             'en_title' => '',
             'price' => 'integer',
             'inventory' => 'integer',
             'review' => '',
-            'primary_specification_titles[]' => 'min:3',
-            'primary_specification_values[]' => '',
-            'special_specifications_titles[]' => 'min:3',
-            'special_specifications_values[]' => '',
             'status' => 'required',
             'amazing_id' => 'integer'
         ];
