@@ -25,57 +25,15 @@
                 <td>{{$order->cart_id}}</td>
                 <td>{{$order->address_id}}</td>
                 <td>
-                    @switch($order->status)
-                        @case(0)
-                        لغو
-                        @break
-
-                        @case(1)
-                        در انتظار پرداخت
-                        @break
-
-                        @case(2)
-                        در حال پردازش
-                        @break
-
-                        @case(3)
-                        تائید شده
-                        @break
-
-                        @case(4)
-                        ارسال شده
-                        @break
-
-                        @case(5)
-                        تحویل به مشتری
-                        @break
-
-                        @default
-                        نامعلوم
-                    @endswitch
-                    {{$order->email}}
+                  {{__("order.status.$order->status")}}
                 </td>
                 <td>
-                    @switch($order->payment_method)
-                        @case(0)
-                        نقدی
-                        @break
+                  @if(!in_array($order->payment_method, [0, 1, 2, 3]))
+                    {{"بانک سرمایه"}}
 
-                        @case(1)
-                        به پرداخت ملت
-                        @break
-
-                        @case(2)
-                        درگاه بانک سامان
-                        @break
-
-                        @case(3)
-                        بانک تجارت
-                        @break
-
-                        @default
-                        بانک سرمایه
-                    @endswitch
+                  @else
+                    {{__("payment.method.$order->payment_method")}}
+                  @endif
                 </td>
                 <td style="width: 239px;">
                     {{$order->status == 0 ? $order->cancel_reason : '-'}}
