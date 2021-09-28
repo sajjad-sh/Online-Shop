@@ -60,7 +60,7 @@
                             </button>
                         </form>
                     @endif&nbsp;
-                    <form action="{{route('admin.shop.products.forceDelete', $product)}}" method="post"
+                    <form action="{{route('admin.shop.products.delete', $product)}}" method="post"
                           style="display: inline-block">
                         @csrf
                         @method('DELETE')
