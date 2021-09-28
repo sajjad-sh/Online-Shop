@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
 class OrderByController extends Controller
@@ -10,7 +11,7 @@ class OrderByController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return View
      */
     public function index()
     {
