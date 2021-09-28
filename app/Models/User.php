@@ -49,6 +49,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    # TODO: Check Relation Comments
+    # TODO: Add return and param in comments and add their signatures
     /**
      * Get the cart that owns the user.
      */

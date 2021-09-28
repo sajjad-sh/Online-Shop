@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UpdateProductRequest;
 use App\Models\PrimarySpecificationTitle;
 use App\Models\Product;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -12,7 +13,7 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return View
      */
     public function index()
     {
@@ -58,7 +59,7 @@ class ProductController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
+     * @return View
      */
     public function edit($id)
     {
@@ -83,6 +84,9 @@ class ProductController extends Controller
      */
     public function update(UpdateProductRequest $request, Product $product)
     {
+        foreach ($request->primary_specification_values as $primary_specification_value)
+            $product->primary_specification_values()->attach($primary_specification_value);
+
         if ($product->update($request->validated()))
             return redirect()->route('admin.shop.products.index');
 
@@ -102,7 +106,7 @@ class ProductController extends Controller
         return back();
     }
 
-    public function forceDelete($id)
+    public function delete($id)
     {
         $product = Product::withTrashed()->find($id);
 

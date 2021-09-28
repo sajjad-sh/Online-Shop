@@ -3,89 +3,50 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+
+# TODO: Add CRUD For all models
 
 class UserController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the users.
      *
-     * @return \Illuminate\Http\Response
+     * @return View
      */
     public function index()
     {
         $users = User::withTrashed()->get();
 
+        # TODO: Add paginate feature
         return view('admin.users.index')
             ->with('users', $users);
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Update the specified user in storage.
      *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
+     * @param Request $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return RedirectResponse
      */
     public function update(Request $request, $id)
     {
         $user = User::withTrashed()->find($id);
-
         $user->deleted_at = null;
-
         $user->save();
 
         return back();
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Ban the specified user from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return RedirectResponse
      */
     public function destroy($id)
     {
@@ -94,10 +55,15 @@ class UserController extends Controller
         return back();
     }
 
-    public function forceDelete($id)
+    /**
+     * Permanently delete the specified user from storage.
+     *
+     * @param  int  $id
+     * @return RedirectResponse
+     */
+    public function delete($id)
     {
         $user = User::withTrashed()->find($id);
-
         $user->forceDelete();
 
         return back();

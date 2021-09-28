@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+# TODO: Change Specification to Attriubute
 class PrimarySpecificationTitle extends Model
 {
     use HasFactory;
