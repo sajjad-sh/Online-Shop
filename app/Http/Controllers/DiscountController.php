@@ -2,15 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreDiscountRequest;
+use App\Http\Requests\UpdateDiscountRequest;
 use App\Models\Discount;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class DiscountController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return View
      */
     public function index()
     {
@@ -20,47 +26,40 @@ class DiscountController extends Controller
             ->with('discounts', $discounts);
     }
 
+    # TODO: Refactor CRUD Methods with latest laravel doc
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new discount.
      *
-     * @return \Illuminate\Http\Response
+     * @return View
      */
     public function create()
     {
-        //
+        return view('admin.discounts.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param StoreDiscountRequest $request
+     * @return RedirectResponse
      */
-    public function store(Request $request)
+    public function store(StoreDiscountRequest $request)
     {
-        //
-    }
+        Discount::create($request->validated());
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Discount  $discount
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Discount $discount)
-    {
-        //
+        return back();
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Discount  $discount
-     * @return \Illuminate\Http\Response
+     * @param  Discount  $discount
+     * @return View
      */
     public function edit(Discount $discount)
     {
-        //
+        return view('admin.discounts.edit')
+            ->with('discount', $discount);
     }
 
     /**
@@ -70,9 +69,23 @@ class DiscountController extends Controller
      * @param  \App\Models\Discount  $discount
      * @return \Illuminate\Http\Response
      */
+
+    # TODO: Fix unique ignore
     public function update(Request $request, Discount $discount)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'code' => ['required','min:3', 'max:50', 'regex:/^[A-Za-z0-9-]+$/', Rule::unique('discounts')->ignore($discount->code, 'code')],
+            'title' => 'required', 'min:3', 'max:25',
+            'type' => 'required|integer|between:0,1',
+            'amount' => 'required|integer',
+            'inventory' => 'required|integer',
+            'sales' => 'required|integer',
+        ]);
+
+        if($validator)
+            $discount->update($request->all());
+
+        return back();
     }
 
     /**
