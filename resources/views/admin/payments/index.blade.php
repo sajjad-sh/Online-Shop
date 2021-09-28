@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
-@section('title', 'پنل مدیریت - فهرست سفارشات')
+@section('title', 'پنل مدیریت - فهرست پرداخت‌ها')
 
 @section('content')
 
-    <h1>فهرست سفارشات</h1><br>
+    <h1>فهرست پرداخت‌ها</h1><br>
     <table class="table table-striped">
         <thead>
         <tr>
@@ -22,26 +22,12 @@
                 <td>{{$payment->user_id}}</td>
                 <td>{{$payment->amount}}</td>
                 <td>
-                    @switch($payment->payment_gateway)
-                        @case(0)
-                        نقدی
-                        @break
+                  @if(!in_array($payment->payment_gateway, [0, 1, 2, 3]))
+                    {{"بانک سرمایه"}}
 
-                        @case(1)
-                        به پرداخت ملت
-                        @break
-
-                        @case(2)
-                        درگاه بانک سامان
-                        @break
-
-                        @case(3)
-                        بانک تجارت
-                        @break
-
-                        @default
-                        بانک سرمایه
-                    @endswitch
+                  @else
+                    {{__("payment.method.$payment->payment_gateway")}}
+                  @endif
                 </td>
                 <td>{{$payment->created_at}}</td>
             </tr>
