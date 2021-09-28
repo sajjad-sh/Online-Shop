@@ -47,9 +47,34 @@
                     <input type="number" class="form-control" id="inventory" name="inventory" placeholder="موجودی"
                            value="{{$product->inventory}}"/>
 
-                    <label for="specification">مشخصات فنی اصلی</label>
+                    <label for="specification">مشخصات فنی ثابت</label>
                     <br>
+                    <!--TODO: show previous specifiaction key/value -->
                     <!--TODO: multiple specifiaction key/value -->
+                    @foreach($product->primary_specification_values as $primary_specification_value)
+                      <select class="form-select primary_spec" aria-label="Default select example"
+                              name="primary_specification_titles[]" id="primary_specification_titles[]">
+
+                        <option selected>عنوان مشخصه فنی ثابت</option>
+                        @foreach($primary_specification_titles as $primary_specification_title)
+                          <option
+                            value="{{$primary_specification_title->id}}">{{$primary_specification_title->title}}</option>
+                        @endforeach
+                      </select>
+
+                      <select class="form-select primary_spec" aria-label="Default select example"
+                              name="primary_specification_values[]" id="primary_specification_values[]">
+                        <option selected>مقدار مشخصه فنی ثابت</option>
+                        @foreach($primary_specification_titles as $primary_specification_title)
+                          @foreach($primary_specification_title->primary_specification_values as $primary_specification_value)
+                            <option
+                              value="{{$primary_specification_value->id}}">{{$primary_specification_value->value}}</option>
+                          @endforeach
+                        @endforeach
+                      </select>
+                    @endforeach
+
+                    <br><br>
                     <select class="form-select primary_spec" aria-label="Default select example"
                             name="primary_specification_titles[]" id="primary_specification_titles[]">
                       <option selected>عنوان مشخصه فنی ثابت</option>
@@ -58,7 +83,6 @@
                           value="{{$primary_specification_title->id}}">{{$primary_specification_title->title}}</option>
                       @endforeach
                     </select>
-
                     <select class="form-select primary_spec" aria-label="Default select example"
                             name="primary_specification_values[]" id="primary_specification_values[]">
                       <option selected>مقدار مشخصه فنی ثابت</option>
@@ -124,19 +148,20 @@
 
                     <select class="form-select primary_spec" aria-label="Default select example" name="status"
                             id="status">
-                      <option value="{{$product->status}}" selected>{{__("status.product.$product->status")}}</option>
+                      <option value="{{$product->status}}" selected>{{__("product.status.$product->status")}}</option>
                       @for($i=0; $i<5; $i++)
                         @if($i == $product->status)
                           @continue;
                         @endif
-                        <option value="{{$i}}">{{__("status.product.$i")}}</option>
+                        <option value="{{$i}}">{{__("product.status.$i")}}</option>
                       @endfor
                     </select>
 
+                    <br>
                     <label for="amazing_id">شناسه تخفیف شگفت انگیز</label>
                     <input type="text" class="form-control" id="amazing_id" name="amazing_id" placeholder="شگفت‌انگیز"
                            value="{{$product->amazing_id}}"/>
-
+                    </select>
                   </div>
                 </div>
                 <div class="form-group row">
