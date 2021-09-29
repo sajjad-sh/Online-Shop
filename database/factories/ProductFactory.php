@@ -40,17 +40,6 @@ class ProductFactory extends Factory
                 "نوع حافظه RAM" => "DDR4"
             ]),
 
-//            'special_specifications' => json_encode([
-//                $this->faker->randomElement(
-//                    [
-//                        "house",
-//                        "flat",
-//                        "apartment",
-//                        "room", "shop",
-//                        "lot", "garage"
-//                    ]
-//                )
-//            ]),
             'status' => $this->faker->numberBetween(0, 4),
         ];
     }
