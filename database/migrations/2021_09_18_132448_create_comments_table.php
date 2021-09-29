@@ -21,7 +21,7 @@ class CreateCommentsTable extends Migration
             $table->foreignIdFor(User::class);
             $table->foreignIdFor(Product::class);
             $table->text('content');
-            $table->boolean('is_verify')->default(0);
+            $table->unsignedTinyInteger('is_verify');
             $table->unsignedInteger('likes')->default(0);
             $table->unsignedInteger('dislikes')->default(0);
 
