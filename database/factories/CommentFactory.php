@@ -22,7 +22,13 @@ class CommentFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'user_id' => $this->faker->randomNumber(),
+            'product_id' => $this->faker->randomNumber(),
+            'content' => $this->faker->realText(),
+            'is_verify' => $this->faker->numberBetween(0, 2),
+            'cancel_reason' => '',
+            'likes' => $this->faker->numberBetween(0, 500),
+            'dislikes' => $this->faker->numberBetween(0, 500)
         ];
     }
 }
