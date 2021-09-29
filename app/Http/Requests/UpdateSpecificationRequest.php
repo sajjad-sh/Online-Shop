@@ -25,13 +25,7 @@ class UpdateSpecificationRequest extends FormRequest
     public function rules()
     {
         return [
-//            'title' => 'unique:primary_specification_values,spec_title_id',
-            'title' => '',
-            'value' => 'required|min:2'
-//            'title' => [
-//                'unique:primary_specification_values,spec_title_id',
-//                Rule::unique('primary_specification_values')->ignore('spec_title_id'),
-//            ]
+            'value' => 'required|min:2|max:30'
         ];
     }
 }
