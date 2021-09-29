@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DiscountController;
 use App\Http\Controllers\OrderByController;
 use App\Http\Controllers\OrderController;
@@ -25,6 +26,7 @@ use Illuminate\Support\Facades\Route;
 
 # TODO: s Plural ?
 # TODO: Select best route Structure
+# TODO: use except and only for Resource routes after complete crud
 # TODO: Multiple routes files ?
 
 Route::view('/', 'admin.index')
@@ -36,11 +38,8 @@ Route::name('admin.')->prefix('admin')
             ->name('index');
 
         Route::resource('users', UserController::class);
-        Route::name('users.')->prefix('users')
-            ->group(function () {
-                Route::delete('{user}/delete', [UserController::class, 'delete'])
-                    ->name('delete');
-            });
+        Route::delete('users/{user}/delete', [UserController::class, 'delete'])
+            ->name('users.delete');
 
         Route::resource('orders', OrderByController::class);
         Route::resource('payments', PaymentController::class);
@@ -61,6 +60,30 @@ Route::name('admin.')->prefix('admin')
                     });
 
                 Route::resource('categories', CategoryController::class);
+
                 Route::resource('specifications', SpecificationController::class);
+                Route::name('specifications.')->prefix('specifications')
+                    ->group(function () {
+                        Route::get('create/t', [SpecificationController::class, 'createTitle'])
+                            ->name('createTitle');
+                        Route::post('t', [SpecificationController::class, 'storeTitle'])
+                            ->name('storeTitle');
+                        Route::delete('{specification}/t', [SpecificationController::class, 'destroyTitle'])
+                            ->name('destroyTitle');
+                    });
+
+                Route::resource('comments', CommentController::class);
+                Route::name('comments.')->prefix('comments')
+                    ->group(function () {
+                        Route::patch('{comment}/verify', [CommentController::class, 'verify'])
+                            ->name('verify');
+                        Route::patch('{comment}/unverify', [CommentController::class, 'unverify'])
+                            ->name('unverify');
+                    });
             });
     });
+
+Route::get('test',function (){
+    $comment = \App\Models\Comment::query()->find(7);
+    dd($comment->user->id);
+});
