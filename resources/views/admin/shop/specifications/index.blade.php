@@ -1,10 +1,12 @@
 @extends('layouts.app')
 
-@section('title', 'پنل مدیریت - فهرست دسته‌بندی‌ها')
+@section('title', 'پنل مدیریت - فهرست خصوصیات')
 
 @section('content')
 
-  <h1>فهرست عناوین خصوصیات</h1><br>
+  <h1 style="display: inline-block;">فهرست عناوین خصوصیات</h1>
+  <a href="{{route('admin.shop.specifications.createTitle')}}" class="btn btn-primary" style="display: inline-block">افزودن</a>
+
   <table class="table table-striped">
     <thead>
     <tr>
@@ -22,12 +24,8 @@
           <td>{{$primary_specification_title->title}}</td>
 
           <td style="text-align: center;">
-            <a href="" style="color: black;"><i
-                class="fas fa-edit"></i></a> &nbsp;
-
               &nbsp;
-            <form action="" method="post"
-                  style="display: inline-block">
+            <form action="{{route('admin.shop.specifications.destroyTitle', $primary_specification_title)}}" method="post" style="display: inline-block">
               @csrf
               @method('DELETE')
 
@@ -44,7 +42,9 @@
     </tbody>
   </table>
 
-  <h1>فهرست خصوصیت - مقدار</h1><br>
+  <h1 style="display: inline-block;">فهرست خصوصیت - مقدار</h1>
+  <a href="{{route('admin.shop.specifications.create')}}" class="btn btn-primary" style="display: inline-block">افزودن</a>
+
   <table class="table table-striped">
     <thead>
     <tr>
