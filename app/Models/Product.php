@@ -77,6 +77,6 @@ class Product extends Model
      */
     public function primary_specification_values()
     {
-        return $this->belongsToMany(PrimarySpecificationValue::class, 'product_spec', 'product_id', 'spec_id');
+        return $this->belongsToMany(PrimarySpecificationValue::class, 'product_spec', 'product_id', 'spec_id')->withTimestamps();
     }
 }
