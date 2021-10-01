@@ -23,7 +23,7 @@ class PrimarySpecificationValue extends Model
      */
     public function products()
     {
-        return $this->belongsToMany(Product::class, 'product_spec', 'spec_id', 'product_id');
+        return $this->belongsToMany(Product::class, 'product_spec', 'spec_id', 'product_id')->withTimestamps();
     }
 
     /**
