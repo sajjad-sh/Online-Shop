@@ -83,7 +83,9 @@ Route::name('admin.')->prefix('admin')
             });
     });
 
-Route::get('test',function (){
-    $comment = \App\Models\Comment::query()->find(7);
-    dd($comment->user->id);
-});
+Route::view('test', 'test')
+    ->name('test');
+
+//Route::get('test',function (){
+//
+//});
