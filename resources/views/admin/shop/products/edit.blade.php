@@ -1,8 +1,10 @@
 @extends('layouts.app')
 
-@section('title', 'پنل مدیریت - ویرایش محصول')
+@section('title', 'پنل مدیریت - ایجاد محصول جدید')
 
 @section('content')
+
+  <!-- TODO: Complete Product edit -->
   <div class="page-wrapper">
     <!-- ============================================================== -->
     <!-- Bread crumb and right sidebar toggle -->
@@ -15,10 +17,9 @@
           <div class="card">
             <form class="form-horizontal" method="post" action="{{route('admin.shop.products.update', $product)}}">
               @csrf
-              @method('PATCH')
               <div class="card-body">
 
-                <h4 class="card-title">Edit product #{{$product->id}}</h4>
+                <h4 class="card-title">Create New product</h4>
                 <br>
                 @if ($errors->any())
                   @foreach ($errors->all() as $error)
@@ -34,7 +35,7 @@
                     <input type="text" class="form-control" id="fa-title" name="fa_title" placeholder="عنوان فارسی"
                            value="{{$product->fa_title}}"/>
                   </div>
-                  <div class="col-sm-9">
+                  <div id="primary-fields" class="col-sm-9">
                     <label for="en-title">نام انگلیسی</label>
                     <input type="text" class="form-control" id="en-title" name="en_title" placeholder="عنوان انگلیسی"
                            value="{{$product->en_title}}"/>
@@ -47,142 +48,171 @@
                     <input type="number" class="form-control" id="inventory" name="inventory" placeholder="موجودی"
                            value="{{$product->inventory}}"/>
 
-                    <label for="specification">مشخصات فنی ثابت</label>
-                    <br>
-                    <!--TODO: show previous specifiaction key/value -->
-                    <!--TODO: multiple specifiaction key/value -->
-                    @foreach($product->primary_specification_values as $primary_specification_value)
-                      <select class="form-select primary_spec" aria-label="Default select example"
-                              name="primary_specification_titles[]" id="primary_specification_titles[]">
+                    <!-- TODO: Enable value when key selected -->
+                    <label for="p_titles[]">مشخصات فنی ثابت</label>
 
-                        <option selected>عنوان مشخصه فنی ثابت</option>
-                        @foreach($primary_specification_titles as $primary_specification_title)
-                          <option
-                            value="{{$primary_specification_title->id}}">{{$primary_specification_title->title}}</option>
+                  <button type="button" class="btn btn-default" onclick="addSelectField()">+</button>
+                  @foreach($product->primary_specification_values as $p_value)
+                      <br>
+                      <select class="form-select primary_spec" aria-label="Default select example" name="p_titles[]"
+                              id="p_titles[]">
+                        <option value="{{$p_value->primary_specification_title->id}}" selected>{{$p_value->primary_specification_title->title}}</option>
+
+                        @foreach($all_titles as $all_title)
+                          <option value="{{$all_title->id}}">
+                            {{$all_title->title}}
+                          </option>
                         @endforeach
                       </select>
 
-                      <select class="form-select primary_spec" aria-label="Default select example"
-                              name="primary_specification_values[]" id="primary_specification_values[]">
-                        <option selected>مقدار مشخصه فنی ثابت</option>
-                        @foreach($primary_specification_titles as $primary_specification_title)
-                          @foreach($primary_specification_title->primary_specification_values as $primary_specification_value)
-                            <option
-                              value="{{$primary_specification_value->id}}">{{$primary_specification_value->value}}</option>
-                          @endforeach
+                      <select class="form-select primary_spec" aria-label="Default select example" name="p_values[]"
+                              id="p_values[]">
+                        <option value="{{$p_value->id}}" selected>{{$p_value->title}}</option>
+                        @foreach($all_values as $value)
+                          @if($value == $p_value)
+                            @continue
+                          @endif
+                          <option value="{{$value->id}}">{{$value->title}}</option>
                         @endforeach
                       </select>
+
                     @endforeach
 
-                    <br><br>
-                    <select class="form-select primary_spec" aria-label="Default select example"
-                            name="primary_specification_titles[]" id="primary_specification_titles[]">
-                      <option selected>عنوان مشخصه فنی ثابت</option>
-                      @foreach($primary_specification_titles as $primary_specification_title)
-                        <option
-                          value="{{$primary_specification_title->id}}">{{$primary_specification_title->title}}</option>
-                      @endforeach
-                    </select>
-                    <select class="form-select primary_spec" aria-label="Default select example"
-                            name="primary_specification_values[]" id="primary_specification_values[]">
-                      <option selected>مقدار مشخصه فنی ثابت</option>
-                      @foreach($primary_specification_titles as $primary_specification_title)
-                        @foreach($primary_specification_title->primary_specification_values as $primary_specification_value)
-                          <option
-                            value="{{$primary_specification_value->id}}">{{$primary_specification_value->value}}</option>
-                        @endforeach
-                      @endforeach
-                    </select>
-                    <button type="button" class="btn btn-default" id="addPrimarySpecification">+</button>
-
-                    <script>
-                      $('#addPrimarySpecification').click(function () {
-                        var the_select1 = $("select[id=\"primary_specification_titles[]\"]");
-                        var the_select2 = $("select[id=\"primary_specification_values[]\"]");
-                        var the_div_of_wrapping = $("div[id=\"the_div_of_wrapping_ps\"]");
-
-                        the_select1.clone();
-                        the_div_of_wrapping.append(the_select1);
-
-                        the_select2.clone();
-                        the_div_of_wrapping.append(the_select2);
-                      });
-                    </script>
-
-                    <div id="the_div_of_wrapping_ps"></div>
 
 
-                    <label for="special_specifications_titles[]">مشخصات فنی این محصول</label>
+                    {{--                    <select class="form-select primary_spec" aria-label="Default select example" name="p_titles[]"--}}
+{{--                            id="p_titles[]">--}}
+{{--                      <option selected>عنوان مشخصه فنی ثابت</option>--}}
+{{--                      @foreach($titles as $title)--}}
+{{--                        <option value="{{$title->id}}">{{$title->title}}</option>--}}
+{{--                      @endforeach--}}
+{{--                    </select>--}}
+{{--                    --}}
+{{--                    <select class="form-select primary_spec" aria-label="Default select example" name="p_values[]"--}}
+{{--                            id="p_values[]">--}}
+{{--                      <option selected>مقدار مشخصه فنی ثابت</option>--}}
+{{--                      @foreach($values as $value)--}}
+{{--                        <option value="{{$value->id}}">{{$value->value}}</option>--}}
+{{--                      @endforeach--}}
+{{--                    </select>--}}
+
+                  </div>
+
+                  <div id="specific-fields" class="col-sm-9">
+                    <label for="s_titles">مشخصات فنی این محصول</label>
                     <br>
-                    @forelse($special_specifications as $key => $value)
+
+                    @foreach($s_values as $s_key => $s_value)
+                      <input style="width: 150px;" type="text" class="form-control primary_spec" id="s_titles[]"
+                             name="s_titles[]" value="{{$s_key}}">
+                      <input style="width: 150px;" type="text" class="form-control primary_spec" id="s_values[]"
+                             name="s_values[]" value="{{$s_value}}">
                       <br>
-                      <input type="text" name="special_specifications_titles[]" id="special_specifications_titles[]"
-                             value="{{$key}}">
-                      <input type="text" name="special_specifications_values[]" id="special_specifications_values[]"
-                             value="{{$value}}">
-
-                    @empty
-                      مشخصه ای یافت نشد
-                    @endforelse
-
-                    <button type="button" class="btn btn-default" id="addSpecialSpecification">+</button>
-
-                    <script>
-                      $('#addSpecialSpecification').click(function () {
-                        var the_input1 = $("input[id=\"special_specifications_titles[]\"]");
-                        var the_input2 = $("input[id=\"special_specifications_values[]\"]");
-                        var the_div_of_wrapping = $("div[id=\"the_div_of_wrapping_ss\"]");
-
-                        the_input1.clone();
-                        the_div_of_wrapping.append(the_input1);
-
-                        the_input2.clone();
-                        the_div_of_wrapping.append(the_input2);
-                      });
-                    </script>
-
-                    <div id="the_div_of_wrapping_ss"></div>
-
-
-                    <label for="status">وضعیت</label>
-
-                    <select class="form-select primary_spec" aria-label="Default select example" name="status"
-                            id="status">
-                      <option value="{{$product->status}}" selected>{{__("product.status.$product->status")}}</option>
-                      @for($i=0; $i<5; $i++)
-                        @if($i == $product->status)
-                          @continue;
-                        @endif
-                        <option value="{{$i}}">{{__("product.status.$i")}}</option>
-                      @endfor
-                    </select>
-
+                    @endforeach
                     <br>
-                    <label for="amazing_id">شناسه تخفیف شگفت انگیز</label>
-                    <input type="text" class="form-control" id="amazing_id" name="amazing_id" placeholder="شگفت‌انگیز"
-                           value="{{$product->amazing_id}}"/>
-                    </select>
+                    <input style="width: 150px;" type="text" class="form-control primary_spec" id="s_titles[]"
+                           name="s_titles[]" placeholder="عنوان">
+                    <input style="width: 150px;" type="text" class="form-control primary_spec" id="s_values[]"
+                           name="s_values[]" placeholder="مقدار">
+
+                    <button type="button" class="btn btn-default" onclick="addInputField()">+</button>
                   </div>
-                </div>
-                <div class="form-group row">
-                  <label for="review">نقد و بررسی</label> <br>
-                  <div class="col-sm-9">
-                    <textarea class="form-control" rows="20" name="review">{{$product->review}}</textarea>
+
+                  <script>
+                    var p_div = document.getElementById('primary-fields');
+
+                    function addSelectTitle(name) {
+                      var select = document.getElementById("p_titles[]");
+                      var select = select.cloneNode(true);
+
+                      select.inner = '';
+                      select.name = name;
+                      select.id = name;
+                      p_div.appendChild(select);
+                    }
+
+                    function addSelectValue(name) {
+                      var select = document.getElementById("p_values[]");
+                      var select = select.cloneNode(true);
+
+                      select.inner = '';
+                      select.name = name;
+                      select.id = name;
+                      p_div.appendChild(select);
+                    }
+
+                    function addSelectField() {
+                      p_div.appendChild(document.createElement("br"));
+                      addSelectTitle("p_titles[]");
+                      addSelectValue("p_values[]");
+                    }
+
+
+                    var s_div = document.getElementById('specific-fields');
+
+                    function addInputTitle(name) {
+                      var input = document.getElementById("s_titles[]");
+                      var input = input.cloneNode(true);
+
+                      input.name = name;
+                      input.id = name;
+                      s_div.appendChild(input);
+                    }
+
+                    function addInputValue(name) {
+                      var input = document.getElementById("s_values[]");
+                      var input = input.cloneNode(true);
+
+                      input.name = name;
+                      input.id = name;
+                      s_div.appendChild(input);
+                    }
+
+                    function addInputField() {
+                      s_div.appendChild(document.createElement("br"));
+                      addInputTitle("s_titles[]");
+                      addInputValue("s_values[]");
+                    }
+
+
+                  </script>
+
+
+                  <label for="status">وضعیت</label>
+
+                  <select class="form-select primary_spec" aria-label="Default select example" name="status"
+                          id="status">
+                    <option value="1" selected>انتخاب وضعیت</option>
+                    @for($i=0; $i<5; $i++)
+                      <option value="{{$i}}">{{__("product.status.$i")}}</option>
+                    @endfor
+                  </select>
+
+                  <br>
+
+                  <label for="amazing_id">شناسه تخفیف شگفت انگیز</label>
+                  <input style="width: 200px;" type="number" class="form-control" id="amazing_id" name="amazing_id"/>
+
+                  <div class="form-group row">
+                    <label for="review">نقد و بررسی</label> <br>
+                    <div class="col-sm-9">
+                      <textarea class="form-control" rows="20" name="review"> </textarea>
+                    </div>
                   </div>
-                </div>
-              </div>
-              <div class="border-top">
-                <div class="card-body">
-                  <button type="submit" class="btn btn-primary">
-                    Submit
-                  </button>
-                </div>
-              </div>
+
+                  <div class="border-top">
+                    <div class="card-body">
+                      <button type="submit" class="btn btn-primary">
+                        Submit
+                      </button>
+                    </div>
+                  </div>
             </form>
           </div>
         </div>
       </div>
     </div>
+  </div>
 
   </div>
 
