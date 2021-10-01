@@ -18,7 +18,7 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignIdFor(Amazing::class);
+            $table->foreignIdFor(Amazing::class)->nullable();
             $table->string('fa_title');
             $table->string('en_title');
             $table->unsignedDouble('price')->default(0);
