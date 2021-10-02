@@ -1,5 +1,13 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\DiscountController;
+use App\Http\Controllers\OrderByController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\SpecificationController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,19 +26,7 @@ use Illuminate\Support\Facades\Route;
 # TODO: use except and only for Resource routes after complete crud
 # TODO: Multiple routes files ?
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/profile', function () {
-    return view('profile');
-})->middleware(['auth'])->name('profile');
-
 require __DIR__ . '/auth.php';
-
-
-//Route::view('/', 'admin.index')
-//    ->name('index');
 
 Route::name('admin.')->prefix('admin')
     ->group(function () {
@@ -82,3 +78,11 @@ Route::name('admin.')->prefix('admin')
                     });
             });
     });
+
+Route::get('/profile', function () {
+    return view('user.profile');
+})->middleware(['auth'])->name('profile');
+
+Route::get('/', function () {
+    return view('shop.home');
+});
