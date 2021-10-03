@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\SlideController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DiscountController;
@@ -9,6 +10,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SpecificationController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------
@@ -77,6 +79,14 @@ Route::name('admin.')->prefix('admin')
                             ->name('unverify');
                     });
             });
+
+        Route::name('site.')->prefix('site')
+            ->group(function () {
+                Route::view('', 'admin.site.index')
+                    ->name('index');
+
+                Route::resource('sliders', SlideController::class);
+            });
     });
 
 Route::get('/profile', function () {
@@ -85,4 +95,27 @@ Route::get('/profile', function () {
 
 Route::get('/', function () {
     return view('shop.home');
+});
+
+Route::get('/test', function () {
+//    Storage::disk('local')->put('example.txt', 'Contents');
+//    Storage::put('avatars/1', '1');
+//    <img src="{{ \Storage::url($task->image) }}" class="img-thumbnail">
+//        Storage::put('store.html','<h1>Test Store</h1>');
+//        $isExist = Storage::exists('store.html');
+//        $isExist = Storage::missing('store.html');
+//        $isExist = Storage::disk('public')->exists('store.html');
+//        dd($isExist);
+//    if ($request->hasFile('file')) {
+//            $ext = $request->file('file')->getClientOriginalExtension();
+//        $name = $request->file('file')->getClientOriginalName();
+//            return $request->file('file')->store('/test_public');
+//        $path = $request->file('file')->storeAs('/images',$name);
+//    }
+//    File::create([
+//        'name'=>$name,
+//        File::PATH=>$path
+//    ]);
+//    return back()->with('status','file saved');
+
 });
