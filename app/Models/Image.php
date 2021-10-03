@@ -17,7 +17,9 @@ class Image extends Model
      */
     protected $fillable = [
         'url',
-        'is_primary'
+        'alt',
+        'is_primary',
+        'extra'
     ];
 
     /**
