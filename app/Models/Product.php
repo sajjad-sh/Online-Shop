@@ -69,7 +69,7 @@ class Product extends Model
      */
     public function images()
     {
-        return $this->morphToMany(Product::class, 'imageable');
+        return $this->morphToMany(Image::class, 'imageable');
     }
 
     /**
