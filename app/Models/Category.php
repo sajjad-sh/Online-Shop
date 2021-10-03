@@ -50,7 +50,7 @@ class Category extends Model
      */
     public function images()
     {
-        return $this->morphToMany(Category::class, 'imageable');
+        return $this->morphToMany(Image::class, 'imageable');
     }
 
     public function setSlugAttribute($value)
