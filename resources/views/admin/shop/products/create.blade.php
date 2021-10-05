@@ -13,7 +13,7 @@
       <div class="row">
         <div class="col">
           <div class="card">
-            <form class="form-horizontal" method="post" action="{{route('admin.shop.products.store')}}">
+            <form class="form-horizontal" method="post" action="{{route('admin.shop.products.store')}}" enctype="multipart/form-data">
               @csrf
               <div class="card-body">
 
@@ -29,7 +29,6 @@
 
                   <div class="col-sm-9">
                     <label for="fa-title">نام فارسی</label>
-
                     <input type="text" class="form-control" id="fa-title" name="fa_title" placeholder="عنوان فارسی"
                     />
                   </div>
@@ -124,8 +123,6 @@
                         addInputTitle("s_titles[]");
                         addInputValue("s_values[]");
                       }
-
-
                     </script>
 
 
@@ -143,6 +140,13 @@
 
                   <label for="amazing_id">شناسه تخفیف شگفت انگیز</label>
                   <input style="width: 200px;" type="number" class="form-control" id="amazing_id" name="amazing_id"/>
+
+                  <label for="formFileMultiple" class="form-label">عکس اصلی</label>
+                  <input name="file" class="form-control" type="file" id="formFileMultiple">
+
+                  <label for="formFileMultiple" class="form-label">انتخاب دسته جمعی سایر عکس ها</label>
+                  <input name="files[]" class="form-control" type="file" id="formFileMultiple" multiple>
+
 
                   <div class="form-group row">
                     <label for="review">نقد و بررسی</label> <br>
