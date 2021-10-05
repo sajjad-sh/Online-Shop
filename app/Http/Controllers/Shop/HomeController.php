@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Shop;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -14,9 +16,19 @@ class HomeController extends Controller
      */
     public function index()
     {
-//        $sliders =
+        $categories = Category::all();
+        $root_category = Category::find(0);
+
+        $home_sliders = array();
+        foreach ($root_category->images as $image) {
+            $home_sliders[] = $image;
+        }
+
+        $amazing_products = Product::query()->whereNotNull('amazing_id')->get();
 
         return view('shop.home')
-            ->with('sliders', $sliders);
+            ->with('home_sliders', $home_sliders)
+            ->with('amazing_products', $amazing_products)
+            ->with('categories', $categories);
     }
 }
