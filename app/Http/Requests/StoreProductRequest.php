@@ -24,8 +24,8 @@ class StoreProductRequest extends FormRequest
     public function rules()
     {
         return [
-            'fa_title' => 'required|min:3|max:50',
-            'en_title' => 'required|min:3|max:50',
+            'fa_title' => 'required|min:3|max:255',
+            'en_title' => 'required|min:3|max:255',
             'price' => 'integer',
             'inventory' => 'integer',
             'review' => '',
