@@ -7,6 +7,7 @@ use App\Http\Controllers\DiscountController;
 use App\Http\Controllers\OrderByController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\Shop\HomeController;
 use App\Http\Controllers\SpecificationController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -27,6 +28,17 @@ use Illuminate\Support\Facades\Storage;
 # TODO: Select best route Structure
 # TODO: use except and only for Resource routes after complete crud
 # TODO: Multiple routes files ?
+
+/*
+ *
+ * which packages ?
+ * intervention
+ * admin lte
+ * spotty
+ * verta
+ * switty alert
+ *
+ */
 
 require __DIR__ . '/auth.php';
 
@@ -93,9 +105,14 @@ Route::get('/profile', function () {
     return view('user.profile');
 })->middleware(['auth'])->name('profile');
 
-Route::get('/', function () {
-    return view('shop.home');
-});
+Route::get('/', [HomeController::class, 'index']);
+
+
+
+
+
+
+//Route::view('/', 'shop.home');
 
 Route::get('/test', function () {
 //    Storage::disk('local')->put('example.txt', 'Contents');
@@ -117,5 +134,25 @@ Route::get('/test', function () {
 //        File::PATH=>$path
 //    ]);
 //    return back()->with('status','file saved');
+
+//    dd(Storage::get('/storage/categories/icons/cat-8.jpg'));
+
+//    dd(\App\Models\Category::countCategoryParent(\App\Models\Category::find(12)));
+
+    $c = \App\Models\Category::find(1);
+    (\App\Models\Category::hasChildren($c));
+//
+//    dd(\App\Models\Category::hasChildren($c));
+
+
+
+
+
+
+
+
+
+
+
 
 });
