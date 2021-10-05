@@ -15,11 +15,15 @@ class Image extends Model
      *
      * @var string[]
      */
+
     protected $fillable = [
         'url',
         'alt',
+        'link',
         'is_primary',
-        'extra'
+        'title',
+        'subtitle',
+        'description'
     ];
 
     /**
