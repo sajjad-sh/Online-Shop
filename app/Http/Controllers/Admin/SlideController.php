@@ -50,13 +50,16 @@ class SlideController extends Controller
 
         $validated = $request->validate([
             'alt' => '',
-            'extra' => '',
+            'link' => '',
+            'title' => '',
+            'subtitle' => '',
+            'description' => '',
             'file' => 'required',
             'category_id' => 'integer',
         ]);
 
         $is_primary = isset($request->is_primary);
-        $extra = $request->extra ? $request->extra : null;
+        $description = $request->description ? $request->description : null;
 
         if ($request->hasFile('file')) {
             $image = $request->file('file');
@@ -64,8 +67,10 @@ class SlideController extends Controller
             $path = $image->storeAs("/public/categories/cat-$request->category_id", $name);
 
             $url = Storage::url($path);
-
             $alt = $request->alt;
+            $link = $request->link;
+            $title = $request->title;
+            $subtitle = $request->subtitle;
 
             if (empty($alt))
                 $alt = $image->getClientOriginalName();
@@ -73,8 +78,11 @@ class SlideController extends Controller
             $image = new Image([
                 'url' => $url,
                 'alt' => $alt,
+                'link' => $link,
                 'is_primary' => $is_primary,
-                'extra' => $extra
+                'title' => $title,
+                'subtitle' => $subtitle,
+                'description' => $description
             ]);
 
             $category = Category::find($request->category_id);
