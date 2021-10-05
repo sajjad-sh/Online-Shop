@@ -79,4 +79,12 @@ class Product extends Model
     {
         return $this->belongsToMany(PrimarySpecificationValue::class, 'product_spec', 'product_id', 'spec_id')->withTimestamps();
     }
+
+    public static function calculateDiscount($type, $amount, $price)
+    {
+        if ($type == 0)
+            return $price - ($amount/100 * $price);
+
+        return $price - $amount;
+    }
 }
