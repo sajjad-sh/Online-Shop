@@ -4,12 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use App\Models\Category;
+use App\Models\Image;
 use App\Models\PrimarySpecificationTitle;
 use App\Models\PrimarySpecificationValue;
 use App\Models\Product;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -49,7 +52,6 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
-
         $special_specifications = json_encode(
             array_combine($request->validated()['s_titles'], $request->validated()['s_values'])
         );
@@ -66,10 +68,55 @@ class ProductController extends Controller
 
         $product->amazing()->associate($request->validated()['amazing_id']);
 
-        $product->save();
-
         foreach ($request->validated()['p_values'] as $p_value)
             $product->primary_specification_values()->attach($p_value);
+
+        if ($request->hasFile('file')) {
+            $image = $request->file('file');
+
+            $name = time() . '-' . $image->getClientOriginalName();
+            $path = $image->storeAs("/public/products/prd-$product->id", $name);
+
+            $url = Storage::url($path);
+            $alt = $request->alt;
+
+            if (empty($alt))
+                $alt = $image->getClientOriginalName();
+
+            $image = new Image([
+                'url' => $url,
+                'alt' => $alt,
+                'is_primary' => 1,
+            ]);
+
+            $product->images()->save($image);
+        }
+
+
+        if ($request->hasFile('files')) {
+            $images = $request->file('files');
+
+            foreach ($images as $image) {
+                $name = time() . '-' . $image->getClientOriginalName();
+                $path = $image->storeAs("/public/products/prd-$product->id", $name);
+
+                $url = Storage::url($path);
+                $alt = $request->alt;
+
+                if (empty($alt))
+                    $alt = $image->getClientOriginalName();
+
+                $image = new Image([
+                    'url' => $url,
+                    'alt' => $alt,
+                    'is_primary' => 0,
+                ]);
+
+                $product->images()->save($image);
+            }
+        }
+
+        $product->save();
 
         return redirect()->route('admin.shop.products.index');
     }
