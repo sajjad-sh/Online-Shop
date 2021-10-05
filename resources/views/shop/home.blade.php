@@ -216,168 +216,285 @@
                 <a href="home.blade.php"><img src="img/logo/logo.png" alt=""></a>
               </div>
               <div class="header-category d-none d-lg-block">
-                <a href="#" class="cat-toggle"><i class="fas fa-bars"></i>همه دسته بندیها<i
+                <a href="/categories/main" class="cat-toggle"><i class="fas fa-bars"></i>همه دسته بندیها<i
                     class="fas fa-angle-down"></i></a>
+
                 <ul class="category-menu">
-                  <li class="menu-item-has-children"><a href="shop.html"><i
-                        class="flaticon-groceries"></i> مواد غذایی و یخ زده</a>
-                    <ul class="megamenu">
-                      <li class="sub-column-item"><a href="shop.html">مواد غذایی و یخ زده</a>
-                        <ul>
-                          <li><a href="shop.html">کلم بروکلی ارگانیک</a></li>
-                          <li><a href="shop.html">گردو</a></li>
-                          <li><a href="shop.html">مت نارنجی</a></li>
-                          <li><a href="shop.html">سیب زمینی فرانسه</a></li>
+                @foreach($categories as $category)
+                  @if($category->parent_id === 0 and \App\Models\Category::hasChildren($category))
+                      <li class="menu-item-has-children">
+                        <a href="/categories/{{$category->slug}}">
+                          <i class="flaticon-groceries"></i>{{$category->name}}
+                        </a>
+                        <ul class="megamenu">
+
+
+                          @foreach($category->childrens as $children)
+                            <li class="sub-column-item">
+                              <a href="shop.html">
+                                {{$children->name}}
+                              </a>
+                              <ul>
+
+                                @foreach($children->childrens as $subchildren)
+                                  <li>
+                                    <a href="shop.html">
+                                      {{$subchildren->name}}
+                                    </a>
+                                  </li>
+                                @endforeach
+
+
+
+
+{{--                                <li><a href="shop.html">گردو</a></li>--}}
+{{--                                <li><a href="shop.html">مت نارنجی</a></li>--}}
+{{--                                <li><a href="shop.html">سیب زمینی فرانسه</a></li>--}}
+                              </ul>
+                            </li>
+
+                          @endforeach
+{{--                          <li class="sub-column-item"><a href="shop.html">مواد غذایی و یخ زده</a>--}}
+{{--                            <ul>--}}
+{{--                              <li><a href="shop.html">کلم بروکلی ارگانیک</a></li>--}}
+{{--                              <li><a href="shop.html">گردو</a></li>--}}
+{{--                              <li><a href="shop.html">مت نارنجی</a></li>--}}
+{{--                              <li><a href="shop.html">سیب زمینی فرانسه</a></li>--}}
+{{--                            </ul>--}}
+{{--                          </li>--}}
+
+
+{{--                          <li class="sub-column-item">--}}
+{{--                            <a href="shop.html">--}}
+{{--                              میوه های تازه ارگانیک--}}
+{{--                            </a>--}}
+{{--                            <ul>--}}
+{{--                              <li><a href="shop.html">هندوانه</a></li>--}}
+{{--                              <li><a href="shop.html">انگور سیاه</a></li>--}}
+{{--                              <li><a href="shop.html">لبنیات چمنزار</a></li>--}}
+{{--                              <li><a href="shop.html">کلم بروکلی ارگانیک</a></li>--}}
+{{--                            </ul>--}}
+{{--                          </li>--}}
+{{--                          <li class="sub-column-item"><a href="shop.html">نان و نانوایی تازه</a>--}}
+{{--                            <ul>--}}
+{{--                              <li><a href="shop.html">کلم بروکلی ارگانیک</a></li>--}}
+{{--                              <li><a href="shop.html">گردو</a></li>--}}
+{{--                              <li><a href="shop.html">مت نارنجی</a></li>--}}
+{{--                              <li><a href="shop.html">سیب زمینی فرانسه</a></li>--}}
+{{--                            </ul>--}}
+{{--                          </li>--}}
+{{--                          <li class="sub-column-item"><a href="shop.html">گوشت تازه ارگانیک</a>--}}
+{{--                            <ul>--}}
+{{--                              <li><a href="shop.html">هندوانه</a></li>--}}
+{{--                              <li><a href="shop.html">انگور سیاه</a></li>--}}
+{{--                              <li><a href="shop.html">لبنیات چمنزار</a></li>--}}
+{{--                              <li><a href="shop.html">کلم بروکلی ارگانیک</a></li>--}}
+{{--                            </ul>--}}
+{{--                          </li>--}}
+{{--                          <li class="sub-column-item"><a href="shop.html">میوه خشک ارگانیک</a>--}}
+{{--                            <ul>--}}
+{{--                              <li><a href="shop.html">هندوانه</a></li>--}}
+{{--                              <li><a href="shop.html">انگور سیاه</a></li>--}}
+{{--                              <li><a href="shop.html">لبنیات چمنزار</a></li>--}}
+{{--                              <li><a href="shop.html">کلم بروکلی ارگانیک</a></li>--}}
+{{--                            </ul>--}}
+{{--                          </li>--}}
+{{--                          <li class="sub-column-item"><a href="shop.html">سایر غذاهای ارگانیک</a>--}}
+{{--                            <ul>--}}
+{{--                              <li class="mega-menu-banner"><a href="shop.html"><img--}}
+{{--                                    src="img/images/megamenu_banner.jpg" alt=""></a></li>--}}
+{{--                            </ul>--}}
+{{--                          </li>--}}
                         </ul>
                       </li>
-                      <li class="sub-column-item"><a href="shop.html">میوه های تازه ارگانیک</a>
-                        <ul>
-                          <li><a href="shop.html">هندوانه</a></li>
-                          <li><a href="shop.html">انگور سیاه</a></li>
-                          <li><a href="shop.html">لبنیات چمنزار</a></li>
-                          <li><a href="shop.html">کلم بروکلی ارگانیک</a></li>
-                        </ul>
+                  @elseif($category->parent_id === 0 && !\App\Models\Category::hasChildren($category))
+                      <li>
+                        <a href="/categories/{{$category->slug}}">
+                          <i class="flaticon-cherry"></i>{{$category->name}}
+                        </a>
                       </li>
-                      <li class="sub-column-item"><a href="shop.html">نان و نانوایی تازه</a>
-                        <ul>
-                          <li><a href="shop.html">کلم بروکلی ارگانیک</a></li>
-                          <li><a href="shop.html">گردو</a></li>
-                          <li><a href="shop.html">مت نارنجی</a></li>
-                          <li><a href="shop.html">سیب زمینی فرانسه</a></li>
-                        </ul>
-                      </li>
-                      <li class="sub-column-item"><a href="shop.html">گوشت تازه ارگانیک</a>
-                        <ul>
-                          <li><a href="shop.html">هندوانه</a></li>
-                          <li><a href="shop.html">انگور سیاه</a></li>
-                          <li><a href="shop.html">لبنیات چمنزار</a></li>
-                          <li><a href="shop.html">کلم بروکلی ارگانیک</a></li>
-                        </ul>
-                      </li>
-                      <li class="sub-column-item"><a href="shop.html">میوه خشک ارگانیک</a>
-                        <ul>
-                          <li><a href="shop.html">هندوانه</a></li>
-                          <li><a href="shop.html">انگور سیاه</a></li>
-                          <li><a href="shop.html">لبنیات چمنزار</a></li>
-                          <li><a href="shop.html">کلم بروکلی ارگانیک</a></li>
-                        </ul>
-                      </li>
-                      <li class="sub-column-item"><a href="shop.html">سایر غذاهای ارگانیک</a>
-                        <ul>
-                          <li class="mega-menu-banner"><a href="shop.html"><img
-                                src="img/images/megamenu_banner.jpg" alt=""></a></li>
-                        </ul>
-                      </li>
-                    </ul>
-                  </li>
-                  <li><a href="shop.html"><i class="flaticon-cherry"></i> میوه های تازه</a></li>
-                  <li><a href="shop.html"><i class="flaticon-fish"></i> ماهی تازه</a></li>
-                  <li class="menu-item-has-children"><a href="shop.html"><i
-                        class="flaticon-hazelnut"></i> آجیل تازه</a>
-                    <ul class="megamenu">
-                      <li class="sub-column-item"><a href="shop.html">مواد غذایی و یخ زده</a>
-                        <ul>
-                          <li><a href="shop.html">کلم بروکلی ارگانیک</a></li>
-                          <li><a href="shop.html">گردو</a></li>
-                          <li><a href="shop.html">مت نارنجی</a></li>
-                          <li><a href="shop.html">سیب زمینی فرانسه</a></li>
-                        </ul>
-                      </li>
-                      <li class="sub-column-item"><a href="shop.html">میوه های تازه ارگانیک</a>
-                        <ul>
-                          <li><a href="shop.html">کلم بروکلی ارگانیک</a></li>
-                          <li><a href="shop.html">گردو</a></li>
-                          <li><a href="shop.html">مت نارنجی</a></li>
-                          <li><a href="shop.html">سیب زمینی فرانسه</a></li>
-                        </ul>
-                      </li>
-                      <li class="sub-column-item"><a href="shop.html">نان و نانوایی تازه</a>
-                        <ul>
-                          <li><a href="shop.html">کلم بروکلی ارگانیک</a></li>
-                          <li><a href="shop.html">گردو</a></li>
-                          <li><a href="shop.html">مت نارنجی</a></li>
-                          <li><a href="shop.html">سیب زمینی فرانسه</a></li>
-                        </ul>
-                      </li>
-                      <li class="sub-column-item"><a href="shop.html">گوشت تازه ارگانیک</a>
-                        <ul>
-                          <li><a href="shop.html">کلم بروکلی ارگانیک</a></li>
-                          <li><a href="shop.html">گردو</a></li>
-                          <li><a href="shop.html">مت نارنجی</a></li>
-                          <li><a href="shop.html">سیب زمینی فرانسه</a></li>
-                        </ul>
-                      </li>
-                      <li class="sub-column-item"><a href="shop.html">میوه خشک ارگانیک</a>
-                        <ul>
-                          <li><a href="shop.html">کلم بروکلی ارگانیک</a></li>
-                          <li><a href="shop.html">گردو</a></li>
-                          <li><a href="shop.html">مت نارنجی</a></li>
-                          <li><a href="shop.html">سیب زمینی فرانسه</a></li>
-                        </ul>
-                      </li>
-                      <li class="sub-column-item"><a href="shop.html">سایر غذاهای ارگانیک</a>
-                        <ul>
-                          <li class="mega-menu-banner"><a href="shop.html"><img
-                                src="img/images/megamenu_banner02.jpg" alt=""></a></li>
-                        </ul>
-                      </li>
-                    </ul>
-                  </li>
-                  <li><a href="shop.html"><i class="flaticon-meat"></i> گوشت تازه</a></li>
-                  <li class="menu-item-has-children"><a href="shop.html"><i
-                        class="flaticon-cupcake"></i> نان و نانوایی</a>
-                    <ul class="megamenu">
-                      <li class="sub-column-item"><a href="shop.html">مواد غذایی و یخ زده</a>
-                        <ul>
-                          <li><a href="shop.html">کلم بروکلی ارگانیک</a></li>
-                          <li><a href="shop.html">گردو</a></li>
-                          <li><a href="shop.html">مت نارنجی</a></li>
-                          <li><a href="shop.html">سیب زمینی فرانسه</a></li>
-                        </ul>
-                      </li>
-                      <li class="sub-column-item"><a href="shop.html">میوه های تازه ارگانیک</a>
-                        <ul>
-                          <li><a href="shop.html">کلم بروکلی ارگانیک</a></li>
-                          <li><a href="shop.html">گردو</a></li>
-                          <li><a href="shop.html">مت نارنجی</a></li>
-                          <li><a href="shop.html">سیب زمینی فرانسه</a></li>
-                        </ul>
-                      </li>
-                      <li class="sub-column-item"><a href="shop.html">نان و نانوایی تازه</a>
-                        <ul>
-                          <li><a href="shop.html">کلم بروکلی ارگانیک</a></li>
-                          <li><a href="shop.html">گردو</a></li>
-                          <li><a href="shop.html">مت نارنجی</a></li>
-                          <li><a href="shop.html">سیب زمینی فرانسه</a></li>
-                        </ul>
-                      </li>
-                      <li class="sub-column-item"><a href="shop.html">گوشت تازه ارگانیک</a>
-                        <ul>
-                          <li><a href="shop.html">کلم بروکلی ارگانیک</a></li>
-                          <li><a href="shop.html">گردو</a></li>
-                          <li><a href="shop.html">مت نارنجی</a></li>
-                          <li><a href="shop.html">سیب زمینی فرانسه</a></li>
-                        </ul>
-                      </li>
-                      <li class="sub-column-item"><a href="shop.html">میوه خشک ارگانیک</a>
-                        <ul>
-                          <li><a href="shop.html">کلم بروکلی ارگانیک</a></li>
-                          <li><a href="shop.html">گردو</a></li>
-                          <li><a href="shop.html">مت نارنجی</a></li>
-                          <li><a href="shop.html">سیب زمینی فرانسه</a></li>
-                        </ul>
-                      </li>
-                      <li class="sub-column-item"><a href="shop.html">سایر غذاهای ارگانیک</a>
-                        <ul>
-                          <li class="mega-menu-banner"><a href="shop.html"><img
-                                src="img/images/megamenu_banner.jpg" alt=""></a></li>
-                        </ul>
-                      </li>
-                    </ul>
-                  </li>
-                  <li><a href="shop.html"><i class="flaticon-broccoli"></i> سبزیجات</a></li>
-                  <li><a href="shop.html"><i class="flaticon-pop-corn-1"></i> ذرت بو داده</a></li>
-                  <li><a href="shop.html"><i class="flaticon-nut"></i> میوه خشک شده</a></li>
+                  @endif
+                  @endforeach
+
+{{--                  --}}
+{{--                  --}}
+{{--                  --}}
+{{--                  --}}
+{{--                  --}}
+{{--                  <li class="menu-item-has-children"><a href="shop.html"><i--}}
+{{--                        class="flaticon-groceries"></i> مواد غذایی و یخ زده</a>--}}
+{{--                    <ul class="megamenu">--}}
+{{--                      <li class="sub-column-item"><a href="shop.html">مواد غذایی و یخ زده</a>--}}
+{{--                        <ul>--}}
+{{--                          <li><a href="shop.html">کلم بروکلی ارگانیک</a></li>--}}
+{{--                          <li><a href="shop.html">گردو</a></li>--}}
+{{--                          <li><a href="shop.html">مت نارنجی</a></li>--}}
+{{--                          <li><a href="shop.html">سیب زمینی فرانسه</a></li>--}}
+{{--                        </ul>--}}
+{{--                      </li>--}}
+{{--                      <li class="sub-column-item"><a href="shop.html">میوه های تازه ارگانیک</a>--}}
+{{--                        <ul>--}}
+{{--                          <li><a href="shop.html">هندوانه</a></li>--}}
+{{--                          <li><a href="shop.html">انگور سیاه</a></li>--}}
+{{--                          <li><a href="shop.html">لبنیات چمنزار</a></li>--}}
+{{--                          <li><a href="shop.html">کلم بروکلی ارگانیک</a></li>--}}
+{{--                        </ul>--}}
+{{--                      </li>--}}
+{{--                      <li class="sub-column-item"><a href="shop.html">نان و نانوایی تازه</a>--}}
+{{--                        <ul>--}}
+{{--                          <li><a href="shop.html">کلم بروکلی ارگانیک</a></li>--}}
+{{--                          <li><a href="shop.html">گردو</a></li>--}}
+{{--                          <li><a href="shop.html">مت نارنجی</a></li>--}}
+{{--                          <li><a href="shop.html">سیب زمینی فرانسه</a></li>--}}
+{{--                        </ul>--}}
+{{--                      </li>--}}
+{{--                      <li class="sub-column-item"><a href="shop.html">گوشت تازه ارگانیک</a>--}}
+{{--                        <ul>--}}
+{{--                          <li><a href="shop.html">هندوانه</a></li>--}}
+{{--                          <li><a href="shop.html">انگور سیاه</a></li>--}}
+{{--                          <li><a href="shop.html">لبنیات چمنزار</a></li>--}}
+{{--                          <li><a href="shop.html">کلم بروکلی ارگانیک</a></li>--}}
+{{--                        </ul>--}}
+{{--                      </li>--}}
+{{--                      <li class="sub-column-item"><a href="shop.html">میوه خشک ارگانیک</a>--}}
+{{--                        <ul>--}}
+{{--                          <li><a href="shop.html">هندوانه</a></li>--}}
+{{--                          <li><a href="shop.html">انگور سیاه</a></li>--}}
+{{--                          <li><a href="shop.html">لبنیات چمنزار</a></li>--}}
+{{--                          <li><a href="shop.html">کلم بروکلی ارگانیک</a></li>--}}
+{{--                        </ul>--}}
+{{--                      </li>--}}
+{{--                      <li class="sub-column-item"><a href="shop.html">سایر غذاهای ارگانیک</a>--}}
+{{--                        <ul>--}}
+{{--                          <li class="mega-menu-banner"><a href="shop.html"><img--}}
+{{--                                src="img/images/megamenu_banner.jpg" alt=""></a></li>--}}
+{{--                        </ul>--}}
+{{--                      </li>--}}
+{{--                    </ul>--}}
+{{--                  </li>--}}
+
+{{--                  <li><a href="shop.html"><i class="flaticon-cherry"></i> میوه های تازه</a></li>--}}
+
+
+
+{{--                  <li><a href="shop.html"><i class="flaticon-fish"></i> ماهی تازه</a></li>--}}
+
+
+
+{{--                  <li class="menu-item-has-children"><a href="shop.html"><i--}}
+{{--                        class="flaticon-hazelnut"></i> آجیل تازه</a>--}}
+{{--                    <ul class="megamenu">--}}
+{{--                      <li class="sub-column-item"><a href="shop.html">مواد غذایی و یخ زده</a>--}}
+{{--                        <ul>--}}
+{{--                          <li><a href="shop.html">کلم بروکلی ارگانیک</a></li>--}}
+{{--                          <li><a href="shop.html">گردو</a></li>--}}
+{{--                          <li><a href="shop.html">مت نارنجی</a></li>--}}
+{{--                          <li><a href="shop.html">سیب زمینی فرانسه</a></li>--}}
+{{--                        </ul>--}}
+{{--                      </li>--}}
+{{--                      <li class="sub-column-item"><a href="shop.html">میوه های تازه ارگانیک</a>--}}
+{{--                        <ul>--}}
+{{--                          <li><a href="shop.html">کلم بروکلی ارگانیک</a></li>--}}
+{{--                          <li><a href="shop.html">گردو</a></li>--}}
+{{--                          <li><a href="shop.html">مت نارنجی</a></li>--}}
+{{--                          <li><a href="shop.html">سیب زمینی فرانسه</a></li>--}}
+{{--                        </ul>--}}
+{{--                      </li>--}}
+{{--                      <li class="sub-column-item"><a href="shop.html">نان و نانوایی تازه</a>--}}
+{{--                        <ul>--}}
+{{--                          <li><a href="shop.html">کلم بروکلی ارگانیک</a></li>--}}
+{{--                          <li><a href="shop.html">گردو</a></li>--}}
+{{--                          <li><a href="shop.html">مت نارنجی</a></li>--}}
+{{--                          <li><a href="shop.html">سیب زمینی فرانسه</a></li>--}}
+{{--                        </ul>--}}
+{{--                      </li>--}}
+{{--                      <li class="sub-column-item"><a href="shop.html">گوشت تازه ارگانیک</a>--}}
+{{--                        <ul>--}}
+{{--                          <li><a href="shop.html">کلم بروکلی ارگانیک</a></li>--}}
+{{--                          <li><a href="shop.html">گردو</a></li>--}}
+{{--                          <li><a href="shop.html">مت نارنجی</a></li>--}}
+{{--                          <li><a href="shop.html">سیب زمینی فرانسه</a></li>--}}
+{{--                        </ul>--}}
+{{--                      </li>--}}
+{{--                      <li class="sub-column-item"><a href="shop.html">میوه خشک ارگانیک</a>--}}
+{{--                        <ul>--}}
+{{--                          <li><a href="shop.html">کلم بروکلی ارگانیک</a></li>--}}
+{{--                          <li><a href="shop.html">گردو</a></li>--}}
+{{--                          <li><a href="shop.html">مت نارنجی</a></li>--}}
+{{--                          <li><a href="shop.html">سیب زمینی فرانسه</a></li>--}}
+{{--                        </ul>--}}
+{{--                      </li>--}}
+{{--                      <li class="sub-column-item"><a href="shop.html">سایر غذاهای ارگانیک</a>--}}
+{{--                        <ul>--}}
+{{--                          <li class="mega-menu-banner"><a href="shop.html"><img--}}
+{{--                                src="img/images/megamenu_banner02.jpg" alt=""></a></li>--}}
+{{--                        </ul>--}}
+{{--                      </li>--}}
+{{--                    </ul>--}}
+{{--                  </li>--}}
+
+
+{{--                  <li><a href="shop.html"><i class="flaticon-meat"></i> گوشت تازه</a></li>--}}
+
+
+{{--                  <li class="menu-item-has-children"><a href="shop.html"><i--}}
+{{--                        class="flaticon-cupcake"></i> نان و نانوایی</a>--}}
+{{--                    <ul class="megamenu">--}}
+{{--                      <li class="sub-column-item"><a href="shop.html">مواد غذایی و یخ زده</a>--}}
+{{--                        <ul>--}}
+{{--                          <li><a href="shop.html">کلم بروکلی ارگانیک</a></li>--}}
+{{--                          <li><a href="shop.html">گردو</a></li>--}}
+{{--                          <li><a href="shop.html">مت نارنجی</a></li>--}}
+{{--                          <li><a href="shop.html">سیب زمینی فرانسه</a></li>--}}
+{{--                        </ul>--}}
+{{--                      </li>--}}
+{{--                      <li class="sub-column-item"><a href="shop.html">میوه های تازه ارگانیک</a>--}}
+{{--                        <ul>--}}
+{{--                          <li><a href="shop.html">کلم بروکلی ارگانیک</a></li>--}}
+{{--                          <li><a href="shop.html">گردو</a></li>--}}
+{{--                          <li><a href="shop.html">مت نارنجی</a></li>--}}
+{{--                          <li><a href="shop.html">سیب زمینی فرانسه</a></li>--}}
+{{--                        </ul>--}}
+{{--                      </li>--}}
+{{--                      <li class="sub-column-item"><a href="shop.html">نان و نانوایی تازه</a>--}}
+{{--                        <ul>--}}
+{{--                          <li><a href="shop.html">کلم بروکلی ارگانیک</a></li>--}}
+{{--                          <li><a href="shop.html">گردو</a></li>--}}
+{{--                          <li><a href="shop.html">مت نارنجی</a></li>--}}
+{{--                          <li><a href="shop.html">سیب زمینی فرانسه</a></li>--}}
+{{--                        </ul>--}}
+{{--                      </li>--}}
+{{--                      <li class="sub-column-item"><a href="shop.html">گوشت تازه ارگانیک</a>--}}
+{{--                        <ul>--}}
+{{--                          <li><a href="shop.html">کلم بروکلی ارگانیک</a></li>--}}
+{{--                          <li><a href="shop.html">گردو</a></li>--}}
+{{--                          <li><a href="shop.html">مت نارنجی</a></li>--}}
+{{--                          <li><a href="shop.html">سیب زمینی فرانسه</a></li>--}}
+{{--                        </ul>--}}
+{{--                      </li>--}}
+{{--                      <li class="sub-column-item"><a href="shop.html">میوه خشک ارگانیک</a>--}}
+{{--                        <ul>--}}
+{{--                          <li><a href="shop.html">کلم بروکلی ارگانیک</a></li>--}}
+{{--                          <li><a href="shop.html">گردو</a></li>--}}
+{{--                          <li><a href="shop.html">مت نارنجی</a></li>--}}
+{{--                          <li><a href="shop.html">سیب زمینی فرانسه</a></li>--}}
+{{--                        </ul>--}}
+{{--                      </li>--}}
+{{--                      <li class="sub-column-item"><a href="shop.html">سایر غذاهای ارگانیک</a>--}}
+{{--                        <ul>--}}
+{{--                          <li class="mega-menu-banner"><a href="shop.html"><img--}}
+{{--                                src="img/images/megamenu_banner.jpg" alt=""></a></li>--}}
+{{--                        </ul>--}}
+{{--                      </li>--}}
+{{--                    </ul>--}}
+{{--                  </li>--}}
+
+
+{{--                  <li><a href="shop.html"><i class="flaticon-broccoli"></i> سبزیجات</a></li>--}}
+
+{{--                  <li><a href="shop.html"><i class="flaticon-pop-corn-1"></i> ذرت بو داده</a></li>--}}
+
+{{--                  <li><a href="shop.html"><i class="flaticon-nut"></i> میوه خشک شده</a></li>--}}
                 </ul>
               </div>
               <div class="navbar-wrap main-menu d-none d-lg-flex">
@@ -456,34 +573,29 @@
     <div class="container custom-container">
       <div class="row">
         <div class="col-7">
+
+          <!-- TODO: Create Slider Model and store title, subtitle, description and button attributes -->
           <div class="slider-active">
-            <div class="single-slider slider-bg" data-background="{{\Illuminate\Support\Facades\Storage::url('')}}">
-              <div class="slider-content">
-                <h5 class="sub-title" data-animation="fadeInUp" data-delay=".2s">پیشنهاد ویژه !</h5>
-                <h2 class="title" data-animation="fadeInUp" data-delay=".4s">غذای ارگانیک</h2>
-                <p data-animation="fadeInUp" data-delay=".6s">فقط تا امروز 50٪ تخفیف بگیرید</p>
-                <a href="shop.html" class="btn rounded-btn" data-animation="fadeInUp" data-delay=".8s">الان
-                  بخرید</a>
+
+            @forelse($home_sliders as $home_slider)
+              <div class="single-slider slider-bg" data-background="{{\Illuminate\Support\Facades\URL::to($home_slider->url)}}">
+                <div class="slider-content">
+                  <h5 class="sub-title" data-animation="fadeInUp" data-delay=".2s">
+                    {{$home_slider->subtitle}}
+                  </h5>
+                  <h2 class="title" data-animation="fadeInUp" data-delay=".4s">
+                    {{$home_slider->title}}
+                  </h2>
+                  <p data-animation="fadeInUp" data-delay=".6s">
+                    {{$home_slider->description}}
+                  </p>
+                  <a href="{{\Illuminate\Support\Facades\URL::to($home_slider->link)}}" class="btn rounded-btn" data-animation="fadeInUp" data-delay=".8s">الان
+                    بخرید</a>
+                </div>
               </div>
-            </div>
-            <div class="single-slider slider-bg" data-background="img/slider/slider_bg01.jpg">
-              <div class="slider-content">
-                <h5 class="sub-title" data-animation="fadeInUp" data-delay=".2s">پیشنهاد ویژه !</h5>
-                <h2 class="title" data-animation="fadeInUp" data-delay=".4s">غذای ارگانیک</h2>
-                <p data-animation="fadeInUp" data-delay=".6s">فقط تا امروز 50٪ تخفیف بگیرید</p>
-                <a href="shop.html" class="btn rounded-btn" data-animation="fadeInUp" data-delay=".8s">الان
-                  بخرید</a>
-              </div>
-            </div>
-            <div class="single-slider slider-bg" data-background="img/slider/slider_bg01.jpg">
-              <div class="slider-content">
-                <h5 class="sub-title" data-animation="fadeInUp" data-delay=".2s">پیشنهاد ویژه !</h5>
-                <h2 class="title" data-animation="fadeInUp" data-delay=".4s">غذای ارگانیک</h2>
-                <p data-animation="fadeInUp" data-delay=".6s">فقط تا امروز 50٪ تخفیف بگیرید</p>
-                <a href="shop.html" class="btn rounded-btn" data-animation="fadeInUp" data-delay=".8s">الان
-                  بخرید</a>
-              </div>
-            </div>
+            @empty
+              No Slider
+            @endforelse
           </div>
         </div>
         <div class="col-3">
@@ -632,18 +744,35 @@
         <div class="col-xl-7 col-lg-9">
           <div class="best-deal-top-wrap">
             <div class="bd-section-title">
-              <h3 class="title">بهترین تخفیفات <span>این هفته!</span></h3>
-              <p>یک دستیار مجازی محصولات را از لیست شما جمع آوری می کند</p>
+              <h3 class="title"> محصولات شگفت‌انگیز &nbsp;<span>این ماه!</span></h3>
+              <p>هر هفته تخفیفات عالی برای محصولات برتر</p>
             </div>
-            <div class="coming-time" data-countdown="2025/10/20"></div>
+
+            <!-- Timer -->
+            <div class="coming-time" data-countdown="2021/10/30"></div>
           </div>
         </div>
       </div>
       <div class="row best-deal-active">
-        <div class="col-xl-3">
+        @foreach($amazing_products as $amazing_product)
+          @php
+            $type = $amazing_product->amazing->type;
+            $amount = $amazing_product->amazing->amount;
+            $price = $amazing_product->price;
+            $final_price = \App\Models\Product::calculateDiscount($type, $amount, $price);
+            $primary_image = null;
+
+            foreach ($amazing_product->images as $image) {
+                if($image->is_primary == 1)
+                    $primary_image = $image;
+            }
+          @endphp
+          <div class="col-xl-3">
           <div class="best-deal-item">
             <div class="best-deal-thumb">
-              <a href="single-product.blade.php"><img src="img/product/best_deal_product01.png" alt=""></a>
+              <a href="{{\Illuminate\Support\Facades\URL::to("product/prd-$amazing_product->id")}}">
+                <img src="{{\Illuminate\Support\Facades\URL::to($primary_image->url)}}" alt="{{$primary_image->alt}}">
+              </a>
             </div>
             <div class="best-deal-content">
               <div class="main-content">
@@ -654,97 +783,21 @@
                   <i class="fas fa-star"></i>
                   <i class="fas fa-star"></i>
                 </div>
-                <h4 class="title"><a href="single-product.blade.php">گردو گانیک</a></h4>
-                <p>هر 1 کیلو - 1.500 تومان</p>
+                <h4 class="title">
+                  <a href="single-product.blade.php">
+                    {{$amazing_product->title}}
+                  </a>
+                </h4>
+                <p>
+                    <del class="text-danger">{{$price}}</del>
+                  </p>
+                <p>{{number_format($final_price)}}&nbsp; تومان</p>
               </div>
               <div class="icon"><a href="single-product.blade.php">+</a></div>
             </div>
           </div>
         </div>
-        <div class="col-xl-3">
-          <div class="best-deal-item">
-            <div class="best-deal-thumb">
-              <a href="single-product.blade.php"><img src="img/product/best_deal_product02.png" alt=""></a>
-            </div>
-            <div class="best-deal-content">
-              <div class="main-content">
-                <div class="rating">
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                </div>
-                <h4 class="title"><a href="single-product.blade.php">آجیل تازه</a></h4>
-                <p>هر 1 کیلو - 1.500 تومان</p>
-              </div>
-              <div class="icon"><a href="single-product.blade.php">+</a></div>
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-3">
-          <div class="best-deal-item">
-            <div class="best-deal-thumb">
-              <a href="single-product.blade.php"><img src="img/product/best_deal_product03.png" alt=""></a>
-            </div>
-            <div class="best-deal-content">
-              <div class="main-content">
-                <div class="rating">
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                </div>
-                <h4 class="title"><a href="single-product.blade.php">آجیل تازه</a></h4>
-                <p>هر 1 کیلو - 1.500 تومان</p>
-              </div>
-              <div class="icon"><a href="single-product.blade.php">+</a></div>
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-3">
-          <div class="best-deal-item">
-            <div class="best-deal-thumb">
-              <a href="single-product.blade.php"><img src="img/product/best_deal_product04.png" alt=""></a>
-            </div>
-            <div class="best-deal-content">
-              <div class="main-content">
-                <div class="rating">
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                </div>
-                <h4 class="title"><a href="single-product.blade.php">آجیل تازه</a></h4>
-                <p>هر 1 کیلو - 1.500 تومان</p>
-              </div>
-              <div class="icon"><a href="single-product.blade.php">+</a></div>
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-3">
-          <div class="best-deal-item">
-            <div class="best-deal-thumb">
-              <a href="single-product.blade.php"><img src="img/product/best_deal_product05.png" alt=""></a>
-            </div>
-            <div class="best-deal-content">
-              <div class="main-content">
-                <div class="rating">
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                </div>
-                <h4 class="title"><a href="single-product.blade.php">آجیل تازه</a></h4>
-                <p>هر 1 کیلو - 1.500 تومان</p>
-              </div>
-              <div class="icon"><a href="single-product.blade.php">+</a></div>
-            </div>
-          </div>
-        </div>
+        @endforeach
       </div>
     </div>
   </section>
