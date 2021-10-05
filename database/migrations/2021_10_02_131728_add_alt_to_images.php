@@ -14,7 +14,7 @@ class AddAltToImages extends Migration
     public function up()
     {
         Schema::table('images', function (Blueprint $table) {
-            $table->text('alt')->after('url')->default('');
+            $table->text('alt')->after('url');
         });
     }
 
