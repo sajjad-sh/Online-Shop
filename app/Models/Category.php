@@ -34,15 +34,15 @@ class Category extends Model
      */
     public function parent()
     {
-        return $this->belongsTo('Category', 'parent_id');
+        return $this->belongsTo(Category::class, 'parent_id');
     }
 
     /**
      * Get the sub-categories for the category.
      */
-    public function children()
+    public function childrens()
     {
-        return $this->hasMany('Category', 'parent_id');
+        return $this->hasMany(Category::class, 'parent_id');
     }
 
     /**
@@ -56,5 +56,26 @@ class Category extends Model
     public function setSlugAttribute($value)
     {
         $this->attributes['slug'] = strtolower($value);
+    }
+
+
+    /**
+     * Get count of the Category parent(s).
+     */
+    public static function countCategoryParent(Category $category)
+    {
+        $count = -1;
+
+        do {
+            $category = $category->parent;
+            $count++;
+        } while (!is_null($category));
+
+        return $count;
+    }
+
+    public static function hasChildren(Category $category)
+    {
+        return ($category->childrens()->get()->first()) ? true : false;
     }
 }
