@@ -17,7 +17,12 @@ class CreateImagesTable extends Migration
             $table->id();
 
             $table->text('url');
+            $table->text('alt');
+            $table->text('link')->nullable();
             $table->boolean('is_primary')->default(false);
+            $table->string('title')->nullable();
+            $table->string('subtitle')->nullable();
+            $table->text('description')->nullable();
 
             $table->timestamps();
         });
