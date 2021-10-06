@@ -1882,6 +1882,8 @@ label {
 .category-thumb img {
 	display: inline-block;
 	border-radius: 50%;
+    width: 120px;
+    height: 120px;
 }
 
 .category-content .title {
