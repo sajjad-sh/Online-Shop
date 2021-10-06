@@ -162,4 +162,11 @@ Route::get('/test', function () {
 //        $product->slug = 'prd-'.$pid;
 //        $product->save();
 //    }
+
+
+//    $product = \App\Models\Product::find(76);
+//    dd($product->attributes);
+
+
+
 });
