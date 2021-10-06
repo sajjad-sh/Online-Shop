@@ -31,15 +31,6 @@ class ProductFactory extends Factory
             'visits' => $this->faker->numberBetween(0, 10),
             'rate' => $this->faker->numberBetween(0, 10),
             'review' => $this->faker->realText(),
-            'special_specifications' => json_encode([
-                "نوع پنل" => "ips",
-                "فرکانس" => "۵ هرتز",
-                "نوع پردازنده" => "core i7",
-                "اندازه صفحه نمایش" => "15.6 اینچ",
-                "ظرفیت حافظه RAM" => "هشت گیگابایت",
-                "نوع حافظه RAM" => "DDR4"
-            ]),
-
             'status' => $this->faker->numberBetween(0, 4),
         ];
     }
