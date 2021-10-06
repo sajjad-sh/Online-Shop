@@ -6,8 +6,8 @@ use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Models\Category;
 use App\Models\Image;
-use App\Models\PrimarySpecificationTitle;
-use App\Models\PrimarySpecificationValue;
+use App\Models\AttTitle;
+use App\Models\AttValue;
 use App\Models\Product;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -36,8 +36,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $titles = PrimarySpecificationTitle::all();
-        $values = PrimarySpecificationValue::all();
+        $titles = AttTitle::all();
+        $values = AttValue::all();
 
         return view('admin.shop.products.create')
             ->with('titles', $titles)
@@ -69,7 +69,7 @@ class ProductController extends Controller
         $product->amazing()->associate($request->validated()['amazing_id']);
 
         foreach ($request->validated()['p_values'] as $p_value)
-            $product->primary_specification_values()->attach($p_value);
+            $product->att_values()->attach($p_value);
 
         if ($request->hasFile('file')) {
             $image = $request->file('file');
@@ -125,11 +125,12 @@ class ProductController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
+     * @return View
      */
     public function show(Product $product)
     {
-        //
+        return view('shop.single-product')
+            ->with('product', $product);
     }
 
     /**
@@ -141,8 +142,8 @@ class ProductController extends Controller
     public function edit(Product $product)
     {
 
-        $all_titles = PrimarySpecificationTitle::all();
-        $all_values = PrimarySpecificationValue::all();
+        $all_titles = AttTitle::all();
+        $all_values = AttValue::all();
 
 //        foreach ($all_titles as $title)
 //            echo $title->title.'<br>';
@@ -159,7 +160,7 @@ class ProductController extends Controller
 //        dd($product->primary_specification_values[1]->primary_specification_title->id);
 
 //        foreach ($product->primary_specification_values as $p_value) {
-//            $p_values[] = $p_value->pivot->spec_id;
+//            $p_values[] = $p_value->pivot->att_id;
 //            $p_titles[] = $p_value->primary_specification_title->id;
 //        }
 
@@ -186,8 +187,8 @@ class ProductController extends Controller
      */
     public function update(UpdateProductRequest $request, Product $product)
     {
-        foreach ($request->primary_specification_values as $primary_specification_value)
-            $product->primary_specification_values()->attach($primary_specification_value);
+        foreach ($request->att_values as $att_value)
+            $product->att_values()->attach($att_value);
 
         if ($product->update($request->validated()))
             return redirect()->route('admin.shop.products.index');
