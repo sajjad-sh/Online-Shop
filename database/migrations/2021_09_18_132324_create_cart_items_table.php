@@ -25,7 +25,7 @@ class CreateCartItemsTable extends Migration
             $table->foreignIdFor(Product::class);
             $table->unsignedInteger('quantity')->default(1);
             $table->unsignedDouble('price')->default(0);
-            $table->json('multiple_selection_specifications')->nullable();
+            $table->json('multi_atts')->nullable();
 
             $table->timestamps();
         });
