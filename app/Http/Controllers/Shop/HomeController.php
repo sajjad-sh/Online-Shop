@@ -16,7 +16,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $categories = Category::all();
         $root_category = Category::find(0);
 
         $home_sliders = array();
@@ -28,7 +27,6 @@ class HomeController extends Controller
 
         return view('shop.home')
             ->with('home_sliders', $home_sliders)
-            ->with('amazing_products', $amazing_products)
-            ->with('categories', $categories);
+            ->with('amazing_products', $amazing_products);
     }
 }
