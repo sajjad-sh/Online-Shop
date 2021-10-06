@@ -18,6 +18,7 @@ class Category extends Model
         'slug',
         'name',
         'description',
+        'image',
         'icon'
     ];
 
@@ -58,7 +59,6 @@ class Category extends Model
         $this->attributes['slug'] = strtolower($value);
     }
 
-
     /**
      * Get count of the Category parent(s).
      */
@@ -77,5 +77,13 @@ class Category extends Model
     public static function hasChildren(Category $category)
     {
         return ($category->childrens()->get()->first()) ? true : false;
+    }
+
+    /**
+     * Get count of the Category parent(s).
+     */
+    public static function countCategoryProducts(Category $category)
+    {
+        return $category->loadCount('products')->products_count;
     }
 }
