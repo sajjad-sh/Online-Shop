@@ -1,11 +1,10 @@
 <?php
 
-use App\Models\PrimarySpecificationTitle;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePrimarySpecificationValuesTable extends Migration
+class CreateAttTitlesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,11 +13,12 @@ class CreatePrimarySpecificationValuesTable extends Migration
      */
     public function up()
     {
-        Schema::create('primary_specification_values', function (Blueprint $table) {
+        Schema::create('att_titles', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('spec_title_id')->references('id')->on('primary_specification_titles');
-            $table->string('value');
+            $table->string('key');
+            $table->string('title');
+            $table->boolean('is_primary');
 
             $table->timestamps();
         });
@@ -31,6 +31,6 @@ class CreatePrimarySpecificationValuesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('primary_specification_values');
+        Schema::dropIfExists('att_titles');
     }
 }

@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\PrimarySpecificationTitle;
+use App\Models\AttTitle;
 use Illuminate\Database\Seeder;
 
-class PrimarySpecificationTitleSeeder extends Seeder
+class AttTitleSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,37 +14,37 @@ class PrimarySpecificationTitleSeeder extends Seeder
      */
     public function run()
     {
-        PrimarySpecificationTitle::create([
+        AttTitle::create([
             'key' => 'color',
             'title' => 'رنگ',
         ]);
 
-        PrimarySpecificationTitle::create([
+        AttTitle::create([
             'key' => 'weight',
             'title' => 'وزن',
         ]);
 
-        PrimarySpecificationTitle::create([
+        AttTitle::create([
             'key' => 'dimensions',
             'title' => 'ابعاد',
         ]);
 
-        PrimarySpecificationTitle::create([
+        AttTitle::create([
             'key' => 'size',
             'title' => 'سایز',
         ]);
 
-        PrimarySpecificationTitle::create([
+        AttTitle::create([
             'key' => 'material',
             'title' => 'جنس',
         ]);
 
-        PrimarySpecificationTitle::create([
+        AttTitle::create([
             'key' => 'brand',
             'title' => 'برند',
         ]);
 
-        PrimarySpecificationTitle::create([
+        AttTitle::create([
             'key' => 'warranty',
             'title' => 'گارانتی',
         ]);

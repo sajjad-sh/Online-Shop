@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'پنل مدیریت - ایجاد خصوصیت-مقدار')
+@section('title', 'پنل مدیریت - ویرایش محصول')
 
 @section('content')
   <div class="page-wrapper">
@@ -12,11 +12,12 @@
       <div class="row">
         <div class="col">
           <div class="card">
-            <form class="form-horizontal" method="post" action="{{route('admin.shop.specifications.store')}}">
+            <form class="form-horizontal" method="post"
+                  action="{{route('admin.shop.attributes.storeTitle')}}">
               @csrf
               <div class="card-body">
 
-                <h4 class="card-title">Add Specification</h4>
+                <h4 class="card-title">Create New Specification Title</h4>
                 <br>
                 @if ($errors->any())
                   @foreach ($errors->all() as $error)
@@ -24,23 +25,14 @@
                   @endforeach
                 @endif
                 <div class="form-group row">
-                  <br>
-
                   <div class="col-sm-9">
-                    <label for="title">عنوان</label>
-                    <select name="spec_title_id" id="spec_title_id" class="form-select" aria-label="Default select example">
-                      <option selected>Select</option>
-                      @foreach($primary_specification_titles as $primary_specification_title)
-                        <option value="{{$primary_specification_title->id}}">
-                          {{$primary_specification_title->title}}
-                        </option>
-                      @endforeach
-                    </select>
+                    <label for="key">کلید</label>
+                    <input type="text" class="form-control" id="key" name="key" placeholder="کلید" />
                   </div>
 
                   <div class="col-sm-9">
-                    <label for="value">مقدار</label>
-                    <input type="text" class="form-control" id="value" name="value" placeholder="مقدار"/>
+                    <label for="title">عنوان</label>
+                    <input type="text" class="form-control" id="title" name="title" placeholder="عنوان" />
                   </div>
                 </div>
               </div>

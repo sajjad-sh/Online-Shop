@@ -11,7 +11,7 @@
     <ul class="list-group">
         <li class="list-group-item"><a href="{{route('admin.shop.products.index')}}">لیست محصولات</a></li>
         <li class="list-group-item"><a href="{{route('admin.shop.categories.index')}}">لیست دسته‌بندی‌ها</a></li>
-        <li class="list-group-item"><a href="{{route('admin.shop.specifications.index')}}">لیست خصوصیات</a></li>
+        <li class="list-group-item"><a href="{{route('admin.shop.attributes.index')}}">لیست خصوصیات</a></li>
         <li class="list-group-item"><a href="{{route('admin.shop.comments.index')}}">لیست نظرات</a></li>
     </ul>
 

@@ -5,7 +5,7 @@
 @section('content')
 
   <h1 style="display: inline-block;">فهرست عناوین خصوصیات</h1>
-  <a href="{{route('admin.shop.specifications.createTitle')}}" class="btn btn-primary" style="display: inline-block">افزودن</a>
+  <a href="{{route('admin.shop.attributes.createTitle')}}" class="btn btn-primary" style="display: inline-block">افزودن</a>
 
   <table class="table table-striped">
     <thead>
@@ -17,15 +17,15 @@
     </tr>
     </thead>
     <tbody>
-    @foreach($primary_specification_titles as $primary_specification_title)
+    @foreach($att_titles as $att_title)
         <tr>
-          <th scope="row">{{$primary_specification_title->id}}</th>
-          <td>{{$primary_specification_title->key}}</td>
-          <td>{{$primary_specification_title->title}}</td>
+          <th scope="row">{{$att_title->id}}</th>
+          <td>{{$att_title->key}}</td>
+          <td>{{$att_title->title}}</td>
 
           <td style="text-align: center;">
               &nbsp;
-            <form action="{{route('admin.shop.specifications.destroyTitle', $primary_specification_title)}}" method="post" style="display: inline-block">
+            <form action="{{route('admin.shop.attributes.destroyTitle', $att_title)}}" method="post" style="display: inline-block">
               @csrf
               @method('DELETE')
 
@@ -43,7 +43,7 @@
   </table>
 
   <h1 style="display: inline-block;">فهرست خصوصیت - مقدار</h1>
-  <a href="{{route('admin.shop.specifications.create')}}" class="btn btn-primary" style="display: inline-block">افزودن</a>
+  <a href="{{route('admin.shop.attributes.create')}}" class="btn btn-primary" style="display: inline-block">افزودن</a>
 
   <table class="table table-striped">
     <thead>
@@ -56,20 +56,20 @@
     </tr>
     </thead>
     <tbody>
-    @foreach($primary_specification_titles as $primary_specification_title)
-      @foreach($primary_specification_title->primary_specification_values as $primary_specification_value)
+    @foreach($att_titles as $att_title)
+      @foreach($att_title->att_values as $att_value)
         <tr>
-          <th scope="row">{{$primary_specification_value->id}}</th>
-          <td>{{$primary_specification_title->key}}</td>
-          <td>{{$primary_specification_title->title}}</td>
-          <td>{{$primary_specification_value->value}}</td>
+          <th scope="row">{{$att_value->id}}</th>
+          <td>{{$att_title->key}}</td>
+          <td>{{$att_title->title}}</td>
+          <td>{{$att_value->value}}</td>
 
           <td style="text-align: center;">
-            <a href="{{route('admin.shop.specifications.edit', $primary_specification_value)}}" style="color: black;"><i
+            <a href="{{route('admin.shop.attributes.edit', $att_value)}}" style="color: black;"><i
                 class="fas fa-edit"></i></a> &nbsp;
 
             &nbsp;
-            <form action="{{route('admin.shop.specifications.destroy', $primary_specification_value->id)}}" method="post"
+            <form action="{{route('admin.shop.attributes.destroy', $att_value->id)}}" method="post"
                   style="display: inline-block">
               @csrf
               @method('DELETE')

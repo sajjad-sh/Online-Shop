@@ -2,17 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\PrimarySpecificationTitle;
+use App\Models\AttTitle;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class PrimarySpecificationTitleFactory extends Factory
+class AttTitleFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = PrimarySpecificationTitle::class;
+    protected $model = AttTitle::class;
 
     /**
      * Define the model's default state.

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 # TODO: Change Specification to Attriubute
-class PrimarySpecificationTitle extends Model
+class AttTitle extends Model
 {
     use HasFactory;
 
@@ -21,10 +21,10 @@ class PrimarySpecificationTitle extends Model
     ];
 
     /**
-     * Get the primary_specification_values for the primary_specification_titles.
+     * Get the att_values for the att_titles.
      */
-    public function primary_specification_values()
+    public function att_values()
     {
-        return $this->hasMany(PrimarySpecificationValue::class, 'spec_title_id');
+        return $this->hasMany(AttValue::class);
     }
 }

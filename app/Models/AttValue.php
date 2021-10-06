@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class PrimarySpecificationValue extends Model
+class AttValue extends Model
 {
     use HasFactory;
 
@@ -19,18 +19,18 @@ class PrimarySpecificationValue extends Model
     ];
 
     /**
-     * The products that belong to the primary_specification_value.
+     * The products that belong to the att_value.
      */
     public function products()
     {
-        return $this->belongsToMany(Product::class, 'product_spec', 'spec_id', 'product_id')->withTimestamps();
+        return $this->belongsToMany(Product::class, 'att_product', 'att_id', 'product_id')->withTimestamps();
     }
 
     /**
      * Get the user that owns the address.
      */
-    public function primary_specification_title()
+    public function att_title()
     {
-        return $this->belongsTo(PrimarySpecificationTitle::class, 'spec_title_id');
+        return $this->belongsTo(AttTitle::class);
     }
 }

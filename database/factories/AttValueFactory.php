@@ -2,17 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\PrimarySpecificationValue;
+use App\Models\AttValue;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class PrimarySpecificationValueFactory extends Factory
+class AttValueFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = PrimarySpecificationValueFactory::class;
+    protected $model = AttValueFactory::class;
 
     /**
      * Define the model's default state.

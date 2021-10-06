@@ -13,12 +13,12 @@
         <div class="col">
           <div class="card">
             <form class="form-horizontal" method="post"
-                  action="{{route('admin.shop.specifications.update', $primary_specification_value)}}">
+                  action="{{route('admin.shop.attributes.update', $att_value)}}">
               @csrf
               @method('PATCH')
               <div class="card-body">
 
-                <h4 class="card-title">Edit Specification #{{$primary_specification_value->id}}</h4>
+                <h4 class="card-title">Edit Specification #{{$att_value->id}}</h4>
                 <br>
                 @if ($errors->any())
                   @foreach ($errors->all() as $error)
@@ -31,7 +31,7 @@
                   <div class="col-sm-9">
                     <label for="value">مقدار</label>
                     <input type="text" class="form-control" id="value" name="value" placeholder="مقدار"
-                           value="{{$primary_specification_value->value}}"/>
+                           value="{{$att_value->value}}"/>
                   </div>
                 </div>
               </div>

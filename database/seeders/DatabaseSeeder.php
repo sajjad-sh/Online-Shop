@@ -20,8 +20,8 @@ class DatabaseSeeder extends Seeder
             DiscountSeeder::class,
             OrderSeeder::class,
             PaymentSeeder::class,
-            PrimarySpecificationTitleSeeder::class,
-            PrimarySpecificationValueSeeder::class,
+            AttTitleSeeder::class,
+            AttValueSeeder::class,
             ProductSeeder::class,
             UserSeeder::class,
         ]);

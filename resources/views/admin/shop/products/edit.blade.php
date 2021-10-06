@@ -52,11 +52,11 @@
                     <label for="p_titles[]">مشخصات فنی ثابت</label>
 
                   <button type="button" class="btn btn-default" onclick="addSelectField()">+</button>
-                  @foreach($product->primary_specification_values as $p_value)
+                  @foreach($product->att_values as $p_value)
                       <br>
                       <select class="form-select primary_spec" aria-label="Default select example" name="p_titles[]"
                               id="p_titles[]">
-                        <option value="{{$p_value->primary_specification_title->id}}" selected>{{$p_value->primary_specification_title->title}}</option>
+                        <option value="{{$p_value->att_title->id}}" selected>{{$p_value->att_title->title}}</option>
 
                         @foreach($all_titles as $all_title)
                           <option value="{{$all_title->id}}">
