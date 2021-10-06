@@ -8,7 +8,7 @@ use App\Http\Controllers\OrderByController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\Shop\HomeController;
-use App\Http\Controllers\SpecificationController;
+use App\Http\Controllers\AttController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
@@ -42,6 +42,8 @@ use Illuminate\Support\Facades\Storage;
 
 require __DIR__ . '/auth.php';
 
+Route::get('/', [HomeController::class, 'index']);
+
 Route::name('admin.')->prefix('admin')
     ->group(function () {
         Route::view('', 'admin.index')
@@ -60,7 +62,9 @@ Route::name('admin.')->prefix('admin')
                 Route::view('', 'admin.shop.index')
                     ->name('index');
 
-                Route::resource('products', ProductController::class);
+                Route::resource('products', ProductController::class)
+                    ->except('show');
+
                 Route::name('products.')->prefix('products')
                     ->group(function () {
                         Route::delete('{product}/delete', [ProductController::class, 'delete'])
@@ -71,14 +75,14 @@ Route::name('admin.')->prefix('admin')
 
                 Route::resource('categories', CategoryController::class);
 
-                Route::resource('specifications', SpecificationController::class);
-                Route::name('specifications.')->prefix('specifications')
+                Route::resource('attributes', AttController::class);
+                Route::name('attributes.')->prefix('attributes')
                     ->group(function () {
-                        Route::get('create/t', [SpecificationController::class, 'createTitle'])
+                        Route::get('create/t', [AttController::class, 'createTitle'])
                             ->name('createTitle');
-                        Route::post('t', [SpecificationController::class, 'storeTitle'])
+                        Route::post('t', [AttController::class, 'storeTitle'])
                             ->name('storeTitle');
-                        Route::delete('{specification}/t', [SpecificationController::class, 'destroyTitle'])
+                        Route::delete('{attributes}/t', [AttController::class, 'destroyTitle'])
                             ->name('destroyTitle');
                     });
 
@@ -105,14 +109,12 @@ Route::get('/profile', function () {
     return view('user.profile');
 })->middleware(['auth'])->name('profile');
 
-Route::get('/', [HomeController::class, 'index']);
+
+Route::get('/product/{product:slug}', [ProductController::class, 'show']);
 
 
 
 
-
-
-//Route::view('/', 'shop.home');
 
 Route::get('/test', function () {
 //    Storage::disk('local')->put('example.txt', 'Contents');
@@ -139,20 +141,25 @@ Route::get('/test', function () {
 
 //    dd(\App\Models\Category::countCategoryParent(\App\Models\Category::find(12)));
 
-    $c = \App\Models\Category::find(1);
-    (\App\Models\Category::hasChildren($c));
+//    $c = \App\Models\Category::find(1);
+//    (\App\Models\Category::hasChildren($c));
 //
 //    dd(\App\Models\Category::hasChildren($c));
 
+//    $category = \App\Models\Category::find(3);
+//    (\App\Models\Category::countCategoryProducts($category));
 
 
 
+//    $categories = \App\Models\Category::all();
+//    dd($categories[1]->image);
 
 
-
-
-
-
-
-
+//    $products = \App\Models\Product::all();
+//
+//    foreach ($products as $product) {
+//        $pid = $product->id;
+//        $product->slug = 'prd-'.$pid;
+//        $product->save();
+//    }
 });
