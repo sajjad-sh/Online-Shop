@@ -37,7 +37,9 @@ use Illuminate\Support\Facades\Storage;
  * spotty
  * verta
  * switty alert
- *
+ * auto slug
+ * jscolor
+ * rich text editor
  */
 
 require __DIR__ . '/auth.php';
@@ -167,6 +169,19 @@ Route::get('/test', function () {
 //    $product = \App\Models\Product::find(76);
 //    dd($product->attributes);
 
+//    $product = \App\Models\Product::find(76);
+//    dd($product->related_products);
+//    dd($product->categories->toarray());
 
+//    $products = \App\Models\Product::query()->find([76, 77, 78]);
+//    dd($products);
+
+//    dd($product->primary_attributes);
+
+//    dd($product->selective_attributes_name);
+
+//    dd(__('numbers.0'));
+
+    return best();
 
 });
