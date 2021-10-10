@@ -78,13 +78,13 @@ class Product extends Model
      */
     public function att_values()
     {
-        return $this->belongsToMany(AttValue::class, 'att_product', 'product_id', 'att_id')->withTimestamps();
+        return $this->belongsToMany(AttValue::class, 'att_product', 'product_id', 'att_id')->withTimestamps()->withPivot('type');
     }
 
     public static function calculateDiscount($type, $amount, $price)
     {
         if ($type == 0)
-            return $price - ($amount/100 * $price);
+            return $price - ($amount / 100 * $price);
 
         return $price - $amount;
     }
@@ -97,7 +97,7 @@ class Product extends Model
     public function getBrandAttribute()
     {
         foreach ($this->att_values as $att_value) {
-            if(AttTitle::find($att_value->att_title_id)->key == 'brand')
+            if (AttTitle::find($att_value->att_title_id)->key == 'brand')
                 return $att_value->value;
         }
         return false;
@@ -111,7 +111,7 @@ class Product extends Model
         $titles = [];
         $values = [];
         foreach ($this->att_values as $att_value) {
-            if (AttTitle::find($att_value->att_title_id)->key == 'brand' or AttTitle::find($att_value->att_title_id)->is_primary == 0)
+            if (AttTitle::find($att_value->att_title_id)->key == 'brand' or $att_value->pivot->type == 0 or $att_value->pivot->type == 3)
                 continue;
             $titles[] = AttTitle::find($att_value->att_title_id)->title;
             $values[] = $att_value->value;
@@ -128,12 +128,68 @@ class Product extends Model
         $titles = [];
         $values = [];
         foreach ($this->att_values as $att_value) {
-            if (AttTitle::find($att_value->att_title_id)->key == 'brand' or AttTitle::find($att_value->att_title_id)->is_primary == 1)
+            if (AttTitle::find($att_value->att_title_id)->key == 'brand' or $att_value->pivot->type == 1 or $att_value->pivot->type == 3)
                 continue;
             $titles[] = AttTitle::find($att_value->att_title_id)->title;
             $values[] = $att_value->value;
         }
 
         return array_combine($titles, $values);
+    }
+
+    /**
+     * get count of specific product comments.
+     */
+    public function getCountCommentsAttribute()
+    {
+        return $this->loadCount('comments')->comments_count;
+    }
+
+    /**
+     * get count of specific product comments.
+     */
+    public function getRelatedProductsAttribute()
+    {
+        $products = array();
+//        $result = array();
+        foreach ($this->categories as $category)
+            $products[] = $category->products;
+
+//        foreach ($products as $product)
+//            $result[] = array_merge($product);
+
+
+        return $products;
+    }
+
+    /**
+     * get count of specific product comments.
+     */
+    public function getSelectiveAttributesIdAttribute()
+    {
+        $selective_attributes = array();
+
+        foreach ($this->att_values as $att_value) {
+            if ($att_value->pivot->type == 3) {
+                $att_title_id = AttTitle::find($att_value->att_title_id)->id;
+                $selective_attributes[$att_title_id][] = $att_value->id;
+            }
+        }
+
+        return $selective_attributes;
+    }
+
+    public function getSelectiveAttributesNameAttribute()
+    {
+        $selective_attributes = array();
+
+        foreach ($this->att_values as $att_value) {
+            if ($att_value->pivot->type == 3) {
+                $att_title = AttTitle::find($att_value->att_title_id)->title;
+                $selective_attributes[$att_title][] = $att_value->value;
+            }
+        }
+
+        return $selective_attributes;
     }
 }
