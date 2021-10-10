@@ -20,6 +20,7 @@ class CreateProductSpecTable extends Migration
 
             $table->foreignIdFor(Product::class);
             $table->foreignIdFor(AttValue::class);
+            $table->boolean('is_primary')->default(0);
 
             $table->timestamps();
         });
