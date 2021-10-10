@@ -35,8 +35,8 @@
                 @foreach($product->images as $image)
                   <li class="nav-item" role="presentation">
                     <a class="nav-link @if($image->is_primary) active &nbsp; @endif" id="item-{{$image->id}}-tab"
-                       data-toggle="tab" href="#item-{{$image->id}}" role="tab"
-                       aria-controls="item-{{$image->id}}" aria-selected="@if($image->is_primary) true &nbsp; @endif">
+                      data-toggle="tab" href="#item-{{$image->id}}" role="tab"
+                      aria-controls="item-{{$image->id}}" aria-selected="@if($image->is_primary) true &nbsp; @endif">
                       <img
                         src="{{\Illuminate\Support\Facades\URL::to("$image->url")}}"
                         style="width: 91px; height: 98px;" alt="">
@@ -50,7 +50,7 @@
 
                 @foreach($product->images as $image)
                   <div class="tab-pane fade @if($image->is_primary) show active &nbsp; @endif" id="item-{{$image->id}}"
-                       role="tabpanel" aria-labelledby="item-{{$image->id}}-tab">
+                    role="tabpanel" aria-labelledby="item-{{$image->id}}-tab">
                     <div class="shop-details-img">
                       <img src="{{\Illuminate\Support\Facades\URL::to("$image->url")}}" style="width: 604px; height: 579px;" alt="">
                     </div>
@@ -62,8 +62,6 @@
         </div>
         <div class="col-lg-5">
           <div class="shop-details-content">
-
-
 
 
             <h4 class="title">
@@ -83,8 +81,9 @@
                     <i class="fas fa-star"></i>
                     <i class="fas fa-star"></i>
                   </div>
-                  <span>دیدگاه</span>
+                  <span>4.3 (5955)</span>
                 </li>
+                <li>تعداد نظرات: <span>{{$product->count_comments}}</span></li>
                 <li>کد محصول : <span>{{strtoupper($product->slug)}}</span></li>
               </ul>
             </div>
@@ -106,6 +105,24 @@
                 @endforeach
               </ul>
             </div>
+
+            @php $counter = 0 @endphp
+            <div class="form-group">
+              @foreach($product->selective_attributes_name as $name => $array)
+                @php $counter++; @endphp
+                <label for="selective-attributes-name-{{__("numbers.$counter")}}">{{$name}}: </label>
+                <select class="form-control" id="selective-attributes-name-{{__("numbers.$counter")}}" style="display: inline-block; width: fit-content; height: 100%;">
+
+                  @foreach($array as $index => $value)
+                    <option>{{$value}}</option>
+                  @endforeach
+
+                </select>
+                &nbsp;&nbsp;
+              @endforeach
+            </div>
+
+            <br>
             <div class="shop-perched-info">
               <div class="sd-cart-wrap">
                 <form action="#">
@@ -125,9 +142,11 @@
                 </li>
                 <li>
                   <span>دسته بندیها :</span>
-                  <a href="#">بستنی,</a>
-                  <a href="#">ویتامین,</a>
-                  <a href="#">طبیعی,</a>
+                  @foreach($product->categories as $category)
+                    <a href="{{\Illuminate\Support\Facades\URL::to('category/'.$category->slug)}}">{{$category->name}}</a>
+                    @if(!$loop->last)|@endif
+                  @endforeach
+
                 </li>
               </ul>
             </div>
@@ -140,40 +159,41 @@
             <ul class="nav nav-tabs" id="myTabTwo" role="tablist">
               <li class="nav-item">
                 <a class="nav-link active" id="details-tab" data-toggle="tab" href="#details" role="tab"
-                   aria-controls="details" aria-selected="true">جزئیات محصول</a>
+                  aria-controls="details" aria-selected="true">نقد و بررسی</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" id="val-tab" data-toggle="tab" href="#val" role="tab" aria-controls="val"
-                   aria-selected="false">محصولات مشابه</a>
+                  aria-selected="false">مشخصات فنی</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" id="review-tab" data-toggle="tab" href="#review" role="tab" aria-controls="review"
-                   aria-selected="false">دیدگاه کاربران</a>
+                  aria-selected="false">دیدگاه کاربران</a>
               </li>
             </ul>
             <div class="tab-content" id="myTabContentTwo">
               <div class="tab-pane fade show active" id="details" role="tabpanel" aria-labelledby="details-tab">
                 <div class="product-desc-content">
-                  <h4 class="title">جزئیات محصول</h4>
+                  {{--                  <h4 class="title">جزئیات محصول</h4>--}}
+
+
                   <div class="row">
-                    <div class="col-xl-3 col-md-5">
-                      <div class="product-desc-img">
-                        <img src="{{asset('img/product/desc_img.jpg')}}" alt="">
-                      </div>
-                    </div>
+
                     <div class="col-xl-9 col-md-7">
-                      <h5 class="small-title">100% ویتامین طبیعی</h5>
-                      <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است.
-                        چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی
-                        مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد</p>
-                      <ul class="product-desc-list">
-                        <li>65٪ پلی ، 35٪ ابریشم</li>
-                        <li>شستشوی دستی سرد</li>
-                        <li>بسته شدن دکمه جلو مخفی با لهجه سوراخ کلید</li>
-                        <li>آستین های آستین دار دکمه ای</li>
-                        <li>ساخت نیمه شفاف سبک</li>
-                        <li>ساخته شده در ایالات متحده آمریکا</li>
-                      </ul>
+                      {!! $product->review !!}
+
+
+                      {{--                      <h5 class="small-title">100% ویتامین طبیعی</h5>--}}
+                      {{--                      <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است.--}}
+                      {{--                        چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی--}}
+                      {{--                        مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد</p>--}}
+                      {{--                      <ul class="product-desc-list">--}}
+                      {{--                        <li>65٪ پلی ، 35٪ ابریشم</li>--}}
+                      {{--                        <li>شستشوی دستی سرد</li>--}}
+                      {{--                        <li>بسته شدن دکمه جلو مخفی با لهجه سوراخ کلید</li>--}}
+                      {{--                        <li>آستین های آستین دار دکمه ای</li>--}}
+                      {{--                        <li>ساخت نیمه شفاف سبک</li>--}}
+                      {{--                        <li>ساخته شده در ایالات متحده آمریکا</li>--}}
+                      {{--                      </ul>--}}
                     </div>
                   </div>
                 </div>
@@ -184,50 +204,92 @@
                   <div class="row">
                     <div class="col-xl-3 col-md-5">
                       <div class="product-desc-img">
-                        <img src="{{asset('img/product/desc_img.jpg')}}" alt="">
                       </div>
                     </div>
                     <div class="col-xl-9 col-md-7">
-                      <h5 class="small-title">100% ویتامین طبیعی</h5>
-                      <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است.
-                        چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی
-                        مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد</p>
+                      <h5 class="small-title">مشخصات {{$product->fa_title}}</h5>
+                      <p>
+                        {{$product->en_title}}
+                      </p>
+                      <hr>
                       <ul class="product-desc-list">
-                        <li>65٪ پلی ، 35٪ ابریشم</li>
-                        <li>شستشوی دستی سرد</li>
-                        <li>بسته شدن دکمه جلو مخفی با لهجه سوراخ کلید</li>
-                        <li>آستین های آستین دار دکمه ای</li>
-                        <li>ساخت نیمه شفاف سبک</li>
-                        <li>ساخته شده در ایالات متحده آمریکا</li>
+                        @foreach($product->secondary_attributes as $key => $value)
+                          <li>
+                            <span style="font-weight: bold">{{$key}}: </span> {{$value}}
+                          </li>
+                        @endforeach
                       </ul>
                     </div>
                   </div>
                 </div>
               </div>
               <div class="tab-pane fade" id="review" role="tabpanel" aria-labelledby="review-tab">
-                <div class="product-desc-content">
-                  <h4 class="title">Product Details</h4>
-                  <div class="row">
-                    <div class="col-xl-3 col-md-5">
-                      <div class="product-desc-img">
-                        <img src="{{asset('img/product/desc_img.jpg')}}" alt="">
+                <div class="product-desc-content" style="font-size: 1rem!important;">
+
+                  <div class="d-flex justify-content-end row">
+                    <div class="col-10">
+                      <div class="d-flex flex-column comment-section">
+
+
+{{--                        //$product->comments()->orderBy('created_at', 'desc')->get()--}}
+                        @foreach($product->comments as $comment)
+                          <div>
+                            <div class="bg-white p-2">
+                              <div class="d-flex flex-column justify-content-start ml-2">
+
+                                <div class="d-flex flex-row user-info">
+                                  <span class="d-block font-weight-bold name">{{$comment->user->full_name}}</span>
+                                </div>
+                                <span class="date text-black-50" style="font-size: 12px">{{$comment->created_at}}</span>
+
+                              </div>
+
+                              <div class="mt-2">
+                                <p class="comment-text">
+                                  {{$comment->content}}
+                                </p>
+                              </div>
+                            </div>
+                            <div class="bg-white">
+                              <div class="d-flex flex-row fs-12" style="flex-direction: row-reverse!important;">
+                                <div class="like p-2 cursor"><i class="far fa-thumbs-up"></i></div>
+                                <div class="like p-2 cursor"><i class="far fa-thumbs-down"></i></div>
+                              </div>
+                            </div>
+                          </div>
+                        @endforeach
+
+
+
+                        <div class="bg-light p-2">
+                          <div class="d-flex flex-row align-items-start">
+                            <textarea class="form-control ml-1 shadow-none textarea" style="height: 150px;"></textarea>
+                          </div>
+                          <div class="mt-2 text-right">
+                            <button class="btn btn-primary" type="submit">ارسال دیدگاه</button>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                    <div class="col-xl-9 col-md-7">
-                      <h5 class="small-title">100% ویتامین طبیعی</h5>
-                      <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است.
-                        چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی
-                        مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد</p>
-                      <ul class="product-desc-list">
-                        <li>65٪ پلی ، 35٪ ابریشم</li>
-                        <li>شستشوی دستی سرد</li>
-                        <li>بسته شدن دکمه جلو مخفی با لهجه سوراخ کلید</li>
-                        <li>آستین های آستین دار دکمه ای</li>
-                        <li>ساخت نیمه شفاف سبک</li>
-                        <li>ساخته شده در ایالات متحده آمریکا</li>
-                      </ul>
-                    </div>
                   </div>
+
+                  {{--                  <h4 class="title">Product Details</h4>--}}
+                  {{--                  <div class="row">--}}
+                  {{--                    <div class="col-xl-9 col-md-7">--}}
+                  {{--                      <h5 class="small-title">100% ویتامین طبیعی</h5>--}}
+                  {{--                      <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است.--}}
+                  {{--                        چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی--}}
+                  {{--                        مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد</p>--}}
+                  {{--                      <ul class="product-desc-list">--}}
+                  {{--                        <li>65٪ پلی ، 35٪ ابریشم</li>--}}
+                  {{--                        <li>شستشوی دستی سرد</li>--}}
+                  {{--                        <li>بسته شدن دکمه جلو مخفی با لهجه سوراخ کلید</li>--}}
+                  {{--                        <li>آستین های آستین دار دکمه ای</li>--}}
+                  {{--                        <li>ساخت نیمه شفاف سبک</li>--}}
+                  {{--                        <li>ساخته شده در ایالات متحده آمریکا</li>--}}
+                  {{--                      </ul>--}}
+                  {{--                    </div>--}}
+                  {{--                  </div>--}}
                 </div>
               </div>
             </div>
@@ -277,6 +339,8 @@
       </div>
       <div class="best-sellers-products">
         <div class="row justify-content-center">
+
+
           <div class="col-3">
             <div class="sp-product-item mb-20">
               <div class="sp-product-thumb">
@@ -304,6 +368,8 @@
               </div>
             </div>
           </div>
+
+
           <div class="col-3">
             <div class="sp-product-item mb-20">
               <div class="sp-product-thumb">
