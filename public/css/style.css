@@ -2167,6 +2167,13 @@ label {
 	padding: 22px 25px 28px;
 }
 
+best-deal-item-amazing {
+    background: #f2f4f7;
+    border: 1px solid #ebebeb;
+    border-radius: 6px;
+    padding: 22px 25px 28px;
+}
+
 .best-deal-thumb {
 	text-align: center;
 	margin-bottom: 23px;
@@ -2357,6 +2364,28 @@ label {
 .sp-product-thumb {
 	position: relative;
 	padding: 32px 15px 0px;
+}
+
+sp-product-thumb-amazing {
+    position: relative;
+    padding: 32px 15px 0px;
+}
+
+sp-product-thumb-amazing .batch-amazing {
+    position: absolute;
+    top: 25px;
+    left: 15px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: 700;
+    background: var(--color-primary);
+    color: #fff;
+    padding: 6px 6px;
+    min-width: 45px;
+    text-align: center;
+    z-index: 1;
+    line-height: 1;
 }
 
 .sp-product-thumb a {
