@@ -22,7 +22,7 @@ class CreateCommentsTable extends Migration
             $table->foreignIdFor(Product::class);
             $table->text('content');
             $table->unsignedTinyInteger('is_verify');
-            $table->text('cancel_reason');
+            $table->text('cancel_reason')->nullable();
             $table->unsignedInteger('likes')->default(0);
             $table->unsignedInteger('dislikes')->default(0);
 
