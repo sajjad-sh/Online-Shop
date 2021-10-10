@@ -23,7 +23,7 @@ class AttValue extends Model
      */
     public function products()
     {
-        return $this->belongsToMany(Product::class, 'att_product', 'att_id', 'product_id')->withTimestamps();
+        return $this->belongsToMany(Product::class, 'att_product', 'att_id', 'product_id')->withTimestamps()->withPivot('type');
     }
 
     /**
