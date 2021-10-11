@@ -34,7 +34,7 @@
 
                 @foreach($product->images as $image)
                   <li class="nav-item" role="presentation">
-                    <a class="nav-link @if($image->is_primary) active &nbsp; @endif" id="item-{{$image->id}}-tab"
+                    <a class="nav-link {{$image->is_primary ? 'active' : ''}}" id="item-{{$image->id}}-tab"
                       data-toggle="tab" href="#item-{{$image->id}}" role="tab"
                       aria-controls="item-{{$image->id}}" aria-selected="@if($image->is_primary) true &nbsp; @endif">
                       <img
@@ -82,7 +82,7 @@
                     <i class="fas fa-star"></i>
                   </div>
                   <span>4.3 (5955)</span>
-                </li>
+                </li>P
                 <li>تعداد نظرات: <span>{{$product->count_comments}}</span></li>
                 <li>کد محصول : <span>{{strtoupper($product->slug)}}</span></li>
               </ul>

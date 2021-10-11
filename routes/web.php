@@ -40,6 +40,11 @@ use Illuminate\Support\Facades\Storage;
  * auto slug
  * jscolor
  * rich text editor
+ * -------------------
+ * amazing
+ * categories, icon, counts
+ * menu with cats
+ * single product view
  */
 
 require __DIR__ . '/auth.php';

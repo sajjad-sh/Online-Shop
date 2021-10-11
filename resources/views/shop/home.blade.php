@@ -154,6 +154,7 @@
         </div>
       </div>
       <div class="row best-deal-active">
+        <!-- TODO: limit -->
         @foreach($amazing_products as $amazing_product)
           @php
             $type = $amazing_product->amazing->type;
@@ -191,6 +192,7 @@
                   <p>
                     <del class="text-danger">{{$price}}</del>
                   </p>
+                  <!-- TODO: Custom directive -->
                   <p>{{number_format($final_price)}}&nbsp; تومان</p>
                 </div>
                 <div class="icon"><a href="single-product.blade.php">+</a></div>
