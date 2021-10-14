@@ -20,7 +20,7 @@ class DiscountController extends Controller
      */
     public function index()
     {
-        $discounts = Discount::all();
+        $discounts = Discount::paginate(15);
 
         return view('admin.discounts.index')
             ->with('discounts', $discounts);
@@ -47,7 +47,7 @@ class DiscountController extends Controller
     {
         Discount::create($request->validated());
 
-        return back();
+        return redirect()->route('admin.discounts.index');
     }
 
     /**
@@ -67,7 +67,7 @@ class DiscountController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Discount  $discount
-     * @return \Illuminate\Http\Response
+     * @return RedirectResponse
      */
 
     # TODO: Fix unique ignore
@@ -85,7 +85,7 @@ class DiscountController extends Controller
         if($validator)
             $discount->update($request->all());
 
-        return back();
+        return redirect()->route('admin.discounts.index');
     }
 
     /**
@@ -96,6 +96,8 @@ class DiscountController extends Controller
      */
     public function destroy(Discount $discount)
     {
-        //
+        $discount->delete();
+
+        return back();
     }
 }

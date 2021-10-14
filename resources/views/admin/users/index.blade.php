@@ -2,90 +2,120 @@
 
 @section('title', 'پنل مدیریت - فهرست کاربران')
 
-@section('content')
+@section('content-wrapper')
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="box">
+        <div class="box-header">
+          <br>
+          <h3 class="box-title">پنل مدیریت - فهرست کاربران</h3>
 
-  <h1>فهرست کاربران</h1><br>
-  <table class="table table-striped">
-    <thead>
-    <tr>
-      <th scope="col">شناسه</th>
-      <th scope="col">شناسه سبد خرید جاری</th>
-      <th scope="col">نام</th>
-      <th scope="col">نام خانوادگی</th>
-      <th scope="col">ایمیل</th>
-      <th scope="col">شماره تماس</th>
-      <th scope="col">نقش</th>
-      <th scope="col">آدرس‌ها</th>
-      <th scope="col">تاریخ عضویت</th>
-      <th scope="col">وضعیت</th>
-      <th scope="col">عملیات</th>
-    </tr>
-    </thead>
-    <tbody>
-    @foreach($users as $user)
-      <tr>
-        <th scope="row">{{$user->id}}</th>
-        <td>{{$user->cart_id}}</td>
-        <td>{{$user->first_name}}</td>
-        <td>{{$user->last_name}}</td>
-        <td>{{$user->email}}</td>
-        <td>{{$user->phone}}</td>
-        <td>{{$user->role}}</td>
-        <td>{{$user->addresses}}</td>
-        <td>{{$user->created_at}}</td>
-        <td>{{$user->deleted_at ?'بن':'فعال'}}</td>
+          <div class="box-tools">
+            <div class="input-group input-group-sm" style="width: 150px;">
+              <input type="text" name="table_search" class="form-control pull-right" placeholder="جستجو">
 
-        <!-- TODO: Fix modals -->
-        <!-- TODO: Add Forms to Components -->
-        <td style="text-align: center;">
-          @if($user->deleted_at)
-            <form action="{{route('admin.users.update', $user->id)}}" method="post"
-                  style="display: inline-block">
-              @csrf
-              @method('PATCH')
+              <div class="input-group-btn">
+                <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body table-responsive no-padding">
+          <table class="table table-hover" style=" margin: 34px 34px; width: 97%; ">
+            <tr>
+              <th>ردیف</th>
+              <th>نام و نام خانوادگی</th>
+              <th>شناسه کاربری</th>
+              <th>شناسه سبد خرید جاری</th>
+              <th>ایمیل</th>
+              <th>شماره تماس</th>
+              <th>نقش</th>
+              <th>نشانی‌ها</th>
+              <th>تاریخ عضویت</th>
+              <th>وضعیت</th>
+              <th>اقدامات</th>
+            </tr>
 
-              <button type="submit"
-                      style="color: black; background: none;	border: none; 	padding: 0;	font: inherit;	cursor: pointer;	outline: inherit; display: inline-block" data-bs-toggle="modal" data-bs-target="#active">
-                <i class="fas fa-check-square" title="فعال‌سازی"></i>
-              </button>
+            @foreach($users as $user)
+              <tr>
+                <th>{{ (($users->currentPage() - 1 ) * $users->perPage() ) + $loop->iteration }}</th>
+                <td>{{$user->full_name}}</td>
+                <td>{{$user->id}}</td>
+                <td>{{$user->cart_id}}</td>
+                <td>{{$user->email}}</td>
+                <td>{{$user->phone}}</td>
+                <td>{{$user->role}}</td>
+                <td>{{$user->addresses}}</td>
+                <td>{{$user->created_at}}</td>
+                <td>
+                  @if($user->deleted_at)
+                    <span class="label label-danger">مسدود</span>
+                  @else
+                    <span class="label label-success">فعال</span>
+                  @endif
+                </td>
+                <!-- TODO: Fix modals -->
+                <!-- TODO: Add Forms to Components -->
+                <td style="text-align: center;">
+                  @if($user->deleted_at)
+                    <form action="{{route('admin.users.update', $user->id)}}" method="post"
+                      style="display: inline-block">
+                      @csrf
+                      @method('PATCH')
 
-{{--              <x-alert id="active" title="هشدار" message="با انتخاب این گزینه کاربر بازیابی می‌شود. آیا مطمئنید ؟"/>--}}
+                      <button type="submit" class="btn btn-app">
+                        <i class="fa fa-toggle-on"></i> فعال‌سازی
+                      </button>
+                      <button type="submit"
+                        style="color: black; background: none;	border: none; 	padding: 0;	font: inherit;	cursor: pointer;	outline: inherit; display: inline-block" data-bs-toggle="modal" data-bs-target="#active">
+                        <i class="fas fa-check-square" title="فعال‌سازی" onclick="return confirm('آیا می‌خواهید این کاربر را فعال کنید ؟')"></i>
+                      </button>
 
-            </form>
+                      {{--              <x-alert id="active" title="هشدار" message="با انتخاب این گزینه کاربر بازیابی می‌شود. آیا مطمئنید ؟"/>--}}
 
-          @else
-            <form action="{{route('admin.users.destroy', $user)}}" method="post"
-                  style="display: inline-block">
-              @csrf
-              @method('DELETE')
-              <button type="submit"
-                      style="color: black; background: none;	border: none; 	padding: 0;	font: inherit;	cursor: pointer;	outline: inherit; display: inline-block" data-bs-toggle="modal" data-bs-target="#ban">
-                <i class="fas fa-ban" title="بن کردن"></i>
-              </button>
+                    </form>
 
-{{--              <x-alert id="ban" title="هشدار" message="با انتخاب این گزینه کاربر بن می‌شود. آیا مطمئنید ؟"/>--}}
+                  @else
+                    <form action="{{route('admin.users.destroy', $user)}}" method="post"
+                      style="display: inline-block">
+                      @csrf
+                      @method('DELETE')
 
-            </form>
-          @endif&nbsp;
+                      <button type="submit" class="btn btn-app" onclick="return confirm('آیا می‌خواهید این کاربر را مسدود کنید ؟')">
+                        <i class="fa fa-ban"></i> مسدودسازی
+                      </button>
+
+                      {{--              <x-alert id="ban" title="هشدار" message="با انتخاب این گزینه کاربر بن می‌شود. آیا مطمئنید ؟"/>--}}
+
+                    </form>
+                  @endif&nbsp;
 
 
-          <form action="{{route('admin.users.delete', $user)}}" method="post"
-                style="display: inline-block">
-            @csrf
-            @method('DELETE')
+                  <form action="{{route('admin.users.delete', $user)}}" method="post"
+                    style="display: inline-block">
+                    @csrf
+                    @method('DELETE')
 
-            <button type="submit"
-                    style="color: black; background: none;	border: none; 	padding: 0;	font: inherit;	cursor: pointer;	outline: inherit; display: inline-block" data-bs-toggle="modal" data-bs-target="#delete">
-              <i class="fas fa-trash" title="حذف دائم"></i>
-            </button>
+                    <button type="submit" class="btn btn-app" onclick="return confirm('آیا می‌خواهید این کاربر را برای همیشه حذف کنید ؟')">
+                      <i class="fa fa-trash"></i> حذف دائم
+                    </button>
 
-{{--            <x-alert id="delete" title="هشدار" message="با انتخاب این گزینه کاربر حذف می‌شود. آیا مطمئنید ؟"/>--}}
+                    {{--            <x-alert id="delete" title="هشدار" message="با انتخاب این گزینه کاربر حذف می‌شود. آیا مطمئنید ؟"/>--}}
 
-          </form>
-        </td>
-      </tr>
-    @endforeach
-    </tbody>
-  </table>
+                  </form>
+                </td>
+              </tr>
+            @endforeach
 
+          </table>
+          <div style="text-align: center">
+            {{ $users->links() }}
+          </div>
+        </div>
+        <!-- /.box-body -->
+      </div>
+      <!-- /.box -->
+    </div>
+  </div>
 @endsection

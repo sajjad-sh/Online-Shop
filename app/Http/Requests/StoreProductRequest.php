@@ -26,6 +26,8 @@ class StoreProductRequest extends FormRequest
         return [
             'fa_title' => 'required|min:3|max:255',
             'en_title' => 'required|min:3|max:255',
+            'slug' => ['required','min:2', 'max:50'],
+            'description' => 'required|min:3|max:500',
             'price' => 'integer',
             'inventory' => 'integer',
             'review' => '',

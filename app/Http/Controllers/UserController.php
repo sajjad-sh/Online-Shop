@@ -19,7 +19,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::withTrashed()->get();
+        $users = User::withTrashed()->paginate(15);
 
         # TODO: Add paginate feature
         return view('admin.users.index')

@@ -2,7 +2,7 @@
 
 @section('title', 'پنل مدیریت - ایجاد محصول جدید')
 
-@section('content')
+@section('content-wrapper')
   <div class="page-wrapper">
     <!-- ============================================================== -->
     <!-- Bread crumb and right sidebar toggle -->
@@ -37,6 +37,12 @@
                     <input type="text" class="form-control" id="en-title" name="en_title" placeholder="عنوان انگلیسی"
                     />
 
+                    <label for="slug">نشانک</label>
+                    <input type="text" class="form-control" id="slug" name="slug" placeholder="نشانک"/>
+
+                    <label for="description">شرح کوتاه</label>
+                    <textarea id="description" class="form-control" rows="20" name="description"> </textarea>
+
                     <label for="price">قیمت</label>
                     <input type="number" class="form-control" id="price" name="price" placeholder="قیمت"
                     />
@@ -49,14 +55,14 @@
                     <br>
                     <select class="form-select primary_spec" aria-label="Default select example" name="p_titles[]"
                             id="p_titles[]">
-                      <option selected>عنوان مشخصه فنی ثابت</option>
+                      <option value="null" selected>عنوان مشخصه فنی ثابت</option>
                       @foreach($titles as $title)
                         <option value="{{$title->id}}">{{$title->title}}</option>
                       @endforeach
                     </select>
                     <select class="form-select primary_spec" aria-label="Default select example" name="p_values[]"
                             id="p_values[]">
-                      <option selected>مقدار مشخصه فنی ثابت</option>
+                      <option value="null" selected>مقدار مشخصه فنی ثابت</option>
                       @foreach($values as $value)
                         <option value="{{$value->id}}">{{$value->value}}</option>
                       @endforeach

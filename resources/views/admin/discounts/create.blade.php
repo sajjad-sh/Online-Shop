@@ -2,7 +2,7 @@
 
 @section('title', 'پنل مدیریت - افزودن تخفیف')
 
-@section('content')
+@section('content-wrapper')
   <div class="page-wrapper">
     <!-- ============================================================== -->
     <!-- Bread crumb and right sidebar toggle -->

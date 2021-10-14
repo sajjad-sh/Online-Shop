@@ -15,7 +15,7 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        $payments = Payment::all();
+        $payments = Payment::paginate(15);
 
         return view('admin.payments.index')
             ->with('payments', $payments);

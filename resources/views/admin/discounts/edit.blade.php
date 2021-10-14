@@ -2,7 +2,7 @@
 
 @section('title', 'پنل مدیریت - افزودن تخفیف')
 
-@section('content')
+@section('content-wrapper')
   <div class="page-wrapper">
     <!-- ============================================================== -->
     <!-- Bread crumb and right sidebar toggle -->
@@ -41,9 +41,13 @@
                     <label for="type">نوع</label>
                     <select id="type" name="type" class="form-select" aria-label="Default select example">
                       <option value="{{$discount->type}}" selected>{{__("discount.type.$discount->type")}}</option>
-                      <option value="0">مبلغی</option>
-                      <option value="1">درصدی</option>
-                    </select> <br>
+                      @if($discount->type == 0)
+                        <option value="1">درصدی</option>
+                      @else
+                        <option value="0">مبلغی</option>
+                      @endif
+                    </select>
+                    <br>
 
                     <!-- TODO: New Field depend on value of previuos select tag -->
                     <label for="amount">مبلغ/درصد</label>

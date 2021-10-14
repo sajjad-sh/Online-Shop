@@ -2,7 +2,7 @@
 
 @section('title', 'پنل مدیریت - فهرست پرداخت‌ها')
 
-@section('content')
+@section('content-wrapper')
 
     <h1>فهرست پرداخت‌ها</h1><br>
     <table class="table table-striped">
@@ -34,5 +34,9 @@
         @endforeach
         </tbody>
     </table>
+    <div style="text-align: center">
+      {{ $payments->links() }}
+    </div>
+
 
 @endsection

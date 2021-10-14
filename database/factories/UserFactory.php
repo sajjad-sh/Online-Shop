@@ -25,6 +25,7 @@ class UserFactory extends Factory
     {
 
         return [
+            'cart_id' => $this->faker->lastName(),
             'first_name' => $this->faker->firstName(),
             'last_name' => $this->faker->lastName(),
             'email' => $this->faker->unique()->safeEmail(),

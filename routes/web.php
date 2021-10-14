@@ -183,10 +183,10 @@ Route::get('/test', function () {
 
 //    dd($product->primary_attributes);
 
-//    dd($product->selective_attributes_name);
+//    dd($product->selective_attributes);
 
 //    dd(__('numbers.0'));
 
-    return best();
+\App\Models\Product::getLastInsertedId();
 
 });

@@ -23,7 +23,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::withTrashed()->get();
+        $products = Product::withTrashed()->paginate(15);
 
         return view('admin.shop.products.index')
             ->with('products', $products);
@@ -59,17 +59,22 @@ class ProductController extends Controller
         $product = Product::create([
             'fa_title' => $request->validated()['fa_title'],
             'en_title' => $request->validated()['en_title'],
+            'slug' => $request->validated()['slug'],
+            'description' => $request->validated()['description'],
             'price' => $request->validated()['price'],
             'inventory' =>  $request->validated()['inventory'],
             'review' =>  $request->validated()['review'],
             'status' =>  $request->validated()['status'],
+            'amazing_id' =>  $request->validated()['amazing_id'],
             'special_specifications' =>  $special_specifications,
         ]);
 
-        $product->amazing()->associate($request->validated()['amazing_id']);
+//        $product->amazing()->associate($request->validated()['amazing_id']);
 
-        foreach ($request->validated()['p_values'] as $p_value)
-            $product->att_values()->attach($p_value);
+        if($request->validated()['p_values']) {
+            foreach ($request->validated()['p_values'] as $p_value)
+                $product->att_values()->attach($p_value);
+        }
 
         if ($request->hasFile('file')) {
             $image = $request->file('file');
@@ -91,8 +96,6 @@ class ProductController extends Controller
 
             $product->images()->save($image);
         }
-
-
         if ($request->hasFile('files')) {
             $images = $request->file('files');
 
@@ -141,41 +144,13 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-
         $all_titles = AttTitle::all();
         $all_values = AttValue::all();
-
-//        foreach ($all_titles as $title)
-//            echo $title->title.'<br>';
-
-//        dd($product->primary_specification_values[0]->value);
-//        dd($product->primary_specification_values[0]->primary_specification_title->title);
-
-//        $p_values = $product->primary_specification_values;
-//        $p_titles = $product->primary_specification_values->primary_specification_title;
-
-
-//        $p_values = [];
-
-//        dd($product->primary_specification_values[1]->primary_specification_title->id);
-
-//        foreach ($product->primary_specification_values as $p_value) {
-//            $p_values[] = $p_value->pivot->att_id;
-//            $p_titles[] = $p_value->primary_specification_title->id;
-//        }
-
-//        dd(array_combine($p_titles, $p_values));
-
-        $s_values = json_decode($product->special_specifications, true);
-//        dd($s_values);
 
         return view('admin.shop.products.edit')
             ->with('product', $product)
             ->with('all_titles', $all_titles)
-            ->with('all_values', $all_values)
-//            ->with('p_titles', $p_titles)
-//            ->with('p_values', $p_values)
-            ->with('s_values', $s_values);
+            ->with('all_values', $all_values);
     }
 
     /**

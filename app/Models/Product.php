@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Psy\Util\Str;
 
 class Product extends Model
 {
@@ -18,8 +19,10 @@ class Product extends Model
      */
 
     protected $fillable = [
+        'id',
         'fa_title',
         'en_title',
+        'amazing_id',
         'description',
         'slug',
         'price',
@@ -89,8 +92,12 @@ class Product extends Model
         return $price - $amount;
     }
 
-    # TODO: use accessor for user defined function and instead of query in blade
+    public function setSlugAttribute($value)
+    {
+        $this->attributes['slug'] = strtolower(str_replace(' ', '-', "$value"));
+    }
 
+    # TODO: use accessor for user defined function and instead of query in blade
     /**
      * a query for fetch brand of product.
      */
@@ -160,6 +167,24 @@ class Product extends Model
 
 
         return $products;
+    }
+
+    public function getSelectiveAttributesAttribute()
+    {
+        $selective_attributes = array();
+
+        foreach ($this->att_values as $att_value) {
+            if ($att_value->pivot->type == 3) {
+                $att_title = AttTitle::find($att_value->att_title_id)->title;
+                $att_title_id = AttTitle::find($att_value->att_title_id)->id;
+
+                $selective_attributes[$att_value->id][] = $att_value->value;
+                $selective_attributes[$att_value->id][] = $att_title_id;
+                $selective_attributes[$att_value->id][] = $att_title;
+            }
+        }
+
+        return $selective_attributes;
     }
 
     /**
