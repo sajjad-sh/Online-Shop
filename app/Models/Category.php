@@ -54,11 +54,6 @@ class Category extends Model
         return $this->morphToMany(Image::class, 'imageable');
     }
 
-    public function setSlugAttribute($value)
-    {
-        $this->attributes['slug'] = strtolower($value);
-    }
-
     /**
      * Get count of the Category parent(s).
      */
@@ -85,5 +80,10 @@ class Category extends Model
     public static function countCategoryProducts(Category $category)
     {
         return $category->loadCount('products')->products_count;
+    }
+
+    public function setSlugAttribute($value)
+    {
+        $this->attributes['slug'] = strtolower(str_replace(' ', '-', "$value"));
     }
 }

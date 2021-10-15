@@ -25,10 +25,10 @@ class StoreCategoryRequest extends FormRequest
     public function rules()
     {
         return [
+            'slug' => ['required', 'min:2', 'max:50', 'unique:categories'],
             'name' => 'required|min:2|max:50',
             'parent_id' => 'integer',
-            'slug' => ['required', 'min:2', 'max:50', 'regex:/^[A-Za-z0-9-]+$/', 'unique:categories'],
-            'icon' => 'url',
+            'icon' => '',
             'description' => ''
         ];
     }

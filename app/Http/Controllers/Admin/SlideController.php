@@ -64,9 +64,9 @@ class SlideController extends Controller
         if ($request->hasFile('file')) {
             $image = $request->file('file');
             $name = time() . '-' . $image->getClientOriginalName();
-            $path = $image->storeAs("/public/categories/cat-$request->category_id", $name);
+            $path = $image->storeAs("/categories/cat-$request->category_id", $name);
 
-            $url = Storage::url($path);
+            $url = '/storage/'.$path;
             $alt = $request->alt;
             $link = $request->link;
             $title = $request->title;

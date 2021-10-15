@@ -2,7 +2,7 @@
 
 @section('title', 'پنل مدیریت - ویرایش محصول')
 
-@section('content')
+@section('content-wrapper')
   <div class="page-wrapper">
     <!-- ============================================================== -->
     <!-- Bread crumb and right sidebar toggle -->
@@ -13,7 +13,7 @@
       <div class="row">
         <div class="col">
           <div class="card">
-            <form class="form-horizontal" method="post" action="{{route('admin.shop.categories.update', $category)}}">
+            <form class="form-horizontal" method="post" action="{{route('admin.shop.categories.update', $category)}}" enctype="multipart/form-data">
               @csrf
               @method('PATCH')
               <div class="card-body">
@@ -39,19 +39,33 @@
                     <input type="text" class="form-control" id="slug" name="slug" placeholder="slug"
                            value="{{$category->slug}}"/>
 
-                    <label for="price">شناسه دسته پدر</label>
-                    <input type="number" class="form-control" id="parent_id" name="parent_id" placeholder="شناسه دسته پدر"
-                           value="{{$category->parent_id}}"/>
+                    <label for="parent_id">دسته والد</label>
+                    <br>
+                    <select name="parent_id" id="parent_id" class="form-select" aria-label="Default select example">
+                      <option value="{{$category->parent_id}}" selected>{{$category->parent->name}}</option>
+                      @forelse($categories as $category)
+                        <option value="{{$category->id}}">{{$category->name}}</option>
+                      @empty
+                        <p>دسته‌بندی یافت نشد</p>
+                      @endforelse
+                    </select>
 
+
+                    <br>
                     <label for="inventory">آیکون</label>
-                    <input type="url" class="form-control" id="icon" name="icon" placeholder="آدرس آیکون"
+                    <input type="text" class="form-control" id="icon" name="icon" placeholder="آیکون"
                            value="{{$category->icon}}"/>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label for="review">توضیحات</label> <br>
-                  <div class="col-sm-9">
-                    <textarea class="form-control" rows="20" name="description">{{$category->description}}</textarea>
+
+                    <br>
+                    <label for="file" class="form-label">انتخاب فایل</label>
+                    <input name="file" class="form-control" type="file" id="file" value="{{old('file')}}">
+
+                    @if(isset($category->image))
+                      <img style="width: 70px; height: 70px" src="{{$category->image}}">
+                    @endif
+
+                    <br>
+
                   </div>
                 </div>
               </div>

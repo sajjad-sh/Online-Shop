@@ -6,6 +6,7 @@ use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
@@ -19,7 +20,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::all();
+        $categories = Category::latest()->paginate();
 
         return view('admin.shop.categories.index')
             ->with('categories', $categories);
@@ -46,7 +47,20 @@ class CategoryController extends Controller
      */
     public function store(StoreCategoryRequest $request)
     {
-        Category::create($request->validated());
+        $category = Category::create($request->validated());
+        $category->parent_id = $request->parent_id;
+
+        if ($request->hasFile('file')) {
+            $image = $request->file('file');
+            $name = "cat-$category->id.".$image->getClientOriginalExtension();
+            $path = $image->storeAs("/categories/images", $name);
+
+            $url = '/storage/'.($path);
+
+            $category->image = $url;
+        }
+
+        $category->save();
 
         return redirect()->route('admin.shop.categories.index');
     }
@@ -73,17 +87,31 @@ class CategoryController extends Controller
     public function update(Request $request, Category $category)
     {
         $validator = Validator::make($request->all(), [
-            'slug' => ['required','min:2', 'max:50', 'regex:/^[A-Za-z0-9-]+$/', Rule::unique('categories')->ignore($category->id)],
+            'slug' => ['required','min:2', 'max:50'],
             'name' => 'required|min:2|max:50',
-            'parent_id' => 'integer',
-            'icon' => 'url',
-            'description' => 'text'
+            'icon' => '',
+            'description' => ''
         ]);
+
 
         if($validator)
             $category->update($request->all());
 
-        return back();
+        $category->parent_id = $request->parent_id;
+
+        if ($request->hasFile('file')) {
+            $image = $request->file('file');
+            $name = "cat-$category->id.".$image->getClientOriginalExtension();
+            $path = $image->storeAs("/categories/images", $name);
+
+            $url = '/storage/'.($path);
+
+            $category->image = $url;
+        }
+
+        $category->save();
+
+        return redirect()->route('admin.shop.categories.index');
     }
 
     /**

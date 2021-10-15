@@ -12,6 +12,8 @@
   <link rel="stylesheet" href="{{asset('dist/css/rtl.css')}}">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="{{asset('bower_components/font-awesome/css/font-awesome.min.css')}}">
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+
   <!-- Ionicons -->
   <link rel="stylesheet" href="{{asset('bower_components/Ionicons/css/ionicons.min.css')}}">
   <!-- jvectormap -->
@@ -378,7 +380,7 @@
           </a>
           <ul class="treeview-menu">
             <li class="active"><a href="index.html"><i class="fa fa-circle-o"></i>منوی اصلی</a></li>
-            <li><a href="index2.html"><i class="fa fa-circle-o"></i>اسلایدر‌ها</a></li>
+            <li><a href="{{route('admin.site.sliders.create')}}"><i class="fa fa-circle-o"></i>اسلایدر‌ها</a></li>
             <li><a href="index2.html"><i class="fa fa-circle-o"></i>پیکربندی</a></li>
           </ul>
         </li>

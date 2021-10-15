@@ -2,7 +2,7 @@
 
 @section('title', 'ایجاد اسلایدر')
 
-@section('content')
+@section('content-wrapper')
   <h1>ایجاد یک اسلاید جدید</h1>
   <br><br>
   @if ($errors->any())
