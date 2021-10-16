@@ -38,7 +38,7 @@ class SlideController extends Controller
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
@@ -89,8 +89,7 @@ class SlideController extends Controller
             $image = $category->images()->save($image);
         }
 
-        else
-            abort(404);
+        return redirect()->route('admin.site.sliders.index');
     }
 
     /**

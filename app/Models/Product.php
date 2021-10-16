@@ -217,4 +217,13 @@ class Product extends Model
 
         return $selective_attributes;
     }
+
+    public function getPrimaryImageAttribute()
+    {
+        foreach ($this->images as $image) {
+            if($image->is_primary == 1)
+                return $image->url;
+        }
+        return false;
+    }
 }

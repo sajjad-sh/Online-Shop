@@ -80,7 +80,8 @@ Route::name('admin.')->prefix('admin')
                             ->name('restore');
                     });
 
-                Route::resource('categories', CategoryController::class);
+                Route::resource('categories', CategoryController::class)
+                    ->except('show');
 
                 Route::resource('attributes', AttController::class);
                 Route::name('attributes.')->prefix('attributes')
@@ -112,15 +113,14 @@ Route::name('admin.')->prefix('admin')
             });
     });
 
+
 Route::get('/profile', function () {
     return view('user.profile');
 })->middleware(['auth'])->name('profile');
 
-
 Route::get('/product/{product:slug}', [ProductController::class, 'show']);
 
-
-
+Route::get('/category/{category:slug}', [CategoryController::class, 'show']);
 
 
 Route::get('/test', function () {
@@ -153,7 +153,7 @@ Route::get('/test', function () {
 //
 //    dd(\App\Models\Category::hasChildren($c));
 
-//    $category = \App\Models\Category::find(3);
+    $category = \App\Models\Category::find(1);
 //    (\App\Models\Category::countCategoryProducts($category));
 
 
@@ -187,6 +187,23 @@ Route::get('/test', function () {
 
 //    dd(__('numbers.0'));
 
-\App\Models\Product::getLastInsertedId();
+//\App\Models\Product::getLastInsertedId();
+    $subcategories = $category->childrens;
 
+    if($subcategories->count()>5)
+        $subcategories = $subcategories->random(5);
+
+    $products = array();
+
+    $i=0;
+    foreach ($subcategories as $subcategory) {
+        $n = $subcategory->products->count();
+
+        if($n<5)
+            $products[$i] = $subcategory->products;
+        else
+            $products[$i] = $subcategory->products->random(5);
+
+        $i++;
+    }
 });
