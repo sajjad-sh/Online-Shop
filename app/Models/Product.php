@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 use Psy\Util\Str;
 
 class Product extends Model
@@ -224,6 +225,22 @@ class Product extends Model
             if($image->is_primary == 1)
                 return $image->url;
         }
+        return false;
+    }
+
+    public function getIsFavoriteAttribute()
+    {
+        $favorite_products = json_decode(Auth::user()->favorite_products) ?? array();
+
+        if(array_search($this->id, $favorite_products) === false)
+            return false;
+        return true;
+    }
+
+    public function getIsInventoryAttribute()
+    {
+        if($this->inventory == 0 or $this->status == 0)
+            return true;
         return false;
     }
 }

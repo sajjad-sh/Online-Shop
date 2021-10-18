@@ -82,7 +82,8 @@
                     <i class="fas fa-star"></i>
                   </div>
                   <span>4.3 (5955)</span>
-                </li>P
+                </li>
+                P
                 <li>تعداد نظرات: <span>{{$product->count_comments}}</span></li>
                 <li>کد محصول : <span>{{strtoupper($product->slug)}}</span></li>
               </ul>
@@ -134,7 +135,19 @@
               <a href="#" class="btn">افزودن به سبد</a>
             </div>
             <div class="shop-details-bottom">
-              <h5 class="title"><a href="#"><i class="far fa-heart"></i> افزودن به علاقه مندیها</a></h5>
+              <h5 class="title">
+                <a style="cursor: pointer" onclick="addToFavorites({{ $product->id }})">
+                  @auth
+                    @if($product->is_favorite)
+                      <i id="fa-heart-icon" class="fas fa-heart"></i>
+                      <span id="fav_btn"> حذف از علاقه مندیها</span>
+                    @else
+                      <i id="fa-heart-icon" class="far fa-heart"></i>
+                      <span id="fav_btn">افزودن به علاقه مندیها</span>
+                    @endif
+                  @endauth
+                </a>
+              </h5>
               <ul>
                 <li>
                   <span>برچسب : </span>
@@ -231,7 +244,7 @@
                       <div class="d-flex flex-column comment-section">
 
 
-{{--                        //$product->comments()->orderBy('created_at', 'desc')->get()--}}
+                        {{--                        //$product->comments()->orderBy('created_at', 'desc')->get()--}}
                         @foreach($product->comments as $comment)
                           <div>
                             <div class="bg-white p-2">
@@ -258,7 +271,6 @@
                             </div>
                           </div>
                         @endforeach
-
 
 
                         <div class="bg-light p-2">
@@ -483,5 +495,46 @@
     </div>
   </section>
   <!-- best-sellers-area-end -->
+
+
+
+  <script>
+    window.addToFavorites = function (id) {
+      $.ajaxSetup({
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+      });
+
+      $.ajax({
+        'type': 'PATCH',
+        'url': '/user/update-favorites/' + id,
+        success: function (result) {
+
+          // alert(result)
+
+          if (result == 1) {
+            alert('محصول به لیست علاقه‌مندی ها افزوده شد!');
+            $('#fav_btn').html('حذف از علاقه مندیها');
+
+            $('#fa-heart-icon').removeClass('far').addClass('fas');
+          } else {
+            alert('محصول از لیست علاقه‌مندی ها حذف شد!');
+            $('#fav_btn').html('افزودن به علاقه مندیها');
+
+            $('#fa-heart-icon').removeClass('fas').addClass('far');
+          }
+
+          // $('#done_status_' + result.id).html(result.is_done ? 'Done' : 'Not Done');
+          // document.getElementById('done_status').innerHTML = result.is_done ? 'Done' : 'Not Done'
+        },
+        error: function (error) {
+          alert('خطا در ارتباط با سرور');
+        }
+      })
+    }
+  </script>
+
+
 
 @endsection

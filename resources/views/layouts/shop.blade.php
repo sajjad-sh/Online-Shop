@@ -7,6 +7,7 @@
   <title>فروشگاه پارادایس - @yield('title')</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
 
   <link rel="shortcut icon" type="image/x-icon" href="img/favicon.png">
   <!-- Place favicon.ico in the root directory -->
@@ -22,6 +23,7 @@
   <link rel="stylesheet" href="{{asset('css/slick.css')}}">
   <link rel="stylesheet" href="{{asset('css/default.css')}}">
   <link rel="stylesheet" href="{{asset('css/style.css')}}">
+  <link rel="stylesheet" href="{{asset('css/search-box.css')}}">
   <link rel="stylesheet" href="{{asset('css/responsive.css')}}">
 </head>
 
@@ -114,7 +116,7 @@
         <div class="col-xl-10 col-lg-9">
           <div class="d-block d-sm-flex align-items-center justify-content-end">
             <div class="header-search-wrap">
-              <form action="#">
+              <form autocomplete="off" action="/action_page.php">
                 <select class="custom-select">
                   <option selected="">همه دسته بندیها</option>
                   <option>-- مواد غذایی و یخ زده</option>
@@ -128,9 +130,15 @@
                   <option>-- میوه های خشک</option>
                   <option>-- دیگر غذاها</option>
                 </select>
-                <input type="text" placeholder="جستجوی محصول مورد نظر...">
-                <button><i class="flaticon-loupe-1"></i></button>
+
+
+                  <div class="autocomplete" style="width:350px;">
+                    <input name="searchProducts" id="searchProducts" type="text" placeholder="جستجوی محصول مورد نظر..." style="width:345px;">
+                  </div>
+                <button type="submit"><i class="flaticon-loupe-1"></i></button>
               </form>
+
+
             </div>
             <div class="header-action">
               <ul>
@@ -239,7 +247,7 @@
                   @foreach($categories as $category)
                     @if($category->parent_id === 0 and \App\Models\Category::hasChildren($category))
                       <li class="menu-item-has-children">
-                        <a href="/categories/{{$category->slug}}">
+                        <a href="/category/{{$category->slug}}">
                           <i class="{{$category->icon}}"></i>{{$category->name}}
                           &nbsp;&nbsp;
                           <span class="product-count" style="display: inline-block;">
@@ -497,6 +505,7 @@
 <script src="{{asset('js/aos.js')}}"></script>
 <script src="{{asset('js/plugins.js')}}"></script>
 <script src="{{asset('js/main.js')}}"></script>
+<script src="{{asset('js/search-box.js')}}"></script>
 </body>
 
 </html>

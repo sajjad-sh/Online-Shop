@@ -69,7 +69,7 @@ class CategoryController extends Controller
      * @param int $id
      * @return View
      */
-    public function show(Category $category)
+    public function show(Request $request, Category $category)
     {
         if ($category->parent->id == 0) {
             $category_sliders = array();
@@ -109,15 +109,47 @@ class CategoryController extends Controller
                 ->with('subcategories', $subcategories)
                 ->with('products', $products);
         } else {
+            $brother_categories = Category::query()->where('parent_id', $category->parent->id)->get();
+            $products = $category->products();
+
+            if(isset($request->orderBy)) {
+                switch ($request->orderBy) {
+                    case 'visits':
+                        $products = $products->orderBy('visits', 'desc');
+                        break;
+                    case 'sales':
+                        $products = $products->orderBy('sales', 'desc');
+                        break;
+                    case 'newest':
+                        $products = $products->latest();
+                        break;
+                    case 'cheapest':
+                        $products = $products->orderBy('price');
+                        break;
+                    case 'expensive':
+                        $products = $products->orderBy('price', 'desc');
+                        break;
+                }
+
+            } else {
+                $products = $products->latest();
+            }
+            $products = $products->paginate(12);
+            $products->appends(request()->query());
+
+
+
             return view('shop.single-subcategory')
-                ->with('category', $category);
+                ->with('category', $category)
+                ->with('brother_categories', $brother_categories)
+                ->with('products', $products);
         }
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param \App\Models\Category $category
+     * @param Category $category
      * @return View
      */
     public function edit(Category $category)
@@ -130,7 +162,7 @@ class CategoryController extends Controller
      * Update the specified resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Category $category
+     * @param Category $category
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, Category $category)
@@ -166,7 +198,7 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Models\Category $category
+     * @param Category $category
      * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Category $category)

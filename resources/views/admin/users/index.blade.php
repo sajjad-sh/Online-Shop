@@ -46,7 +46,7 @@
                 <td>{{$user->email}}</td>
                 <td>{{$user->phone}}</td>
                 <td>{{$user->role}}</td>
-                <td>{{$user->addresses}}</td>
+                <td></td>
                 <td>{{$user->created_at}}</td>
                 <td>
                   @if($user->deleted_at)

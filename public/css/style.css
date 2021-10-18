@@ -3539,6 +3539,11 @@ sp-product-thumb-amazing .batch-amazing {
 	color: #fff;
 }
 
+.shop-cat-list ul #child-category {
+    margin-right: 25px;
+    margin-bottom: 15px;
+}
+
 .price_filter .ui-slider.ui-slider-horizontal.ui-widget.ui-widget-content.ui-corner-all {
 	background: #ebebeb none repeat scroll 0 0;
 	border: medium none;

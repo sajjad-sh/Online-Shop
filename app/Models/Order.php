@@ -31,11 +31,26 @@ class Order extends Model
         return $this->belongsTo(Cart::class);
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     /**
      * Get the address that owns the Order.
      */
     public function address()
     {
         return $this->belongsTo(Address::class);
+    }
+
+//    public function getCartIDAttribute()
+//    {
+//        return 'PRC-' . $attributes['cart_id'];
+//    }
+
+    public function getOrderDetails()
+    {
+        auth()->user()->cart;
     }
 }

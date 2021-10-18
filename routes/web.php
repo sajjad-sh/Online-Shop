@@ -9,6 +9,7 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\Shop\HomeController;
 use App\Http\Controllers\AttController;
+use App\Http\Controllers\Shop\ProfileController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
@@ -34,17 +35,27 @@ use Illuminate\Support\Facades\Storage;
  * which packages ?
  * intervention
  * admin lte
- * spotty
+ * spotty role permisson
+ * spotty media library
  * verta
  * switty alert
  * auto slug
  * jscolor
  * rich text editor
+ * shetabi payment
  * -------------------
  * amazing
  * categories, icon, counts
  * menu with cats
  * single product view
+ * --------3-----------
+ * add admin view
+ *  confirmer
+ * categories
+ *  slider
+ *  amazings
+ * user profile
+ *  updateFavorites
  */
 
 require __DIR__ . '/auth.php';
@@ -113,14 +124,35 @@ Route::name('admin.')->prefix('admin')
             });
     });
 
+//Route::get('/profile', function () {
+//    return view('user.profile');
+//})->middleware(['auth'])->name('profile');
 
-Route::get('/profile', function () {
-    return view('user.profile');
-})->middleware(['auth'])->name('profile');
+Route::resource('/profile', ProfileController::class)
+    ->only(['index', 'update'])
+    ->middleware(['auth']);
+
+Route::patch('update-favorites/{user}', [UserController::class, 'updateFavorites'])
+    ->name('updateFavorites')
+    ->middleware(['auth']);
+
+//Route::name('user.')->prefix('user')
+//    ->group(function () {
+//        Route::resource('profile2', ProfileController::class)
+//            ->only(['index', 'update'])
+//            ->middleware(['auth']);
+//
+//        Route::patch('update-favorites/{user}', [UserController::class, 'updateFavorites'])
+//            ->name('updateFavorites')
+//            ->middleware(['auth']);
+//    });
+
+
 
 Route::get('/product/{product:slug}', [ProductController::class, 'show']);
 
-Route::get('/category/{category:slug}', [CategoryController::class, 'show']);
+Route::get('/category/{category:slug}', [CategoryController::class, 'show'])
+->name('categories.show');;
 
 
 Route::get('/test', function () {
@@ -153,8 +185,8 @@ Route::get('/test', function () {
 //
 //    dd(\App\Models\Category::hasChildren($c));
 
-    $category = \App\Models\Category::find(1);
-//    (\App\Models\Category::countCategoryProducts($category));
+    $category = \App\Models\Category::find(18);
+    dd(\App\Models\Category::countCategoryParent($category));
 
 
 
@@ -188,22 +220,38 @@ Route::get('/test', function () {
 //    dd(__('numbers.0'));
 
 //\App\Models\Product::getLastInsertedId();
-    $subcategories = $category->childrens;
+//    $subcategories = $category->childrens;
+//
+//    if($subcategories->count()>5)
+//        $subcategories = $subcategories->random(5);
+//
+//    $products = array();
+//
+//    $i=0;
+//    foreach ($subcategories as $subcategory) {
+//        $n = $subcategory->products->count();
+//
+//        if($n<5)
+//            $products[$i] = $subcategory->products;
+//        else
+//            $products[$i] = $subcategory->products->random(5);
+//
+//        $i++;
+//    }
+//    dd(auth()->user()->carts);
 
-    if($subcategories->count()>5)
-        $subcategories = $subcategories->random(5);
 
-    $products = array();
+//    $orders = auth()->user()->orders;
+//    dd($orders);
+//    foreach ($orders as $order) {
+//        dump($order->cart_id);
+//        dd($order->cart);
+//        dd($order->cart->cart_items);
+//    }
+//    $user = auth()->user()->id;
+//    dd($user);
 
-    $i=0;
-    foreach ($subcategories as $subcategory) {
-        $n = $subcategory->products->count();
+//    dd($product->add_to_favorites);
 
-        if($n<5)
-            $products[$i] = $subcategory->products;
-        else
-            $products[$i] = $subcategory->products->random(5);
 
-        $i++;
-    }
 });

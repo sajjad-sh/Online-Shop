@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -19,6 +20,7 @@ class User extends Authenticatable
      * @var string[]
      */
     protected $fillable = [
+        'current_cart_id',
         'first_name',
         'last_name',
         'email',
@@ -54,9 +56,14 @@ class User extends Authenticatable
     /**
      * Get the cart that owns the user.
      */
-    public function cart()
+    public function carts()
     {
-        return $this->belongsTo(Cart::class);
+        return $this->hasMany(Cart::class);
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
     }
 
     /**
@@ -86,5 +93,10 @@ class User extends Authenticatable
     public function getFullNameAttribute()
     {
         return $this->first_name . ' ' . $this->last_name;
+    }
+
+    public function getFavoritesAttribute()
+    {
+        return json_decode($this->favorite_products) ?? array();
     }
 }
