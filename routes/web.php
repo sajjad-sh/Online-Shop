@@ -1,19 +1,6 @@
 <?php
 
-use App\Http\Controllers\Admin\AdminController;
-use App\Http\Controllers\Admin\SlideController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\CommentController;
-use App\Http\Controllers\DiscountController;
-use App\Http\Controllers\OrderByController;
-use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\Shop\HomeController;
-use App\Http\Controllers\AttController;
-use App\Http\Controllers\Shop\ProfileController;
-use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,130 +22,16 @@ use Illuminate\Support\Facades\Storage;
  *
  * which packages ?
  * intervention
- * admin lte
- * spotty role permisson
  * spotty media library
  * verta
  * switty alert
- * auto slug
- * jscolor
  * rich text editor
  * shetabi payment
- * -------------------
- * amazing
- * categories, icon, counts
- * menu with cats
- * single product view
- * --------3-----------
- * add admin view
- *  confirmer
- * categories
- *  slider
- *  amazings
- * user profile
- *  updateFavorites
  */
 
 require __DIR__ . '/auth.php';
-
-Route::get('/', [HomeController::class, 'index']);
-
-Route::name('admin.')->prefix('admin')
-    ->group(function () {
-        Route::get('', AdminController::class)
-            ->middleware('auth')
-            ->name('index');
-
-//        Route::view('', 'admin.index')
-//            ->middleware('auth')
-//            ->name('index');
-
-        Route::resource('users', UserController::class);
-        Route::delete('users/{user}/delete', [UserController::class, 'delete'])
-            ->name('users.delete');
-
-        Route::resource('orders', OrderByController::class);
-        Route::resource('payments', PaymentController::class);
-        Route::resource('discounts', DiscountController::class);
-
-        Route::name('shop.')->prefix('shop')
-            ->group(function () {
-                Route::view('', 'admin.shop.index')
-                    ->name('index');
-
-                Route::resource('products', ProductController::class)
-                    ->except('show');
-
-                Route::name('products.')->prefix('products')
-                    ->group(function () {
-                        Route::delete('{product}/delete', [ProductController::class, 'delete'])
-                            ->name('delete');
-                        Route::patch('{product}/restore', [ProductController::class, 'restore'])
-                            ->name('restore');
-                    });
-
-                Route::resource('categories', CategoryController::class)
-                    ->except('show');
-
-                Route::resource('attributes', AttController::class);
-                Route::name('attributes.')->prefix('attributes')
-                    ->group(function () {
-                        Route::get('create/t', [AttController::class, 'createTitle'])
-                            ->name('createTitle');
-                        Route::post('t', [AttController::class, 'storeTitle'])
-                            ->name('storeTitle');
-                        Route::delete('{attributes}/t', [AttController::class, 'destroyTitle'])
-                            ->name('destroyTitle');
-                    });
-
-                Route::resource('comments', CommentController::class);
-                Route::name('comments.')->prefix('comments')
-                    ->group(function () {
-                        Route::patch('{comment}/verify', [CommentController::class, 'verify'])
-                            ->name('verify');
-                        Route::patch('{comment}/unverify', [CommentController::class, 'unverify'])
-                            ->name('unverify');
-                    });
-            });
-
-        Route::name('site.')->prefix('site')
-            ->group(function () {
-                Route::view('', 'admin.site.index')
-                    ->name('index');
-
-                Route::resource('sliders', SlideController::class);
-            });
-    });
-
-//Route::get('/profile', function () {
-//    return view('user.profile');
-//})->middleware(['auth'])->name('profile');
-
-Route::resource('/profile', ProfileController::class)
-    ->only(['index', 'update'])
-    ->middleware(['auth']);
-
-Route::patch('update-favorites/{user}', [UserController::class, 'updateFavorites'])
-    ->name('updateFavorites')
-    ->middleware(['auth']);
-
-//Route::name('user.')->prefix('user')
-//    ->group(function () {
-//        Route::resource('profile2', ProfileController::class)
-//            ->only(['index', 'update'])
-//            ->middleware(['auth']);
-//
-//        Route::patch('update-favorites/{user}', [UserController::class, 'updateFavorites'])
-//            ->name('updateFavorites')
-//            ->middleware(['auth']);
-//    });
-
-
-
-Route::get('/product/{product:slug}', [ProductController::class, 'show']);
-
-Route::get('/category/{category:slug}', [CategoryController::class, 'show'])
-->name('categories.show');;
+require __DIR__ . '/admin.php';
+require __DIR__ . '/user.php';
 
 
 Route::get('/test', function () {
@@ -191,14 +64,11 @@ Route::get('/test', function () {
 //
 //    dd(\App\Models\Category::hasChildren($c));
 
-    $category = \App\Models\Category::find(18);
-    dd(\App\Models\Category::countCategoryParent($category));
-
-
+//    $category = \App\Models\Category::find(18);
+//    dd(\App\Models\Category::countCategoryParent($category));
 
 //    $categories = \App\Models\Category::all();
 //    dd($categories[1]->image);
-
 
 //    $products = \App\Models\Product::all();
 //
@@ -207,7 +77,6 @@ Route::get('/test', function () {
 //        $product->slug = 'prd-'.$pid;
 //        $product->save();
 //    }
-
 
 //    $product = \App\Models\Product::find(76);
 //    dd($product->attributes);
@@ -258,6 +127,4 @@ Route::get('/test', function () {
 //    dd($user);
 
 //    dd($product->add_to_favorites);
-
-
 });

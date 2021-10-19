@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\UpdateAttributeRequest;
+use App\Http\Controllers\Controller;
 use App\Models\AttTitle;
 use App\Models\AttValue;
 use Illuminate\Http\RedirectResponse;
