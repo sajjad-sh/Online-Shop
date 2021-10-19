@@ -69,6 +69,11 @@ class Product extends Model
         return $this->belongsTo(Amazing::class);
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     /**
      * Get all of the images for the product.
      */

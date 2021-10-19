@@ -9,10 +9,11 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
+    use HasApiTokens, HasFactory, Notifiable, SoftDeletes, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -75,6 +76,14 @@ class User extends Authenticatable
     }
 
     /**
+     * Get the payments for the user.
+     */
+    public function products()
+    {
+        return $this->hasMany(Product::class)->withTrashed();
+    }
+
+    /**
      * Get the comments for the user.
      */
     public function comments()
@@ -98,5 +107,25 @@ class User extends Authenticatable
     public function getFavoritesAttribute()
     {
         return json_decode($this->favorite_products) ?? array();
+    }
+
+    public function isSuperAdmin()
+    {
+        return $this->hasRole('super-admin');
+    }
+
+    public function isAdmin()
+    {
+        return $this->hasRole('admin');
+    }
+
+    public function isStoreKeeper()
+    {
+        return $this->hasRole('storekeeper');
+    }
+
+    public function isWriter()
+    {
+        return $this->hasRole('writer');
     }
 }

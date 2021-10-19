@@ -25,7 +25,7 @@
   <link rel="stylesheet" href="{{asset('dist/css/skins/_all-skins.min.css')}}">
   <!-- Select2 -->
   <link rel="stylesheet" href="{{asset('bower_components/select2/dist/css/select2.min.css')}}">
-  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
@@ -266,8 +266,10 @@
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <img src="{{asset('dist/img/user2-160x160.jpg')}}" class="user-image" alt="User Image">
-              <span class="hidden-xs">علیرضا حسینی زاده</span>
+              <img src="{{asset('img/icon/prof-icon.png')}}" class="user-image" alt="User Image">
+              <span class="hidden-xs">
+                {{ auth()->user()->fullname }}
+              </span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
@@ -275,7 +277,7 @@
                 <img src="{{asset('dist/img/user2-160x160.jpg')}}" class="img-circle" alt="User Image">
 
                 <p>
-                  علیرضا حسینی زاده
+                  {{ auth()->user()->fullname }}
                   <small>مدیریت کل سایت</small>
                 </p>
               </li>
@@ -320,11 +322,19 @@
       <!-- Sidebar user panel -->
       <div class="user-panel">
         <div class="pull-right image">
-          <img src="{{asset('dist/img/user2-160x160.jpg')}}" class="img-circle" alt="User Image">
+          <img src="{{asset('img/icon/prof-icon.png')}}" class="img-circle" alt="User Image">
         </div>
         <div class="pull-right info">
-          <p>علیرضا حسینی زاده</p>
-          <a href="#"><i class="fa fa-circle text-success"></i> آنلاین</a>
+          <p>
+            {{ auth()->user()->fullname }}
+          </p>
+
+          <a href="#"><i class="fa fa-circle text-success"></i>
+            {{ __("role.".auth()->user()->getRoleNames()->toArray()[0]) }}
+          <?php
+
+          ?>
+          </a>
         </div>
       </div>
       <!-- search form -->
@@ -341,7 +351,9 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">منو</li>
-        <li class="active treeview">
+
+        @hasanyrole('super-admin|admin|storekeeper')
+        <li class="treeview">
           <a href="#">
             <i class="fa fa-dashboard"></i> <span>داشبورد مدیریت</span>
             <span class="pull-left-container">
@@ -349,13 +361,28 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="active"><a href="{{route('admin.users.index')}}"><i class="fa fa-circle-o"></i>فهرست کاربران</a></li>
+
+            @hasanyrole('super-admin|admin')
+            <li class="active"><a href="{{route('admin.users.index')}}"><i class="fa fa-circle-o"></i>فهرست کاربران</a>
+            </li>
+            @endhasanyrole
+
+            @hasanyrole('super-admin|admin|storekeeper')
             <li><a href="{{route('admin.orders.index')}}"><i class="fa fa-circle-o"></i>فهرست سفارشات</a></li>
+            @endhasanyrole
+
+            @hasanyrole('super-admin|admin')
             <li><a href="{{route('admin.payments.index')}}"><i class="fa fa-circle-o"></i>فهرست مالی</a></li>
+            @endhasanyrole
+
+            @hasanyrole('super-admin|admin')
             <li><a href="{{route('admin.discounts.index')}}"><i class="fa fa-circle-o"></i>فهرست کدهای تخفیف</a></li>
+            @endhasanyrole
           </ul>
         </li>
+        @endhasanyrole
 
+        @hasanyrole('super-admin|admin|storekeeper|writer')
         <li class="treeview">
           <a href="#">
             <i class="fa fa-shopping-cart"></i> <span>فروشگاه</span>
@@ -364,13 +391,28 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="active"><a href="{{route('admin.shop.products.index')}}"><i class="fa fa-circle-o"></i>محصولات</a></li>
+            @hasanyrole('super-admin|admin|writer')
+            <li class="active">
+              <a href="{{route('admin.shop.products.index')}}"><i class="fa fa-circle-o"></i>محصولات</a></li>
+            @endhasanyrole
+
+            @hasanyrole('super-admin|admin|storekeeper')
             <li><a href="{{route('admin.shop.categories.index')}}"><i class="fa fa-circle-o"></i>دسته‌‌بندی‌ها</a></li>
+            @endhasanyrole
+
+            @hasanyrole('super-admin|admin|storekeeper')
             <li><a href="{{route('admin.shop.attributes.index')}}"><i class="fa fa-circle-o"></i>خصوصیات محصول</a></li>
+            @endhasanyrole
+
+            @hasanyrole('super-admin|admin|storekeeper')
             <li><a href="{{route('admin.shop.comments.index')}}"><i class="fa fa-circle-o"></i>نظرات</a></li>
+            @endhasanyrole
+
           </ul>
         </li>
+        @endhasanyrole
 
+        @hasanyrole('super-admin|admin')
         <li class="treeview">
           <a href="#">
             <i class="fa fa-cogs"></i> <span>تنظیمات سایت</span>
@@ -384,6 +426,8 @@
             <li><a href="index2.html"><i class="fa fa-circle-o"></i>پیکربندی</a></li>
           </ul>
         </li>
+        @endhasanyrole
+
 
         <li class="treeview">
           <a href="#">

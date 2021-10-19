@@ -12,10 +12,16 @@ use App\Models\Product;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Product::class, 'product');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -23,7 +29,12 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::withTrashed()->paginate(15);
+        if(\auth()->user()->isWriter())
+            $products = auth()->user()->products()->withTrashed();
+        else
+            $products = Product::withTrashed();
+
+        $products = $products->paginate(15);
 
         return view('admin.shop.products.index')
             ->with('products', $products);

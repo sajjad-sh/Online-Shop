@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\SlideController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentController;
@@ -64,8 +65,13 @@ Route::get('/', [HomeController::class, 'index']);
 
 Route::name('admin.')->prefix('admin')
     ->group(function () {
-        Route::view('', 'admin.index')
+        Route::get('', AdminController::class)
+            ->middleware('auth')
             ->name('index');
+
+//        Route::view('', 'admin.index')
+//            ->middleware('auth')
+//            ->name('index');
 
         Route::resource('users', UserController::class);
         Route::delete('users/{user}/delete', [UserController::class, 'delete'])
