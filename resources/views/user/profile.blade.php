@@ -1,4 +1,4 @@
-@extends('layouts.profile2')
+@extends('layouts.profile')
 
 @section('title', 'صفحه اصلی')
 
