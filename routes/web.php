@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -126,5 +128,29 @@ Route::get('/test', function () {
 //    $user = auth()->user()->id;
 //    dd($user);
 
-//    dd($product->add_to_favorites);
+//    dd($product->add_to_favori
+//tes);
+//    Response::
+/*
+ * [{"item":6679984,"quantity":1,"price":13990000},{"item":2052290,"quantity":1,"price":1895000}]
+ */
+
+//
+//
+//    $cart_count = 0;
+//    $cart_items = [];
+//
+//    if (!(request()->cookie('cart_count')))
+//        Cookie::queue('cart_count', $cart_count, 7 * 24 * 60 * 60);
+//
+//    if (!(request()->cookie('cart_items')))
+//        Cookie::queue('cart_items', json_encode($cart_items), 7 * 24 * 60 * 60);
+
+
+
+
+
+
+
+
 });

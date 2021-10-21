@@ -128,11 +128,11 @@
               <div class="sd-cart-wrap">
                 <form action="#">
                   <div class="cart-plus-minus">
-                    <input type="text" value="1">
+                    <input id="countof" type="text" value="1">
                   </div>
                 </form>
               </div>
-              <a href="#" class="btn">افزودن به سبد</a>
+              <a href="{{ \Illuminate\Support\Facades\URL::to("cart/add/$product->id/1") }}" class="btn">افزودن به سبد</a>
             </div>
             <div class="shop-details-bottom">
               <h5 class="title">
@@ -508,7 +508,7 @@
 
       $.ajax({
         'type': 'PATCH',
-        'url': '/user/update-favorites/' + id,
+        'url': '/update-favorites/' + id,
         success: function (result) {
 
           // alert(result)

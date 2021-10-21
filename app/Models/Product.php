@@ -124,7 +124,7 @@ class Product extends Model
         $titles = [];
         $values = [];
         foreach ($this->att_values as $att_value) {
-            if (AttTitle::find($att_value->att_title_id)->key == 'brand' or $att_value->pivot->type == 0 or $att_value->pivot->type == 3)
+            if (AttTitle::find($att_value->att_title_id)->key == 'brand' or $att_value->pivot->type == 0 or $att_value->pivot->type == 2)
                 continue;
             $titles[] = AttTitle::find($att_value->att_title_id)->title;
             $values[] = $att_value->value;
@@ -141,7 +141,7 @@ class Product extends Model
         $titles = [];
         $values = [];
         foreach ($this->att_values as $att_value) {
-            if (AttTitle::find($att_value->att_title_id)->key == 'brand' or $att_value->pivot->type == 1 or $att_value->pivot->type == 3)
+            if (AttTitle::find($att_value->att_title_id)->key == 'brand' or $att_value->pivot->type == 1 or $att_value->pivot->type == 2)
                 continue;
             $titles[] = AttTitle::find($att_value->att_title_id)->title;
             $values[] = $att_value->value;
@@ -180,7 +180,7 @@ class Product extends Model
         $selective_attributes = array();
 
         foreach ($this->att_values as $att_value) {
-            if ($att_value->pivot->type == 3) {
+            if ($att_value->pivot->type == 2) {
                 $att_title = AttTitle::find($att_value->att_title_id)->title;
                 $att_title_id = AttTitle::find($att_value->att_title_id)->id;
 
@@ -201,7 +201,7 @@ class Product extends Model
         $selective_attributes = array();
 
         foreach ($this->att_values as $att_value) {
-            if ($att_value->pivot->type == 3) {
+            if ($att_value->pivot->type == 2) {
                 $att_title_id = AttTitle::find($att_value->att_title_id)->id;
                 $selective_attributes[$att_title_id][] = $att_value->id;
             }
@@ -215,7 +215,7 @@ class Product extends Model
         $selective_attributes = array();
 
         foreach ($this->att_values as $att_value) {
-            if ($att_value->pivot->type == 3) {
+            if ($att_value->pivot->type == 2) {
                 $att_title = AttTitle::find($att_value->att_title_id)->title;
                 $selective_attributes[$att_title][] = $att_value->value;
             }

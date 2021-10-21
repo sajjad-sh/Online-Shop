@@ -110,7 +110,7 @@
       <div class="row align-items-center">
         <div class="col-xl-2 col-lg-3 d-none d-lg-block">
           <div class="logo">
-            <a href="home.blade.php"><img src="{{asset('img/logo/logo.png')}}" alt=""></a>
+            <a href="{{ route('home') }}"><img src="{{asset('img/logo/logo.png')}}" alt=""></a>
           </div>
         </div>
         <div class="col-xl-10 col-lg-9">
@@ -118,7 +118,7 @@
             <div class="header-search-wrap">
               <form autocomplete="off" action="/action_page.php">
                 <select class="custom-select">
-                  <option selected="">همه دسته بندیها</option>
+                  <option selected>همه دسته بندیها</option>
                   <option>-- مواد غذایی و یخ زده</option>
                   <option>-- میوه های تازه</option>
                   <option>-- ماهی تازه</option>

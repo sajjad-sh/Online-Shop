@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AttController;
+use App\Http\Controllers\Admin\CartController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CommentController;
 use App\Http\Controllers\Admin\DiscountController;
@@ -12,10 +13,11 @@ use App\Http\Controllers\Admin\SlideController;
 use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::name('admin.')->prefix('admin')
+Route::name('admin.')
+    ->prefix('admin')
+    ->middleware('auth')
     ->group(function () {
         Route::get('', AdminController::class)
-            ->middleware('auth')
             ->name('index');
 
         Route::resource('users', UserController::class);
@@ -78,3 +80,8 @@ Route::name('admin.')->prefix('admin')
 Route::patch('update-favorites/{user}', [UserController::class, 'updateFavorites'])
     ->name('updateFavorites')
     ->middleware(['auth']);
+
+Route::resource('cart', CartController::class)
+    ->only(['index', 'update', 'destroy']);
+Route::get('cart/add/{product}/{count}', [CartController::class, 'addProduct'])
+    ->name('cart.addProduct');
