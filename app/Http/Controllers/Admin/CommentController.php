@@ -118,7 +118,7 @@ class CommentController extends Controller
     }
 
     /**
-     * Verify the comment.
+     * Unverify the comment.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id

@@ -85,3 +85,5 @@ Route::resource('cart', CartController::class)
     ->only(['index', 'update', 'destroy']);
 Route::get('cart/add/{product}/{count}', [CartController::class, 'addProduct'])
     ->name('cart.addProduct');
+Route::post('cart/discount/', [CartController::class, 'applyDiscount'])
+    ->name('cart.applyDiscount');

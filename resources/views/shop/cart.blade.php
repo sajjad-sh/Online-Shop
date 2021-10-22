@@ -1,4 +1,3 @@
-@dd(request()->cookie('cart_items'))
 @extends('layouts.shop')
 
 @section('title', 'محصول')
@@ -44,25 +43,27 @@
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($products as $product)
+                @foreach($cart_items as $cart_item)
                   <tr>
                     <td class="product-thumbnail">
                       <a href="single-product.blade.php">
-                        <img src="{{$product->primary_image}}" alt="">
+                        <img src="{{$cart_item->primary_image}}" alt="">
                       </a>
                     </td>
                     <td class="product-name">
                       <h4><a href="single-product.blade.php">
-                          {{ $product->fa_title }}
+                          {{ $cart_item->fa_title }}
                         </a></h4>
                     </td>
                     <td class="product-price">
-                      @price($product->price)
+                      @price($cart_item->price)
                     </td>
                     <td class="product-quantity">
                       <div class="cart--plus--minus">
-                        <form action="#" class="num-block">
-                          <input type="text" class="in-num" value="1" readonly="">
+                        <form action="{{ route('cart.update', $cart_item->id) }}" class="num-block" id="updateCart" method="post">
+                          @csrf
+                          @method('PUT')
+                          <input name="new_quantity" type="text" class="in-num" value="{{ $cart_items_counts[$cart_item->id] ?: 1 }}" readonly="">
                           <div class="qtybutton-box">
                             <span class="plus"><i class="fas fa-angle-up"></i></span>
                             <span class="minus dis"><i class="fas fa-angle-down"></i></span>
@@ -72,29 +73,56 @@
                     </td>
                     <td class="product-subtotal">
                       <span>
-                        @price($product->price)
+                        @price($cart_item->price)
                       </span>
                     </td>
-                    <td class="product-delete"><a href="#"><i class="far fa-trash-alt"></i></a></td>
-                  </tr>
-                @endforeach
+                    <td class="product-delete">
+                      <form action="{{ route('cart.destroy', $cart_item) }}" method="post">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" style="background: none; color: inherit; border: none; padding: 0; font: inherit; cursor: pointer; outline: inherit;">
+                          <i class="far fa-trash-alt"></i>
+                        </button>
+                      </form>
 
+                    </td>
+                  </tr>
+                  @endforeach
                 </tbody>
               </table>
             </div>
           </div>
           <div class="shop-cart-bottom">
             <div class="cart-coupon">
-              <form action="#">
-                <input type="text" placeholder="کد تخفیف را وارد کیند ...">
-                <button class="btn">اعمال تخفیف</button>
+              <form action="{{ route('cart.applyDiscount')}}" method="post">
+                @csrf
+                <input name="cart_total_price" type="hidden" value="{{ cartTotalPrice($cart_items, $cart_items_counts, false) }}">
+                <input name="discount_code" type="text" placeholder="کد تخفیف را وارد کنید ...">
+                <button type="submit" class="btn">اعمال تخفیف</button>
               </form>
             </div>
             <div class="continue-shopping">
-              <a href="shop.html" class="btn">بروزرسانی سبد</a>
+              <a onclick="updateCart()" class="btn">بروزرسانی سبد</a>
             </div>
           </div>
+          <br>
+
+          @if(isset(session('message')['error']))
+            <div class="alert alert-danger" role="alert">
+              {{ session('message')['error'] }}
+            </div>
+          @elseif(isset(session('message')['success']))
+            <div class="alert alert-success" role="alert">
+              {{ session('message')['success'] }}
+            </div>
+          @endif
+
         </div>
+        <script>
+          function updateCart() {
+            document.getElementById("updateCart").submit();
+          }
+        </script>
         <div class="col-xl-5 col-lg-12">
           <div class="shop-cart-total">
             <h3 class="title">مجموع سبد خرید</h3>
@@ -117,7 +145,7 @@
                   <li class="cart-total-amount">
                     <span>مجموع کل سبد</span>
                     <span class="amount">
-                      @totalPrice($products)
+                      {{ cartTotalPrice($cart_items, $cart_items_counts) }} &nbsp;تومان
                     </span>
                   </li>
                 </ul>

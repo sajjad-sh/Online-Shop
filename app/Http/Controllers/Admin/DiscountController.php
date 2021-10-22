@@ -93,7 +93,7 @@ class DiscountController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Discount  $discount
-     * @return \Illuminate\Http\Response
+     * @return RedirectResponse
      */
     public function destroy(Discount $discount)
     {

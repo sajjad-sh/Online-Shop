@@ -131,9 +131,9 @@ Route::get('/test', function () {
 //    dd($product->add_to_favori
 //tes);
 //    Response::
-/*
- * [{"item":6679984,"quantity":1,"price":13990000},{"item":2052290,"quantity":1,"price":1895000}]
- */
+    /*
+     * [{"item":6679984,"quantity":1,"price":13990000},{"item":2052290,"quantity":1,"price":1895000}]
+     */
 
 //
 //
@@ -146,11 +146,21 @@ Route::get('/test', function () {
 //    if (!(request()->cookie('cart_items')))
 //        Cookie::queue('cart_items', json_encode($cart_items), 7 * 24 * 60 * 60);
 
+//
+//    $cart_items = json_decode(request()->cookie('cart_items'), true) ?: [];
+//
+//    foreach ($cart_items as $key => $subArr) {
+//        if($subArr['item'] == 77 )
+//            unset($cart_items[$key]);
+//    }
+//    dd($cart_items);
 
 
+    $discount = \App\Models\Discount::query()->where('code', 'wisnter')->first();
 
-
-
+    dd($discount);
+    if(\Illuminate\Support\Collection::empty($discount))
+        $discount = false;
 
 
 });

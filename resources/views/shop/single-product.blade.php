@@ -89,13 +89,16 @@
               </ul>
             </div>
             <div class="shop-details-price">
-              <h2 class="price">{{number_format($product->price)}} تومان</h2>
+              <h2 class="price">{{number_format($product->total_price)}} تومان</h2>
               @if($product->status == 0 or $product->inventory == 0)
                 <h5 class="stock-status text-danger">- ناموجود</h5>
               @else
                 <h5 class="stock-status">- موجود در انبار</h5>
               @endif
             </div>
+            <h5 style="color: red;" class="price">
+              <del>{{number_format($product->price)}} تومان</del>
+            </h5>
             <p>
               {{$product->description}}
             </p>

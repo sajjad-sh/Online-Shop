@@ -1,59 +1,30 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\AttTitle;
 use App\Models\AttValue;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\View\View;
 
 class AttController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Contracts\View\View
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
     public function index()
     {
-        $att_titles = AttTitle::with('att_values')
-            ->get();
-
-        return view('admin.shop.attributes.index')
-            ->with('att_titles', $att_titles);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return View
-     */
-    public function create()
-    {
-        $att_titles = AttTitle::all();
-
-        return view('admin.shop.attributes.create')
-            ->with('att_titles', $att_titles);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return View
-     */
-    public function createTitle()
-    {
-        return view('admin.shop.attributes.create-title');
+        return AttTitle::with('att_values')->paginate(15);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @return RedirectResponse
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
     {
@@ -69,15 +40,13 @@ class AttController extends Controller
 
         $att_value->save();
 
-        return redirect()->route('admin.shop.attributes.index');
+        return response()
+            ->json([
+                'message' => 'Attribute Value Created Successfully.',
+                'data' => $att_value
+            ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return RedirectResponse
-     */
     public function storeTitle(Request $request)
     {
         $validated = $request->validate([
@@ -92,30 +61,30 @@ class AttController extends Controller
 
         $att_title->save();
 
-        return redirect()->route('admin.shop.attributes.index');
+        return response()
+            ->json([
+                'message' => 'Attribute Title Created Successfully.',
+                'data' => $att_title
+            ]);
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Display the specified resource.
      *
-     * @param \App\Models\AttTitle $att_title
-     * @return \Illuminate\Contracts\View\View
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function show($id)
     {
-        $att_titles = AttTitle::all();
-        $att_value = AttValue::query()->find($id);
-
-        return view('admin.shop.attributes.edit')
-            ->with('att_titles', $att_titles)
-            ->with('att_value', $att_value);
+        //
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(Request $request, $id)
     {
@@ -128,34 +97,46 @@ class AttController extends Controller
         if($validator)
             $att_value->update($request->all());
 
-        return redirect()->route('admin.shop.attributes.index');
+        return response()
+            ->json([
+                'message' => 'Attribute Value Updated Successfully.',
+                'data' => $att_value,
+            ]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Models\AttValue $att_value
-     * @return RedirectResponse
+     * @param  int  $id
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy($id)
     {
         $att_value = AttValue::find($id);
         $att_value->delete();
 
-        return back();
+        return response()
+            ->json([
+                'message' => 'Attribute Value Deleted Successfully.',
+                'data' => $att_value,
+            ]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param \App\Models\AttValue $att_title
-     * @return RedirectResponse
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroyTitle($id)
     {
         $att_title = AttTitle::find($id);
         $att_title->delete();
 
-        return back();
+        return response()
+            ->json([
+                'message' => 'Attribute Title Deleted Successfully.',
+                'data' => $att_title,
+            ]);
     }
 }

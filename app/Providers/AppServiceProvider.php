@@ -3,10 +3,11 @@
 namespace App\Providers;
 
 use App\Models\Category;
+use Illuminate\Http\Request;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
-use Nette\Utils\Paginator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -27,15 +28,22 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Blade::directive('price', function ($expression) {
-            return "<?php echo number_format($expression) . \"&nbsp; تومان\"; ?>";
+        Blade::directive('price', function ($product) {
+            return "<?php echo number_format($product) . \"&nbsp; تومان\"; ?>";
         });
 
-        Blade::directive('totalPrice', function ($expression) {
-            return "<?php echo totalPrice($expression) . \"&nbsp; تومان\"; ?>";
+        Blade::directive('cartTotalPrice', function ($array) {
+            $cart_products = $array[0];
+            $cart_items_counts = $array[1];
+            return "<?php echo cartTotalPrice($cart_products, $cart_items_counts) . \"&nbsp; تومان\"; ?>";
         });
 
-        \Illuminate\Pagination\Paginator::useBootstrap();
+        Blade::directive('productTotalPrice', function ($product) {
+            return "<?php echo $product->totalprice . \"&nbsp; تومان\"; ?>";
+        });
+
+        #TODO: How to retrieve cookie in app service provider
+        Paginator::useBootstrap();
 
         $categories = Category::all();
         View::share('categories', $categories);

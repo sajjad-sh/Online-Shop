@@ -432,7 +432,7 @@
             </div>
             <div class="col-md-4 col-sm-3">
               <div class="section-btn-link text-right text-md-left">
-                <a href="{{\Illuminate\Support\Facades\URL::to('categories/'.$subcategory->slug)}}">همه محصولات <i class="fas fa-angle-double-left"></i></a>
+                <a href="{{\Illuminate\Support\Facades\URL::to('category/'.$subcategory->slug)}}">همه محصولات <i class="fas fa-angle-double-left"></i></a>
               </div>
             </div>
           </div>
@@ -442,7 +442,7 @@
               <div class="sp--product--item mb-50">
                 <div class="sp--product--thumb">
                   <a href="cart.html" class="wishlist"><i class="flaticon-heart-shape-outline"></i></a>
-                  <a href="{{\Illuminate\Support\Facades\URL::to($product->slug)}}"><img src="{{$product->primary_image ? \Illuminate\Support\Facades\URL::to($product->primary_image) : asset('img/product/sp__products04.png')}}" alt=""></a>
+                  <a href="{{\Illuminate\Support\Facades\URL::to('product/'.$product->slug)}}"><img src="{{$product->primary_image ? \Illuminate\Support\Facades\URL::to($product->primary_image) : asset('img/product/sp__products04.png')}}" alt=""></a>
                 </div>
                 <div class="sp--product--content">
                   <h6 class="title"><a href="shop-details.html">{{$product->fa_title}}</a></h6>

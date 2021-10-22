@@ -248,4 +248,23 @@ class Product extends Model
             return true;
         return false;
     }
+
+    public function getTotalPriceAttribute()
+    {
+        if(!$this->isAmazing())
+            return $this->price;
+
+        $discount_type = $this->amazing->type;
+        $discount_amount = $this->amazing->amount;
+
+        if ($discount_type == 0)
+            return $this->price - ($discount_amount / 100 * $this->price);
+
+        return $this->price - $discount_amount;
+    }
+
+    public function isAmazing()
+    {
+        return $this->amazing_id ? true : false;
+    }
 }

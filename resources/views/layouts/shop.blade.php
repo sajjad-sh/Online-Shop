@@ -62,7 +62,7 @@
               <li class="header-top-lang">
                 <div class="dropdown">
                   <button class="dropdown-toggle" type="button" id="dropdownMenuButton2"
-                          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">پارسی
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">پارسی
                   </button>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
                     <a class="dropdown-item" href="home.blade.php">انگلیسی</a>
@@ -74,7 +74,7 @@
               <li class="header-top-currency">
                 <div class="dropdown">
                   <button class="dropdown-toggle" type="button" id="dropdownMenuButton3"
-                          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">تومان
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">تومان
                   </button>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton3">
                     <a class="dropdown-item" href="home.blade.php">دلار</a>
@@ -132,9 +132,9 @@
                 </select>
 
 
-                  <div class="autocomplete" style="width:350px;">
-                    <input name="searchProducts" id="searchProducts" type="text" placeholder="جستجوی محصول مورد نظر..." style="width:345px;">
-                  </div>
+                <div class="autocomplete" style="width:350px;">
+                  <input name="searchProducts" id="searchProducts" type="text" placeholder="جستجوی محصول مورد نظر..." style="width:345px;">
+                </div>
                 <button type="submit"><i class="flaticon-loupe-1"></i></button>
               </form>
 
@@ -153,56 +153,74 @@
                 </li>
                 <li class="header-cart-action">
                   <div class="header-cart-wrap">
-                    <a href="cart.html"><i class="flaticon-shopping-basket"></i></a>
-                    <span class="item-count">2</span>
+                    <a href="{{ route('cart.index') }}"><i class="flaticon-shopping-basket"></i></a>
+                    <span class="item-count">
+                      {{ request()->cookie('cart_count' ) ?: 0 }}
+                    </span>
+
                     <ul class="minicart">
-                      <li class="d-flex align-items-start">
-                        <div class="cart-img">
-                          <a href="single-product.blade.php"><img src="{{asset('img/product/cart_p01.jpg')}}"
-                                                                  alt=""></a>
-                        </div>
-                        <div class="cart-content">
-                          <h4><a href="single-product.blade.php">آجیل تازه مزرعه ارگانیک</a></h4>
-                          <div class="cart-price">
-                            <span class="new">22.000 تومان</span>
-                            <span><del>22.000 تومان</del></span>
+
+                      @php
+                        $cart_items = getCartItems()[0];
+                        $cart_items_counts = getCartItems()[1];
+                        $cart_count = getCartItems()[2];
+                      @endphp
+
+                      @foreach(getCartItems()[0] as $cart_item)
+                        <li class="d-flex align-items-start">
+                          <div class="cart-img">
+                            <a href="{{ \Illuminate\Support\Facades\URL::to('/product/prd-'.$cart_item->id) }}">
+                              <img src="{{  \Illuminate\Support\Facades\URL::to($cart_item->primary_image) }}"
+                                alt="">
+                            </a>
                           </div>
-                        </div>
-                        <div class="del-icon">
-                          <a href="#"><i class="far fa-trash-alt"></i></a>
-                        </div>
-                      </li>
-                      <li class="d-flex align-items-start">
-                        <div class="cart-img">
-                          <a href="single-product.blade.php"><img src="{{asset('img/product/cart_p02.jpg')}}"
-                                                                  alt=""></a>
-                        </div>
-                        <div class="cart-content">
-                          <h4><a href="single-product.blade.php">آجیل تازه مزرعه ارگانیک</a></h4>
-                          <div class="cart-price">
-                            <span class="new">22.000 تومان</span>
-                            <span><del>22.000 تومان</del></span>
+                          <div class="cart-content">
+                            <h4><a href="{{ \Illuminate\Support\Facades\URL::to('/product/prd-'.$cart_item->id) }}">
+                                {{ $cart_item->fa_title }}
+                              </a></h4>
+                            <div class="cart-price">
+                              <span style="display: block;" class="new">
+                                @price($cart_item->total_price)
+                              </span>
+                              @if($cart_item->isAmazing())
+                                <span style="display: block; color: red">
+                                  <del>
+                                    @price($cart_item->price)
+                                  </del>
+                                </span>
+                              @endif
+                              <span style="display: block; color: green;">
+                                <strong>x{{ $cart_items_counts[$cart_item->id] }}</strong>
+                              </span>
+                            </div>
                           </div>
-                        </div>
-                        <div class="del-icon">
-                          <a href="#"><i class="far fa-trash-alt"></i></a>
-                        </div>
-                      </li>
+                          <div class="del-icon">
+                            <a href="#"><i class="far fa-trash-alt"></i></a>
+                          </div>
+                        </li>
+                      @endforeach
                       <li>
                         <div class="total-price">
                           <span class="f-left">مجموع:</span>
-                          <span class="f-right">44.000 تومان</span>
+                          <span class="f-right">
+                            {{ cartTotalPrice($cart_items, $cart_items_counts) }} &nbsp;تومان
+                          </span>
                         </div>
                       </li>
                       <li>
                         <div class="checkout-link">
-                          <a href="cart.html">سبد خرید</a>
+                          <a href="{{ route('cart.index') }}">سبد خرید</a>
                           <a class="black-color" href="checkout.html">صورتحساب</a>
                         </div>
                       </li>
+
+
                     </ul>
                   </div>
-                  <div class="cart-amount">44.000 تومان</div>
+
+                  <div class="cart-amount">
+                    {{ cartTotalPrice($cart_items, $cart_items_counts) }} &nbsp;تومان
+                  </div>
                 </li>
               </ul>
             </div>
@@ -279,7 +297,7 @@
                       </li>
                     @elseif($category->parent_id === 0 && !\App\Models\Category::hasChildren($category))
                       <li>
-                        <a href="/categories/{{$category->slug}}">
+                        <a href="/category/{{$category->slug}}">
                           <i class="{{$category->icon}}"></i>{{$category->name}}
                           &nbsp;&nbsp;
                           <span class="product-count" style="display: inline-block;">
@@ -320,7 +338,7 @@
               <div class="header-super-store d-none d-xl-block d-lg-none d-md-block">
                 <div class="dropdown">
                   <button class="dropdown-toggle" type="button" id="dropdownMenuButton4"
-                          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
                       class="flaticon-shop"></i> فروشگاه اینترنتی
                   </button>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton4">
@@ -391,7 +409,7 @@
                 <li>
                   <div class="icon"><i class="flaticon-mail"></i></div>
                   <p><a href=""><span class="__cf_email__"
-                                      data-cfemail="70030500001f020430061517151e5e131f1d">[email&#160;protected]</span></a>
+                        data-cfemail="70030500001f020430061517151e5e131f1d">[email&#160;protected]</span></a>
                   </p>
                 </li>
                 <li>

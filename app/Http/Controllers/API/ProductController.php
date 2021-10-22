@@ -1,16 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreProductRequest;
-use App\Http\Requests\UpdateProductRequest;
 use App\Models\Image;
-use App\Models\AttTitle;
-use App\Models\AttValue;
 use App\Models\Product;
-use Illuminate\Contracts\View\View;
-use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
@@ -23,7 +18,7 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return View
+     * @return \Illuminate\Http\Response
      */
     public function index()
     {
@@ -32,34 +27,18 @@ class ProductController extends Controller
         else
             $products = Product::withTrashed();
 
-        $products = $products->paginate(15);
+        $products = $products->with(['categories', 'att_values', 'comments'])->paginate(15);
 
-        return view('admin.shop.products.index')
-            ->with('products', $products);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return view
-     */
-    public function create()
-    {
-        $titles = AttTitle::all();
-        $values = AttValue::all();
-
-        return view('admin.shop.products.create')
-            ->with('titles', $titles)
-            ->with('values', $values);
+        return $products;
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return RedirectResponse
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function store(StoreProductRequest $request)
+    public function store(Request $request)
     {
         $special_specifications = json_encode(
             array_combine($request->validated()['s_titles'], $request->validated()['s_values'])
@@ -77,8 +56,6 @@ class ProductController extends Controller
             'amazing_id' =>  $request->validated()['amazing_id'],
             'special_specifications' =>  $special_specifications,
         ]);
-
-//        $product->amazing()->associate($request->validated()['amazing_id']);
 
         if($request->validated()['p_values']) {
             foreach ($request->validated()['p_values'] as $p_value)
@@ -130,67 +107,63 @@ class ProductController extends Controller
 
         $product->save();
 
-        return redirect()->route('admin.shop.products.index');
+        return response()
+            ->json([
+                'message' => 'Product Created Successfully!',
+                'data' => $product
+            ], 201);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Product  $product
-     * @return View
+     * @param  int  $id
+     * @return Product
      */
     public function show(Product $product)
     {
-        return view('shop.single-product')
-            ->with('product', $product);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Product  $product
-     * @return View
-     */
-    public function edit(Product $product)
-    {
-        $all_titles = AttTitle::all();
-        $all_values = AttValue::all();
-
-        return view('admin.shop.products.edit')
-            ->with('product', $product)
-            ->with('all_titles', $all_titles)
-            ->with('all_values', $all_values);
+        return $product;
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Product  $product
-     * @return RedirectResponse
+     * @param  int  $id
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function update(UpdateProductRequest $request, Product $product)
+    public function update(Request $request, Product $product)
     {
         foreach ($request->att_values as $att_value)
             $product->att_values()->attach($att_value);
 
         if ($product->update($request->validated()))
-            return redirect()->route('admin.shop.products.index');
+            return response()
+                ->json([
+                    'message' => 'Product Updated Successfully!',
+                    'data' => $product
+                ], 200);
 
-        return back();
+        return response()
+            ->json([
+                'message' => 'Deleted Failed!',
+            ], 404);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
+     * @param  int  $id
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy($id)
+    public function destroy(Product $product)
     {
-        Product::find($id)->delete();
+        $product->delete();
 
-        return back();
+        return response()
+            ->json([
+                'message' => 'Soft Deleted Successfully!',
+            ], 200);
     }
 
     public function delete($id)
@@ -199,13 +172,19 @@ class ProductController extends Controller
 
         $product->forceDelete();
 
-        return back();
+        return response()
+            ->json([
+                'message' => 'Force Deleted Successfully!',
+            ], 200);
     }
 
     public function restore($id)
     {
         Product::withTrashed()->find($id)->restore();
 
-        return back();
+        return response()
+            ->json([
+                'message' => 'Restore Successfully!',
+            ], 200);
     }
 }
