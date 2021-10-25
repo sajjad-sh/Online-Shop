@@ -29,7 +29,7 @@
                     {{__("payment.method.$payment->payment_gateway")}}
                   @endif
                 </td>
-                <td>{{$payment->created_at}}</td>
+                <td>{{verta($payment->created_at)}}</td>
             </tr>
         @endforeach
         </tbody>

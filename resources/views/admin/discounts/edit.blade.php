@@ -25,8 +25,6 @@
                   @endforeach
                 @endif
 
-                <!-- TODO: @old for forms -->
-                <!-- TODO: Front Validation -->
                 <div class="form-group row">
                   <br>
                   <div class="col-sm-9">
@@ -49,7 +47,6 @@
                     </select>
                     <br>
 
-                    <!-- TODO: New Field depend on value of previuos select tag -->
                     <label for="amount">مبلغ/درصد</label>
                     <input type="number" class="form-control" id="amount" name="amount" placeholder="مبلغ/درصد" value="{{$discount->amount}}" />
 

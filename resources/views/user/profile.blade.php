@@ -135,7 +135,7 @@
                             {{$comment->product->fa_title}}
                           </a>
                         </span>
-                      <span class="description">ارسال شده در {{$comment->created_at}}</span>
+                      <span class="description">ارسال شده در {{verta($comment->created_at)}}</span>
                     </div>
                     <!-- /.user-block -->
                     <p>
@@ -162,13 +162,13 @@
                     <i class="fa fa-user bg-aqua"></i>
 
                     <div class="timeline-item">
-                      <span class="time"><i class="fa fa-clock-o"></i> &nbsp;{{$order->created_at}}</span>
+                      <span class="time"><i class="fa fa-clock-o"></i> &nbsp;{{verta($order->created_at)}}</span>
                       <h4 style="color: blue">
-                        سفارش PRC-{{$order->cart_id}}
+                        سفارش PRC-{{$order->id}}
                       </h4>
                       <ul>
                         <li><span style="color: red;">وضعیت سفارش:</span> {{__("order.status.$order->status")}} </li>
-                        <li><span style="color: red;">تاریخ سفارش:</span> {{$order->created_at}} </li>
+                        <li><span style="color: red;">تاریخ سفارش:</span> {{verta($order->created_at)}} </li>
                         @if($order->cart->discount)
                           <li>
                             @php $discount_type = $order->cart->discount->type @endphp
@@ -177,8 +177,10 @@
                         @endif
                         <li><span style="color: red;">قیمت نهایی:</span> {{$order->cart->total_price}} </li>
                         <li><span style="color: red;">قیمت خالص:</span> {{$order->cart->net_price}} </li>
-                        <li><span style="color: red;">آدرس ارسال شده:</span> {{$order->address->content}} </li>
-                        <li><span style="color: red;">متد پرداخت:</span> {{__("payment.method.$order->payment_method")}}
+                        <li><span style="color: red;">آدرس ارسال شده:</span> {{$order->address->content ?? ''}} </li>
+                        <li>
+                          <span style="color: red;">متد پرداخت:</span>
+                          {{__("payment.method.".$order->payment->payment_method)}}
                         </li>
 
                         @if($order->cancel_reason)

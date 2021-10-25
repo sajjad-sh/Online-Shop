@@ -256,7 +256,7 @@
                                 <div class="d-flex flex-row user-info">
                                   <span class="d-block font-weight-bold name">{{$comment->user->full_name}}</span>
                                 </div>
-                                <span class="date text-black-50" style="font-size: 12px">{{$comment->created_at}}</span>
+                                <span class="date text-black-50" style="font-size: 12px">{{verta($comment->created_at)}}</span>
 
                               </div>
 

@@ -29,6 +29,13 @@
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-xl-7">
+
+          @if(session('payment_message'))
+            <div class="alert alert-success" role="alert">
+              {{ session('payment_message') }}
+            </div>
+          @endif
+
           <div class="cart-wrapper">
             <div class="table-responsive">
               <table class="table mb-0">
@@ -149,7 +156,7 @@
                     </span>
                   </li>
                 </ul>
-                <a href="checkout.html" class="btn">برو به صورتحساب</a>
+                <a href="{{ route('checkout') }}" class="btn">برو به صورتحساب</a>
               </form>
             </div>
           </div>

@@ -15,6 +15,7 @@ class Address extends Model
      * @var string[]
      */
     protected $fillable = [
+        'user_id',
         'content',
         'location'
     ];

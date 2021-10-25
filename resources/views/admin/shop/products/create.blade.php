@@ -50,7 +50,6 @@
                     <label for="inventory">موجودی</label>
                     <input type="number" class="form-control" id="inventory" name="inventory" placeholder="موجودی"/>
 
-                    <!-- TODO: Enable value when key selected -->
                     <label for="p_titles[]">مشخصات فنی ثابت</label>
                     <br>
                     <select class="form-select primary_spec" aria-label="Default select example" name="p_titles[]"

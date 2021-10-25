@@ -34,8 +34,7 @@
         <td>{{$discount->amount}}</td>
         <td>{{$discount->inventory}}</td>
         <td>{{$discount->sales}}</td>
-        <!-- TODO: toJalali dates -->
-        <td>{{$discount->created_at}}</td>
+        <td>{{verta($discount->created_at)}}</td>
         <td>
           <a href="{{route('admin.discounts.edit', $discount)}}" style="color: black;">
             <button class="btn btn-app" onclick="return confirm('آیا می‌خواهید این کاربر را ویرایش کنید ؟')">

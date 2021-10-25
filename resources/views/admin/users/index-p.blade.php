@@ -32,11 +32,9 @@
         <td>{{$user->phone}}</td>
         <td>{{$user->role}}</td>
         <td>{{$user->addresses}}</td>
-        <td>{{$user->created_at}}</td>
+        <td>{{verta($user->created_at)}}</td>
         <td>{{$user->deleted_at ?'بن':'فعال'}}</td>
 
-        <!-- TODO: Fix modals -->
-        <!-- TODO: Add Forms to Components -->
         <td style="text-align: center;">
           @if($user->deleted_at)
             <form action="{{route('admin.users.update', $user->id)}}" method="post"

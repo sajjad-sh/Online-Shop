@@ -14,9 +14,8 @@ class Order extends Model
      *
      * @var string[]
      */
-    //todo: category for specification
     protected $fillable = [
-        'card_id',
+        'cart_id',
         'address_id',
         'status',
         'payment_method',
@@ -52,5 +51,11 @@ class Order extends Model
     public function getOrderDetails()
     {
         auth()->user()->cart;
+    }
+
+    public function getPaymentAttribute()
+    {
+        $cart_id = $this->cart_id;
+        return Payment::query()->where('cart_id', $cart_id)->first('payment_method');
     }
 }

@@ -16,7 +16,7 @@ class StoreCategoryRequest extends FormRequest
         return true;
     }
 
-    # TODO: Customize error messages
+    # TODO: Refactore Validates and Customize error messages
     /**
      * Get the validation rules that apply to the request.
      *

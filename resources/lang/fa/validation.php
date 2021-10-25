@@ -135,6 +135,7 @@ return [
         'password' => 'رمز عبور',
         'first_name' => 'نام',
         'last_name' => 'نام خانوادگی',
-        'full_name' => 'نام و نام خانوادگی'
+        'full_name' => 'نام و نام خانوادگی',
+        'payment_method' => 'درگاه پرداختی'
     ]
 ];

@@ -35,8 +35,6 @@ class Product extends Model
         'status'
     ];
 
-    //TODO: casts?
-
     /**
      * Get the card items for the product.
      */
@@ -103,7 +101,7 @@ class Product extends Model
         $this->attributes['slug'] = strtolower(str_replace(' ', '-', "$value"));
     }
 
-    # TODO: use accessor for user defined function and instead of query in blade
+    # TODO: use accessor, scopes, helpers for user defined function and instead of query in blade
     /**
      * a query for fetch brand of product.
      */
@@ -258,7 +256,7 @@ class Product extends Model
         $discount_amount = $this->amazing->amount;
 
         if ($discount_type == 0)
-            return $this->price - ($discount_amount / 100 * $this->price);
+            return ceil($this->price - ($discount_amount / 100 * $this->price));
 
         return $this->price - $discount_amount;
     }

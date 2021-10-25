@@ -25,7 +25,7 @@ Route::name('admin.')
             ->name('users.delete');
 
         Route::resource('orders', OrderByController::class);
-        Route::resource('payments', PaymentController::class);
+        Route::resource('payments', PaymentController::class)->only('index');
         Route::resource('discounts', DiscountController::class);
 
         Route::name('shop.')->prefix('shop')

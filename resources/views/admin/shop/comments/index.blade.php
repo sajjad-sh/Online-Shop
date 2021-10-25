@@ -44,7 +44,7 @@
         <td>{{$comment->cancel_reason ? $comment->cancel_reason : '-'}}</td>
         <td>{{$comment->likes}}</td>
         <td>{{$comment->dislikes}}</td>
-        <td>{{$comment->created_at}}</td>
+        <td>{{verta($comment->created_at)}}</td>
 
         <td style="text-align: center; width: 100px">
 

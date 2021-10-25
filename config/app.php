@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'فروشگاه اینترنتی پارادایس'),
 
     /*
     |--------------------------------------------------------------------------
@@ -39,7 +39,7 @@ return [
     |
     */
 
-    'debug' => (bool) env('APP_DEBUG', false),
+    'debug' => (bool)env('APP_DEBUG', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -166,6 +166,8 @@ return [
          * Package Service Providers...
          */
         Spatie\Permission\PermissionServiceProvider::class,
+        Hekmatinasser\Verta\Laravel\VertaServiceProvider::class,
+
 
         /*
          * Application Service Providers...
@@ -191,6 +193,9 @@ return [
 
     'aliases' => [
 
+        /*
+         * Laravel Class Aliases...
+         */
         'App' => Illuminate\Support\Facades\App::class,
         'Arr' => Illuminate\Support\Arr::class,
         'Artisan' => Illuminate\Support\Facades\Artisan::class,
@@ -230,6 +235,10 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
+        /*
+         * Package Class Aliases...
+         */
+        'Verta' => Hekmatinasser\Verta\Verta::class,
     ],
 
 ];

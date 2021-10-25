@@ -4,7 +4,6 @@
 
 @section('content')
 
-  <!-- TODO: Review code and move to components -->
     <h1>داشبورد مدیریت</h1><br>
 
     <ul class="list-group">

@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Cart;
+use App\Models\Order;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Route;
@@ -15,10 +17,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-# TODO: s Plural ?
-# TODO: Select best route Structure
-# TODO: use except and only for Resource routes after complete crud
-# TODO: Multiple routes files ?
+
+# TODO: Refactor route Structures and names
 
 /*
  *
@@ -156,11 +156,32 @@ Route::get('/test', function () {
 //    dd($cart_items);
 
 
-    $discount = \App\Models\Discount::query()->where('code', 'wisnter')->first();
+//    $discount = \App\Models\Discount::query()->where('code', 'wisnter')->first();
+//
+//    dd($discount);
+//    if(\Illuminate\Support\Collection::empty($discount))
+//        $discount = false;
 
-    dd($discount);
-    if(\Illuminate\Support\Collection::empty($discount))
-        $discount = false;
+
+//    dd(auth()->user()->addresses);
+//    dd(auth()->user()->getAuthIdentifier());
+
+//    $cart_ids = [];
+//    $carts = Cart::query()->where('user_id', 13)->get('id')->toArray();
+//    foreach ($carts as $key => $array)
+//        $cart_ids[] = $array['id'];
+//
+//    $orders = Order::query()
+//        ->whereIn('cart_id', $cart_ids)
+//        ->latest()->paginate(1);
+//
+//    dd($orders);
+
+    $order = Order::find(70);
+
+    dd($order->payment);
+
+
 
 
 });

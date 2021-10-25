@@ -15,15 +15,16 @@ class Payment extends Model
      * @var string[]
      */
     protected $fillable = [
+        'user_id',
         'amount',
-        'payment_gateway'
+        'payment_method'
     ];
 
     /**
      * Get the user that owns the payment.
      */
-    public function user()
+    public function cart()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Cart::class);
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Address;
+use App\Models\Cart;
 use App\Models\Comment;
 use App\Models\Order;
 use App\Models\Product;
@@ -28,8 +29,13 @@ class ProfileController extends Controller
             ->whereIn('id', $favorites)
             ->paginate(15);
 
+        $cart_ids = [];
+        $carts = Cart::query()->where('user_id', $user->id)->get('id')->toArray();
+        foreach ($carts as $key => $array)
+            $cart_ids[] = $array['id'];
+
         $orders = Order::query()
-            ->where('user_id', $user->id)
+            ->whereIn('cart_id', $cart_ids)
             ->latest()->paginate(15);
 
         $comments = Comment::query()

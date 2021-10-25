@@ -15,6 +15,9 @@ class Cart extends Model
      * @var string[]
      */
     protected $fillable = [
+        'user_id',
+        'discount_id',
+        'count',
         'total_price',
         'net_price'
     ];
@@ -50,4 +53,14 @@ class Cart extends Model
     {
         return $this->hasMany(CartItem::class);
     }
+
+
+    /**
+     * Get the payments for the user.
+     */
+    public function payments()
+    {
+        return $this->hasOne(Payment::class);
+    }
+
 }

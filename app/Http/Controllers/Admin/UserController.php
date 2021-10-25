@@ -23,7 +23,6 @@ class UserController extends Controller
     {
         $users = User::withTrashed()->paginate(15);
 
-        # TODO: Add paginate feature
         return view('admin.users.index')
             ->with('users', $users);
     }

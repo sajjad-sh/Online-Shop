@@ -9,7 +9,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-class SlideController extends Controller
+class  SlideController extends Controller
 {
     /**
      * Display a listing of the resource.

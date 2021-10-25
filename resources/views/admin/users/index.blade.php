@@ -47,7 +47,7 @@
                 <td>{{$user->phone}}</td>
                 <td>{{$user->role}}</td>
                 <td></td>
-                <td>{{$user->created_at}}</td>
+                <td>{{verta($user->created_at)}}</td>
                 <td>
                   @if($user->deleted_at)
                     <span class="label label-danger">مسدود</span>
@@ -55,8 +55,7 @@
                     <span class="label label-success">فعال</span>
                   @endif
                 </td>
-                <!-- TODO: Fix modals -->
-                <!-- TODO: Add Forms to Components -->
+
                 <td style="text-align: center;">
                   @if($user->deleted_at)
                     <form action="{{route('admin.users.update', $user->id)}}" method="post"

@@ -33,7 +33,7 @@
         <td>
           <i class="{{$category->icon}}"></i>
         </td>
-        <td>{{$category->created_at}}</td>
+        <td>{{verta($category->created_at)}}</td>
 
         <td style="text-align: center;">
           <button onclick="return confirm('آیا می‌خواهید این محصول را ویرایش کنید ؟')">

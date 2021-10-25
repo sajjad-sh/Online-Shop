@@ -51,7 +51,7 @@
                 <td>{{$product->sales}}</td>
                 <td>{{$product->visits}}</td>
                 <td>{{__("product.status.$product->status")}}</td>
-                <td>{{$product->created_at}}</td>
+                <td>{{verta($product->created_at)}}</td>
                 <td style="text-align: center;">
 
                   <a href="{{ route('admin.shop.products.edit', $product) }}" style="color: black;">

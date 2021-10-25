@@ -82,7 +82,7 @@
                   </div>
                   @endif
                 </td>
-                <td>{{$order->created_at}}</td>
+                <td>{{verta($order->created_at)}}</td>
                 <td>
                   <form action="{{route('admin.orders.update', $order)}}" method="post">
                     @csrf

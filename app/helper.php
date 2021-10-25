@@ -55,19 +55,23 @@ function getCartItems() {
 
     $cart_item_ids = array();
     $cart_items_counts = array();
+    $cart_items_price = array();
     foreach ($cart_items as $cart_item) {
         $cart_item_ids[] = $cart_item->item;
         $cart_items_counts[$cart_item->item] = $cart_item->quantity;
+        $cart_items_price[$cart_item->item] = $cart_item->price;
     }
 
     $cart_items = Product::query()->findMany($cart_item_ids);
 
-    return [$cart_items, $cart_items_counts, $cart_count];
+    return [$cart_items, $cart_items_counts, $cart_count, $cart_items_price];
 }
 
 function cartTotalPriceAfterDiscount($cart_total_price, $discount_ids) {
 
     $discounts = Discount::query()->findMany($discount_ids);
+
+    $cart_total_price_discount = $cart_total_price;
 
     if(!is_null($discounts)) {
         foreach ($discounts as $discount) {
@@ -77,5 +81,5 @@ function cartTotalPriceAfterDiscount($cart_total_price, $discount_ids) {
                 $cart_total_price_discount = $cart_total_price - $discount->amount;
         }
     }
-    return $cart_total_price_discount;
+    return ($cart_total_price_discount >= 0) ? $cart_total_price_discount : 0;
 }
