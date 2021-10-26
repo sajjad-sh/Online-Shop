@@ -2,7 +2,9 @@
 
 namespace App\Observers;
 
+use App\Mail\CommentStatusChanged;
 use App\Models\Comment;
+use Illuminate\Support\Facades\Mail;
 
 class CommentObserver
 {
@@ -15,6 +17,9 @@ class CommentObserver
     public function verified(Comment $comment)
     {
         info("comment verified");
+
+        Mail::to($comment->user->email)
+            ->later(now()->addSeconds(5), new CommentStatusChanged($comment));
     }
 
     /**
@@ -26,5 +31,8 @@ class CommentObserver
     public function unverified(Comment $comment)
     {
         info("comment unverified");
+
+        Mail::to($comment->user->email)
+            ->later(now()->addSeconds(5), new CommentStatusChanged($comment));
     }
 }

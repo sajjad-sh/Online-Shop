@@ -21,7 +21,7 @@ class Comment extends Model
     ];
 
     protected $observables = [
-      'verified'
+      'verified', 'unverified'
     ];
 
     public function makeVerify()
