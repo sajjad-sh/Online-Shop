@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Comment;
+use Illuminate\Database\Eloquent\Concerns\HasEvents;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -52,7 +53,7 @@ class CommentController extends Controller
      */
     public function index()
     {
-        $comments = Comment::all();
+        $comments = Comment::latest()->paginate(15);
 
         return view('admin.shop.comments.index')
             ->with('comments', $comments);
@@ -106,13 +107,11 @@ class CommentController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return RedirectResponse
      */
     public function verify(Request $request, Comment $comment)
     {
-        $comment->is_verify = 1;
-        $comment->cancel_reason = '';
-        $comment->save();
+        $comment->makeVerify();
 
         return back();
     }
@@ -130,9 +129,7 @@ class CommentController extends Controller
             'cancel_reason' => 'required|min:10|max:255',
         ]);
 
-        $comment->is_verify = 2;
-        $comment->cancel_reason = $validated['cancel_reason'];
-        $comment->save();
+        $comment->makeUnverify($validated['cancel_reason']);
 
         return back();
     }

@@ -2,7 +2,8 @@
 
 @section('title', 'پنل مدیریت - فهرست نظرات')
 
-@section('content')
+@section('content-wrapper')
+
 
   <!-- TODO: Seed and add relations to tables -->
   <h1>فهرست نظرات</h1><br>
@@ -56,48 +57,50 @@
                 @method('PATCH')
 
                 <button type="submit"
-                        style="color: black; background: none;	border: none; 	padding: 0;	font: inherit;	cursor: pointer;	outline: inherit; display: inline-block"
-                        data-bs-toggle="modal" data-bs-target="#active">
-                  <i class="fas fa-check" title="تائید"></i>
+                        style="color: black; background: none;	border: none; 	padding: 0;	font: inherit;	cursor: pointer;	outline: inherit; display: inline-block">
+                  <i class="fas fa-check" title="تائید" onclick="return confirm('آیا می‌خواهید این دیدگاه را تائید کنید ؟')"></i>
                 </button>
-
-                {{--              <x-alert id="active" title="هشدار" message="با انتخاب این گزینه کاربر بازیابی می‌شود. آیا مطمئنید ؟"/>--}}
-
               </form>
               <form action="{{route('admin.shop.comments.unverify', $comment)}}" method="post"
                     style="display: inline-block">
                 @csrf
                 @method('PATCH')
                 <button type="button"
-                        style="color: black; background: none;	border: none; 	padding: 0;	font: inherit;	cursor: pointer;	outline: inherit; display: inline-block"
-                        data-bs-toggle="modal" data-bs-target="#unverify{{$comment->id}}">
+                        style="color: black; background: none;	border: none; 	padding: 0;	font: inherit;	cursor: pointer;	outline: inherit; display: inline-block" data-toggle="modal" data-target="#exampleModal-{{$comment->id}}">
                   <i class="fas fa-ban" title="عدم تائید"></i>
                 </button>
 
-                {{--              <x-alert id="ban" title="هشدار" message="با انتخاب این گزینه کاربر بن می‌شود. آیا مطمئنید ؟"/>--}}
-
-                <div class="modal fade" id="unverify{{$comment->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                  <div class="modal-dialog">
+                <div class="modal fade" id="exampleModal-{{$comment->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
                     <div class="modal-content">
                       <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">New message</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <h5 class="modal-title" id="exampleModalLabel">علت لغو را بنویسید (این پیام برای کاربر ایمیل می‌شود)</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
                       </div>
                       <div class="modal-body">
                         <form>
-                          <div class="mb-3">
-                            <label for="cancel_reason" class="col-form-label">Reason:</label>
-                            <textarea required class="form-control" id="cancel_reason" name="cancel_reason"></textarea>
+                          <div class="form-group">
+                            <textarea class="form-control" id="cancel_reason" name="cancel_reason"></textarea>
                           </div>
                         </form>
                       </div>
                       <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">لغو</button>
+                        <button type="submit" class="btn btn-primary">ثبت</button>
                       </div>
                     </div>
                   </div>
                 </div>
+
+
+
+
+
+
+
+
 
               </form>
             @break
@@ -108,35 +111,35 @@
               @csrf
               @method('PATCH')
               <button type="button"
-                      style="color: black; background: none;	border: none; 	padding: 0;	font: inherit;	cursor: pointer;	outline: inherit; display: inline-block"
-                      data-bs-toggle="modal" data-bs-target="#unverify{{$comment->id}}">
+                      style="color: black; background: none;	border: none; 	padding: 0;	font: inherit;	cursor: pointer;	outline: inherit; display: inline-block" data-toggle="modal" data-target="#exampleModal-{{$comment->id}}">
                 <i class="fas fa-ban" title="عدم تائید"></i>
               </button>
 
-              {{--              <x-alert id="ban" title="هشدار" message="با انتخاب این گزینه کاربر بن می‌شود. آیا مطمئنید ؟"/>--}}
-              <div class="modal fade" id="unverify{{$comment->id}}" tabindex="-1" aria-labelledby="exampleModal2Label" aria-hidden="true">
-                <div class="modal-dialog">
+              <div class="modal fade" id="exampleModal-{{$comment->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModal2Label">New message</h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      <h5 class="modal-title" id="exampleModalLabel">علت لغو را بنویسید (این پیام برای کاربر ایمیل می‌شود)</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
                     </div>
                     <div class="modal-body">
-                      <div class="mb-3">
-                        <label for="cancel_reason" class="col-form-label">Reason:</label>
-                        <textarea required class="form-control" id="cancel_reason" name="cancel_reason"></textarea>
-                      </div>
+                      <form>
+                        <div class="form-group">
+                          <textarea class="form-control" id="cancel_reason" name="cancel_reason"></textarea>
+                        </div>
+                      </form>
                     </div>
                     <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                      <button type="submit" class="btn btn-primary">Submit</button>
+                      <button type="button" class="btn btn-danger" data-dismiss="modal">لغو</button>
+                      <button type="submit" class="btn btn-primary">ثبت</button>
                     </div>
                   </div>
                 </div>
               </div>
 
             </form>
-
 
             @break
 
@@ -147,12 +150,9 @@
               @method('PATCH')
 
               <button type="submit"
-                      style="color: black; background: none;	border: none; 	padding: 0;	font: inherit;	cursor: pointer;	outline: inherit; display: inline-block"
-                      data-bs-toggle="modal" data-bs-target="#active">
-                <i class="fas fa-check" title="تائید"></i>
+                      style="color: black; background: none;	border: none; 	padding: 0;	font: inherit;	cursor: pointer;	outline: inherit; display: inline-block">
+                <i class="fas fa-check" title="تائید" onclick="return confirm('آیا می‌خواهید این دیدگاه را تائید کنید ؟')"></i>
               </button>
-
-              {{--              <x-alert id="active" title="هشدار" message="با انتخاب این گزینه کاربر بازیابی می‌شود. آیا مطمئنید ؟"/>--}}
 
             </form>
             @break
@@ -164,13 +164,9 @@
               @method('DELETE')
 
               <button type="submit"
-                      style="color: black; background: none;	border: none; 	padding: 0;	font: inherit;	cursor: pointer;	outline: inherit; display: inline-block"
-                      data-bs-toggle="modal" data-bs-target="#delete">
-                <i class="fas fa-trash" title="حذف دائم"></i>
+                      style="color: black; background: none;	border: none; 	padding: 0;	font: inherit;	cursor: pointer;	outline: inherit; display: inline-block">
+                <i class="fas fa-trash" title="حذف دائم" onclick="return confirm('آیا می‌خواهید این دیدگاه را حذف کنید ؟')"></i>
               </button>
-
-              {{--            <x-alert id="delete" title="هشدار" message="با انتخاب این گزینه کاربر حذف می‌شود. آیا مطمئنید ؟"/>--}}
-
             </form>
         </td>
 
@@ -178,5 +174,8 @@
     @endforeach
     </tbody>
   </table>
+
+  {{$comments->links()}}
+
 
 @endsection
