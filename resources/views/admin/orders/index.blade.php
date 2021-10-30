@@ -44,11 +44,15 @@
                   <span class="label label-{{__("order.label.$order->status")}}">{{__("order.status.$order->status")}}</span>
                 </td>
                 <td>
-                  @if(!in_array($order->payment_method, [0, 1, 2, 3]))
-                    {{"بانک سرمایه"}}
+                  @if($order->payment)
+                    @if(!in_array($order->payment->payment_method, [0, 1, 2, 3]))
+                      {{"نقدی"}}
 
+                    @else
+                      {{__("payment.method.".$order->payment->payment_method)}}
+                    @endif
                   @else
-                    {{__("payment.method.$order->payment_method")}}
+                    {{"نقدی"}}
                   @endif
                 </td>
                 <td style="width: 239px;">

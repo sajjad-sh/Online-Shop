@@ -2,7 +2,7 @@
 
 @section('title', 'پنل مدیریت - ایجاد خصوصیت-مقدار')
 
-@section('content')
+@section('content-wrapper')
   <div class="page-wrapper">
     <!-- ============================================================== -->
     <!-- Bread crumb and right sidebar toggle -->

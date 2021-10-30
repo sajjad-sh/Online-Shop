@@ -22,6 +22,13 @@ class Order extends Model
         'cancel_reason',
     ];
 
+    protected $observables = ['failed'];
+
+    public function makeFail()
+    {
+        $this->fireModelEvent('failed', false);
+    }
+
     /**
      * Get the cart that owns the order.
      */

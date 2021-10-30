@@ -36,7 +36,6 @@ function cartTotalPriceWithoutDiscount($cart_products, $cart_items_counts) {
     return $cart_total_price ;
 }
 
-
 function cartTotalPrice($cart_products, $cart_items_counts, $number_format = true) {
 
     if(request()->cookie('discount_ids')) {

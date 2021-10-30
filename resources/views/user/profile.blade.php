@@ -123,7 +123,7 @@
               </div>
             </div>
 
-            <div class="active tab-pane" id="activity">
+            <div class="tab-pane" id="activity">
 
                 <!-- Post -->
               @foreach($comments as $comment)
@@ -180,7 +180,7 @@
                         <li><span style="color: red;">آدرس ارسال شده:</span> {{$order->address->content ?? ''}} </li>
                         <li>
                           <span style="color: red;">متد پرداخت:</span>
-                          {{__("payment.method.".$order->payment->payment_method)}}
+                          {{$order->payment ? __("payment.method.".$order->payment->payment_method) : 'پرداخت ناموفق' }}
                         </li>
 
                         @if($order->cancel_reason)

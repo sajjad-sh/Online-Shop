@@ -26,7 +26,7 @@
                     {{"بانک سرمایه"}}
 
                   @else
-                    {{__("payment.method.$payment->payment_gateway")}}
+                    {{__("payment.method.$payment->payment_method")}}
                   @endif
                 </td>
                 <td>{{verta($payment->created_at)}}</td>

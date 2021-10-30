@@ -172,7 +172,7 @@
             <div class="best-deal-item">
               <div class="best-deal-thumb">
                 <a href="{{\Illuminate\Support\Facades\URL::to("product/prd-$amazing_product->id")}}">
-                  <img src="{{\Illuminate\Support\Facades\URL::to($primary_image->url) ?: asset('img/product/sp__products04.png')}}" alt="{{$primary_image->alt}}">
+                  <img src="{{$primary_image ? \Illuminate\Support\Facades\URL::to($primary_image->url) : asset('img/product/sp__products04.png')}}" alt="{{$primary_image ? $primary_image->alt : ''}}">
                 </a>
               </div>
               <div class="best-deal-content">

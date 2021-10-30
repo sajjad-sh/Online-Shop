@@ -30,11 +30,15 @@
       <div class="row justify-content-center">
         <div class="col-xl-7">
 
-          @if(session('payment_message'))
-            <div class="alert alert-success" role="alert">
-              {{ session('payment_message') }}
-            </div>
-          @endif
+            @if(isset(session('payment_message')['error']))
+              <div class="alert alert-danger" role="alert">
+                {{ session('payment_message')['error'] }}
+              </div>
+            @elseif(isset(session('payment_message')['success']))
+              <div class="alert alert-success" role="alert">
+                {{ session('payment_message')['success'] }}
+              </div>
+            @endif
 
           <div class="cart-wrapper">
             <div class="table-responsive">

@@ -23,7 +23,7 @@ class CommentObserver
     }
 
     /**
-     * Handle the Comment "verified" event.
+     * Handle the Comment "verified" event.C
      *
      * @param  \App\Models\Comment  $comment
      * @return void

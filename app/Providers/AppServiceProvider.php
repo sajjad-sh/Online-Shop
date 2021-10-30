@@ -4,8 +4,9 @@ namespace App\Providers;
 
 use App\Models\Category;
 use App\Models\Comment;
+use App\Models\Order;
 use App\Observers\CommentObserver;
-use Illuminate\Http\Request;
+use App\Observers\OrderObserver;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\View;
@@ -31,6 +32,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Comment::observe(CommentObserver::class);
+        Order::observe(OrderObserver::class);
 
         Blade::directive('price', function ($product) {
             return "<?php echo number_format($product) . \"&nbsp; تومان\"; ?>";

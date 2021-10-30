@@ -2,7 +2,7 @@
 
 @section('title', 'پنل مدیریت - فهرست خصوصیات')
 
-@section('content')
+@section('content-wrapper')
 
   <h1 style="display: inline-block;">فهرست عناوین خصوصیات</h1>
   <a href="{{route('admin.shop.attributes.createTitle')}}" class="btn btn-primary" style="display: inline-block">افزودن</a>

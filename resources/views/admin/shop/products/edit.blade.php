@@ -19,6 +19,7 @@
           <div class="card">
             <form class="form-horizontal" method="post" action="{{route('admin.shop.products.update', $product)}}">
               @csrf
+              @method('PATCH')
               <div class="card-body">
 
                 <h4 class="card-title">ویرایش محصول {{$product->id}}</h4>

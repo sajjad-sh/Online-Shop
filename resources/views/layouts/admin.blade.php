@@ -328,7 +328,6 @@
           <p>
             {{ auth()->user()->fullname }}
           </p>
-
           <a href="#"><i class="fa fa-circle text-success"></i>
             {{ __("role.".auth()->user()->getRoleNames()->toArray()[0]) }}
           <?php
@@ -421,9 +420,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="active"><a href="index.html"><i class="fa fa-circle-o"></i>منوی اصلی</a></li>
-            <li><a href="{{route('admin.site.sliders.create')}}"><i class="fa fa-circle-o"></i>اسلایدر‌ها</a></li>
-            <li><a href="index2.html"><i class="fa fa-circle-o"></i>پیکربندی</a></li>
+            <li class="active"><a href="{{route('admin.site.sliders.create')}}"><i class="fa fa-circle-o"></i>اسلایدر‌ها</a></li>
           </ul>
         </li>
         @endhasanyrole

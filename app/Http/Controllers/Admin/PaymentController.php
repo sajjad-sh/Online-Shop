@@ -54,7 +54,8 @@ class PaymentController extends Controller
             'payment_method' => 'required|boolean'
         ]);
 
-        $all = DB::transaction(function () use ($request) {
+        $order = new Order();
+        $all = DB::transaction(function () use ($request, $order) {
 
             $cart_items = getCartItems()[0];
             $cart_items_counts = getCartItems()[1];
@@ -76,8 +77,6 @@ class PaymentController extends Controller
 
             $cart_id = $cart->id;
 
-
-
             foreach ($cart_items_counts as $product_id => $quantity) {
                 $cart->cart_items()->create([
                     'cart_id' => $cart_id,
@@ -93,37 +92,53 @@ class PaymentController extends Controller
             if($address_id == 'new') {
                 $new_address_text = $request->new_address;
                 $new_address = Address::create([
-                    'user_id' => auth()->user()->id,
+                    'user_id' => $cart_id,
                     'content' => $new_address_text,
                     'location' => null,
                 ]);
                 $address_id = $new_address->id;
             }
 
+            $status = 2;
+//            $status = rand(1, 2);
 
             $order = Order::create([
                 'cart_id' => $cart_id,
                 'address_id' => $address_id,
-                'status' => 3,
+                'status' => $status,
                 'cancel_reason' => null
             ]);
 
-            $payment = Payment::create([
-                'user_id' => auth()->user()->id,
-                'amount' => cartTotalPrice($cart_items, $cart_items_counts, false),
-                'payment_method' => $request->payment_method
-            ]);
+            if ($status == 2) {
+                $payment = Payment::create([
+                    'cart_id' => auth()->user()->id,
+                    'amount' => cartTotalPrice($cart_items, $cart_items_counts, false),
+                    'payment_method' => $request->payment_method
+                ]);
 
-            Cookie::queue(Cookie::forget('cart_items'));
-            Cookie::queue(Cookie::forget('cart_count'));
-            Cookie::queue(Cookie::forget('discount_ids'));
+                Cookie::queue(Cookie::forget('cart_items'));
+                Cookie::queue(Cookie::forget('cart_count'));
+                Cookie::queue(Cookie::forget('discount_ids'));
 
-            return redirect()->route('cart.index')
-                ->with('success_message', 'خرید شما با موفقیت انجام و سبد خرید خالی شد');
+                return true;
+            }
+            return false;
         });
 
+        if($all) {
+            $message = ["success" => 'خرید شما با موفقیت انجام و سبد خرید خالی شد'];
+            return redirect()->route('cart.index')
+                ->with('payment_message', $message);
+        }
+
+        /**
+         * @var Order $order
+         */
+        $order->makeFail();
+
+        $message = ["error" => 'مشکلی در درگاه پرداختی گزارش شد و پرداخت انجام نشد. سفارش شما در انتظار پرداخت است. لطفا مجددا امتحان کنید'];
         return redirect()->route('cart.index')
-            ->with('payment_message', 'خرید شما با موفقیت انجام و سبد خرید خالی شد');
+            ->with('payment_message', $message);
     }
 
     /**

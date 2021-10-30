@@ -63,12 +63,8 @@
                       @csrf
                       @method('PATCH')
 
-                      <button type="submit" class="btn btn-app">
-                        <i class="fa fa-toggle-on"></i> فعال‌سازی
-                      </button>
-                      <button type="submit"
-                        style="color: black; background: none;	border: none; 	padding: 0;	font: inherit;	cursor: pointer;	outline: inherit; display: inline-block" data-bs-toggle="modal" data-bs-target="#active">
-                        <i class="fas fa-check-square" title="فعال‌سازی" onclick="return confirm('آیا می‌خواهید این کاربر را فعال کنید ؟')"></i>
+                      <button type="submit" class="btn btn-app"  onclick="return confirm('آیا می‌خواهید این کاربر را فعال کنید ؟')">
+                        <i class="fa fa-toggle-on" title="فعال‌سازی"></i> فعال‌سازی
                       </button>
 
                       {{--              <x-alert id="active" title="هشدار" message="با انتخاب این گزینه کاربر بازیابی می‌شود. آیا مطمئنید ؟"/>--}}
