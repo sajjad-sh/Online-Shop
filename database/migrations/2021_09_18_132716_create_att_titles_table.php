@@ -18,7 +18,7 @@ class CreateAttTitlesTable extends Migration
 
             $table->string('key');
             $table->string('title');
-            $table->boolean('is_primary');
+            $table->boolean('is_primary')->nullable();
 
             $table->timestamps();
         });

@@ -31,7 +31,9 @@
                 </div>
               </div>
             @empty
-              No Slider
+              <p>
+                اسلایدری وجود ندارد
+              </p>
             @endforelse
           </div>
         </div>
@@ -155,7 +157,8 @@
       </div>
       <div class="row best-deal-active">
         <!-- TODO: limit -->
-        @foreach($amazing_products as $amazing_product)
+
+      @foreach($amazing_products as $amazing_product)
           @php
             $type = $amazing_product->amazing->type;
             $amount = $amazing_product->amazing->amount;

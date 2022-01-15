@@ -25,12 +25,11 @@ class UserFactory extends Factory
     {
 
         return [
-            'cart_id' => $this->faker->lastName(),
             'first_name' => $this->faker->firstName(),
             'last_name' => $this->faker->lastName(),
             'email' => $this->faker->unique()->safeEmail(),
             'phone' => $this->faker->unique()->phoneNumber(),
-            'role' => $this->faker->numberBetween(0, 4),
+//            'role' => $this->faker->numberBetween(0, 4),
 //            'latest_categories' => $this->faker->shuffleArray(),
 //            'latest_products' => $this->faker->shuffleArray(),
 //            'favorite_products' => $this->faker->shuffleArray(),

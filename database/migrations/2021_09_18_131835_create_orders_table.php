@@ -19,8 +19,8 @@ class CreateOrdersTable extends Migration
             $table->id();
 
             $table->foreignIdFor(Cart::class);
-            $table->foreignIdFor(User::class);
-            $table->unsignedBigInteger('address_id');
+            $table->foreignIdFor(User::class)->nullable();
+            $table->unsignedBigInteger('address_id')->nullable();
             $table->unsignedTinyInteger('status')->default(1);
             $table->unsignedTinyInteger('payment_method');
             $table->string('cancel_reason')->nullable();

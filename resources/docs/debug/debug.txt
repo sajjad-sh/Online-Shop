@@ -1,0 +1,8 @@
+composer i
+key generate
+storage link
+serve
+migarate
+seed
+
+aval appservice provider run mishe bayad comment she category

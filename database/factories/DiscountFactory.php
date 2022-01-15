@@ -22,7 +22,7 @@ class DiscountFactory extends Factory
     public function definition()
     {
         return [
-            'code' => $this->faker->word(),
+            'code' => $this->faker->unique()->word(),
             'title' => $this->faker->word(),
             'type' => $this->faker->numberBetween(0, 1),
             'amount' => $this->faker->numberBetween(0, 1000),

@@ -22,8 +22,8 @@ class ProductFactory extends Factory
     public function definition()
     {
         return [
-            'amazing_id' => $this->faker->randomNumber(),
-            'fa_title' => $this->faker->title(),
+            'amazing_id' => null,
+            'fa_title' => $this->faker->word(),
             'en_title' => $this->faker->word(),
             'price' => $this->faker->numberBetween(0, 10),
             'inventory' => $this->faker->numberBetween(0, 10),

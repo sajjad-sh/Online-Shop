@@ -22,7 +22,7 @@ class CreateProductsTable extends Migration
             $table->string('fa_title');
             $table->string('en_title');
             $table->text('description')->nullable();
-            $table->string('slug');
+            $table->string('slug')->nullable();
             $table->unsignedDouble('price')->default(0);
             $table->unsignedInteger('inventory')->default(0);
             $table->unsignedInteger('sales')->default(0);
