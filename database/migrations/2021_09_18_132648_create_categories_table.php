@@ -18,6 +18,7 @@ class CreateCategoriesTable extends Migration
         Schema::create('categories', function (Blueprint $table) {
             DB::statement('SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";');
 
+
             $table->id();
 
             $table->foreignId('parent_id')->nullable();
