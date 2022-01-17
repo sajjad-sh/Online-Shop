@@ -16,8 +16,6 @@ class CategorySeeder extends Seeder
     public function run()
     {
 
-
-
         Category::create(['id' => '0', 'parent_id' => null, 'slug' => 'main', 'name' => 'کالا', 'description' => null, 'icon' => 'fas fa-shopping-basket']);
 
         Category::create(['id' => '1', 'parent_id' => 0, 'slug' => 'electronic-devices', 'name' => 'کالای دیجیتال', 'description' => null, 'icon' => 'fas fa-laptop']);

@@ -9,6 +9,8 @@ use App\Observers\CommentObserver;
 use App\Observers\OrderObserver;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -51,7 +53,9 @@ class AppServiceProvider extends ServiceProvider
         #TODO: How to retrieve cookie in app service provider
         Paginator::useBootstrap();
 
-        $categories = Category::all();
-        View::share('categories', $categories);
+        if(Schema::hasTable('categories')) {
+            $categories = Category::all();
+            View::share('categories', $categories);
+        }
     }
 }
