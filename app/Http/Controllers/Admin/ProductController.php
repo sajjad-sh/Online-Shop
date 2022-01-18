@@ -93,19 +93,6 @@ class ProductController extends Controller
         }
 
         if ($request->hasFile('file')) {
-
-
-
-
-//            $img = \Intervention\Image\Facades\Image::make(public_path('img/logo/test.jpg'));
-//
-//            /* insert watermark at bottom-right corner with 10px offset */
-//            $img->insert(public_path('img/logo/logo.png'), 'bottom-right', 10, 10);
-//
-//            $img->save(public_path('img/logo/main-new.jpg'));
-//
-//            dd('saved image successfully.');
-
             $image = $request->file('file');
 
             $name = time() . '-' . $image->getClientOriginalName();
@@ -120,8 +107,6 @@ class ProductController extends Controller
             $img->save($spath);
 
             $path = "products/prd-$product->id/$name";
-
-//            $path = $image->storeAs("/public/products/prd-$product->id", $name);
 
             $url = Storage::url($path);
             $alt = $request->alt;
@@ -142,8 +127,17 @@ class ProductController extends Controller
 
             foreach ($images as $image) {
                 $name = time() . '-' . $image->getClientOriginalName();
-                $path = $image->storeAs("/public/products/prd-$product->id", $name);
+                $img = \Intervention\Image\Facades\Image::make($image->getRealPath());
+                $img->insert(public_path('img/logo/logo.png'), 'bottom-right', 10, 10);
 
+                if (!file_exists(storage_path("app/public/products/prd-$product->id"))) {
+                    mkdir(storage_path("app/public/products/prd-$product->id"), 666, true);
+                }
+
+                $spath = storage_path("app/public/products/prd-$product->id/$name");
+                $img->save($spath);
+
+                $path = "products/prd-$product->id/$name";
                 $url = Storage::url($path);
                 $alt = $request->alt;
 

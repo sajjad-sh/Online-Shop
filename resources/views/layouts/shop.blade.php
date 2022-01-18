@@ -249,7 +249,7 @@
                   @foreach($categories as $category)
                     @if($category->parent_id === 0 and \App\Models\Category::hasChildren($category))
                       <li class="menu-item-has-children">
-                        <a href="/category/{{$category->slug}}">
+                        <a href="{{ \Illuminate\Support\Facades\URL::to("category/$category->slug")}}">
                           <i class="{{$category->icon}}"></i>{{$category->name}}
                           &nbsp;&nbsp;
                           <span class="product-count" style="display: inline-block;">
@@ -262,14 +262,14 @@
 
                           @foreach($category->childrens as $children)
                             <li class="sub-column-item">
-                              <a href="shop.html">
+                              <a href="{{ \Illuminate\Support\Facades\URL::to("category/$children->slug")}}">
                                 {{$children->name}}
                               </a>
                               <ul>
 
                                 @foreach($children->childrens as $subchildren)
                                   <li>
-                                    <a href="shop.html">
+                                    <a href="{{ \Illuminate\Support\Facades\URL::to("category/$subchildren->slug")}}">
                                       {{$subchildren->name}}
                                     </a>
                                   </li>
@@ -281,7 +281,7 @@
                       </li>
                     @elseif($category->parent_id === 0 && !\App\Models\Category::hasChildren($category))
                       <li>
-                        <a href="/category/{{$category->slug}}">
+                        <a href="{{ \Illuminate\Support\Facades\URL::to("category/$category->slug")}}">
                           <i class="{{$category->icon}}"></i>{{$category->name}}
                           &nbsp;&nbsp;
                           <span class="product-count" style="display: inline-block;">

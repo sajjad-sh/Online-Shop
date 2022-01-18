@@ -194,7 +194,7 @@
                     </a>
                   </h4>
                   <p>
-                    <del class="text-danger">{{$price}}</del>
+                    <del class="text-danger">{{number_format($price)}}</del>
                   </p>
                   <!-- TODO: Custom directive -->
                   <p>{{number_format($final_price)}}&nbsp; تومان</p>
@@ -233,7 +233,7 @@
                 <span class="sub-title">غذای سالم</span>
                 <h4 class="title">غذای <b>بچه ها</b></h4>
                 <p>پیشنهاد فوق العاده تا 50٪ تخفیف</p>
-                <a href="shop.html" class="btn rounded-btn">الان بخرید</a>
+                <a href="{{ \Illuminate\Support\Facades\URL::to('category/food-beverage') }}" class="btn rounded-btn">الان بخرید</a>
               </div>
             </div>
           </div>
