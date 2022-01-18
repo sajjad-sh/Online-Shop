@@ -85,7 +85,7 @@
       <div class="row align-items-center">
         <div class="col-xl-2 col-lg-3 d-none d-lg-block">
           <div class="logo">
-            <a href="{{ route('home') }}"><img src="{{asset('img/logo/logo.png')}}" alt=""></a>
+            <a href="{{ route('home') }}"><img style="width: 60px; height: 70px;" src="{{asset('img/logo/logo.png')}}" alt=""></a>
           </div>
         </div>
         <div class="col-xl-10 col-lg-9">
@@ -223,7 +223,7 @@
           <div class="menu-wrap">
             <nav class="menu-nav">
               <div class="logo d-block d-lg-none">
-                <a href="home.blade.php"><img src="{{asset('img/logo/logo.png')}}" alt=""></a>
+                <a href="{{ route('home') }}"><img style="width: 60px; height: 70px;" src="{{asset('img/logo/logo.png')}}" alt=""></a>
               </div>
               <div class="header-category d-none d-lg-block">
                 <a href="/categories/main" class="cat-toggle"><i class="fas fa-bars"></i>همه دسته بندیها<i
@@ -313,7 +313,7 @@
           <div class="mobile-menu">
             <nav class="menu-box">
               <div class="close-btn"><i class="fas fa-times"></i></div>
-              <div class="nav-logo"><a href="home.blade.php"><img src="{{asset('img/logo/logo.png')}}" alt="" title=""></a>
+              <div class="nav-logo"><a href="{{ route('home') }}"><img style="width: 60px; height: 70px;"  src="{{asset('img/logo/logo.png')}}" alt="" title=""></a>
               </div>
               <div class="menu-outer">
                 <!--Here Menu Will Come Automatically Via Javascript / Same Menu as in Header-->
@@ -353,7 +353,7 @@
         <div class="col-xl-3 col-lg-4 col-md-6">
           <div class="footer-widget mb-50">
             <div class="footer-logo mb-25">
-              <a href="home.blade.php"><img src="{{asset('img/logo/logo.png')}}" alt=""></a>
+              <a href="{{ route('home') }}"><img style="width: 60px; height: 70px;" src="{{asset('img/logo/logo.png')}}" alt=""></a>
             </div>
             <div class="footer-contact-list">
               <ul>
