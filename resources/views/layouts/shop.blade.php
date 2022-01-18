@@ -144,13 +144,16 @@
                       @foreach(getCartItems()[0] as $cart_item)
                         <li class="d-flex align-items-start">
                           <div class="cart-img">
-                            <a href="{{ \Illuminate\Support\Facades\URL::to('/product/prd-'.$cart_item->id) }}">
+                            @php
+                              $slug = \App\Models\Product::query()->find($cart_item->id)->slug;
+                            @endphp
+                            <a href="{{ \Illuminate\Support\Facades\URL::to("/product/$slug") }}">
                               <img src="{{  \Illuminate\Support\Facades\URL::to($cart_item->primary_image) }}"
                                 alt="">
                             </a>
                           </div>
                           <div class="cart-content">
-                            <h4><a href="{{ \Illuminate\Support\Facades\URL::to('/product/prd-'.$cart_item->id) }}">
+                            <h4><a href="{{ \Illuminate\Support\Facades\URL::to("/product/$slug") }}">
                                 {{ $cart_item->fa_title }}
                               </a></h4>
                             <div class="cart-price">
@@ -170,7 +173,13 @@
                             </div>
                           </div>
                           <div class="del-icon">
-                            <a href="#"><i class="far fa-trash-alt"></i></a>
+                            <form action="{{ route('cart.destroy', $cart_item) }}" method="post">
+                              @csrf
+                              @method('DELETE')
+                              <button type="submit" style="background: none; color: inherit; border: none; padding: 0; font: inherit; cursor: pointer; outline: inherit;">
+                                <i class="far fa-trash-alt"></i>
+                              </button>
+                            </form>
                           </div>
                         </li>
                       @endforeach

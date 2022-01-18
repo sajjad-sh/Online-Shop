@@ -189,7 +189,7 @@
               <div class="best-deal-content">
                 <div class="main-content">
                   <h4 class="title">
-                    <a href="single-product.blade.php">
+                    <a href="{{\Illuminate\Support\Facades\URL::to("product/$amazing_product->slug")}}">
                       <span style="width: 10px;">{{$amazing_product->fa_title}}</span>
                     </a>
                   </h4>
@@ -343,7 +343,7 @@
                 </div>
                 <div class="sp-product-content">
                   <h6 class="title">
-                    <a href="single-product.blade.php">
+                    <a href="{{\Illuminate\Support\Facades\URL::to("product/$most_sale->slug")}}">
                       {{ $most_sale->fa_title }}
                     </a>
                   </h6>
