@@ -39,15 +39,15 @@
         </div>
         <div class="col-3">
           <div class="slider-banner-img mb-20">
-            <a href="shop.html"><img src="img/slider/slider_banner01.jpg" alt=""></a>
+            <a href="{{ \Illuminate\Support\Facades\URL::to('category/home-and-kitchen') }}"><img src="img/slider/slider_banner01.jpg" alt=""></a>
           </div>
           <div class="slider-banner-img">
-            <a href="shop.html"><img src="img/slider/slider_banner02.jpg" alt=""></a>
+            <a href="{{ \Illuminate\Support\Facades\URL::to('category/personal-appliance') }}"><img src="img/slider/slider_banner02.jpg" alt=""></a>
           </div>
         </div>
         <div class="col-3">
           <div class="slider-banner-img">
-            <a href="shop.html"><img src="img/slider/slider_banner03.jpg" alt=""></a>
+            <a href="{{ \Illuminate\Support\Facades\URL::to('category/sport-entertainment') }}"><img src="img/slider/slider_banner03.jpg" alt=""></a>
           </div>
         </div>
       </div>
@@ -60,7 +60,7 @@
 
           <div class="col-lg-2">
             <div class="category-item active">
-              <a href="shop.html" class="category-link"></a>
+              <a href="{{ \Illuminate\Support\Facades\URL::to('category/' . $categories[1]->slug) }}" class="category-link"></a>
               <div class="category-thumb">
                 @php $first_image = $categories[1]->image @endphp
                 <img src="{{\Illuminate\Support\Facades\URL::to("$first_image")}}">
@@ -75,7 +75,7 @@
             @if($category->parent_id === 0 and $key > 1)
               <div class="col-lg-2">
                 <div class="category-item">
-                  <a href="shop.html" class="category-link"></a>
+                  <a href="{{ \Illuminate\Support\Facades\URL::to('category/' . $category->slug) }}" class="category-link"></a>
                   <div class="category-thumb">
                     <img src="{{\Illuminate\Support\Facades\URL::to("$category->image")}}">
                   </div>
@@ -105,8 +105,11 @@
             </div>
             <div class="discount-content">
               <span>غذای سالم</span>
-              <h4 class="title"><a href="shop.html">100 ارگانیک تا 35</a></h4>
-              <a href="shop.html" class="btn">الان بخرید</a>
+              <h4 class="title">
+                <a href="{{ \Illuminate\Support\Facades\URL::to('category/apparel') }}">100 ارگانیک تا 35</a>
+              </h4>
+
+              <a href="{{ \Illuminate\Support\Facades\URL::to('category/apparel') }}" class="btn">الان بخرید</a>
             </div>
           </div>
         </div>
@@ -117,8 +120,8 @@
             </div>
             <div class="discount-content">
               <span>غذای سالم</span>
-              <h4 class="title"><a href="shop.html">بسته بندی بهداشتی</a></h4>
-              <a href="shop.html" class="btn">الان بخرید</a>
+              <h4 class="title"><a href="{{ \Illuminate\Support\Facades\URL::to('category/food-beverage') }}">بسته بندی بهداشتی</a></h4>
+              <a href="{{ \Illuminate\Support\Facades\URL::to('category/food-beverage') }}" class="btn">الان بخرید</a>
             </div>
           </div>
         </div>
@@ -129,8 +132,8 @@
             </div>
             <div class="discount-content">
               <span>غذای سالم</span>
-              <h4 class="title"><a href="shop.html">مورد علاقه نوزاد تا 15</a></h4>
-              <a href="shop.html" class="btn">الان بخرید</a>
+              <h4 class="title"><a href="{{ \Illuminate\Support\Facades\URL::to('category/personal-appliance') }}">مورد علاقه نوزاد تا 15</a></h4>
+              <a href="{{ \Illuminate\Support\Facades\URL::to('category/personal-appliance') }}" class="btn">الان بخرید</a>
             </div>
           </div>
         </div>
@@ -151,14 +154,19 @@
             </div>
 
             <!-- Timer -->
-            <div class="coming-time" data-countdown="2021/10/30"></div>
+            <div class="coming-time" data-countdown="2022/02/30"></div>
           </div>
         </div>
       </div>
       <div class="row best-deal-active">
-        <!-- TODO: limit -->
 
       @foreach($amazing_products as $amazing_product)
+        @php
+          $ids = \Illuminate\Support\Facades\DB::table('amazings')->pluck('id')->toArray();
+        @endphp
+
+        @if(in_array($amazing_product->amazing_id, $ids))
+
           @php
             $type = $amazing_product->amazing->type;
             $amount = $amazing_product->amazing->amount;
@@ -172,24 +180,17 @@
             }
           @endphp
           <div class="col-xl-3">
-            <div class="best-deal-item">
+            <div class="best-deal-item" style="height: 430px;">
               <div class="best-deal-thumb">
-                <a href="{{\Illuminate\Support\Facades\URL::to("product/prd-$amazing_product->id")}}">
+                <a href="{{\Illuminate\Support\Facades\URL::to("product/$amazing_product->slug")}}">
                   <img src="{{$primary_image ? \Illuminate\Support\Facades\URL::to($primary_image->url) : asset('img/product/sp__products04.png')}}" alt="{{$primary_image ? $primary_image->alt : ''}}">
                 </a>
               </div>
               <div class="best-deal-content">
                 <div class="main-content">
-                  <div class="rating">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                  </div>
                   <h4 class="title">
                     <a href="single-product.blade.php">
-                      {{$amazing_product->title}}
+                      <span style="width: 10px;">{{$amazing_product->fa_title}}</span>
                     </a>
                   </h4>
                   <p>
@@ -198,10 +199,11 @@
                   <!-- TODO: Custom directive -->
                   <p>{{number_format($final_price)}}&nbsp; تومان</p>
                 </div>
-                <div class="icon"><a href="single-product.blade.php">+</a></div>
+                <div class="icon"><a href="{{ \Illuminate\Support\Facades\URL::to("cart/add/$amazing_product->id/1") }}">+</a></div>
               </div>
             </div>
           </div>
+          @endif
         @endforeach
       </div>
     </div>
@@ -214,15 +216,11 @@
       <div class="row align-items-end mb-50">
         <div class="col-md-8 col-sm-9">
           <div class="section-title">
-            <span class="sub-title">فروشگاه عالی</span>
-            <h2 class="title">محصولات ویژه ما</h2>
+            <span class="sub-title">فروشگاه پاردایس</span>
+            <h2 class="title">محصولات پربازدید</h2>
           </div>
         </div>
-        <div class="col-md-4 col-sm-3">
-          <div class="section-btn text-right text-md-left">
-            <a href="shop.html" class="btn">نمایش همه</a>
-          </div>
-        </div>
+
       </div>
       <div class="special-products-wrap">
         <div class="row">
@@ -241,222 +239,42 @@
           </div>
           <div class="col-9">
             <div class="row justify-content-center">
-              <div class="col-xl-3 col-md-4 col-sm-6">
-                <div class="sp-product-item mb-20">
+
+              @foreach($most_visits as $most_visit)
+                <div class="col-xl-3 col-md-4 col-sm-6">
+                <div class="sp-product-item mb-20" style="height: 495px;">
                   <div class="sp-product-thumb">
-                    <span class="batch">جدید</span>
-                    <a href="single-product.blade.php"><img src="img/product/sp_products01.png" alt=""></a>
+                    @if($most_visit->amazing_id != null)
+                      @if($most_visit->amazing->type == 0)
+                        <span class="batch">{{ $most_visit->amazing->amount }}%</span>
+                      @else
+                        <span class="batch">جدید</span>
+                      @endif
+                    @else
+                      <span class="batch">جدید</span>
+                    @endif
+                    @php
+                      $primary_image = null;
+
+                      foreach ($most_visit->images as $image) {
+                          if($image->is_primary == 1)
+                              $primary_image = $image;
+                      }
+                    @endphp
+                    <a href="{{\Illuminate\Support\Facades\URL::to("product/$most_visit->slug")}}"><img src="{{$primary_image ? \Illuminate\Support\Facades\URL::to($primary_image->url) : asset('img/product/sp__products04.png')}}" alt=""></a>
                   </div>
                   <div class="sp-product-content">
-                    <div class="rating">
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
+                    <h6 class="title"><a href="{{\Illuminate\Support\Facades\URL::to("product/$most_visit->slug")}}">{{ $most_visit->fa_title }}</a></h6>
+                    <span class="product-status">{{number_format($most_visit->total_price)}} تومان</span>
+                    <div class="sp-cart-wrap" >
+                      <div class="shop-perched-info">
+                        <a href="{{ \Illuminate\Support\Facades\URL::to("cart/add/$most_visit->id/1") }}" class="btn">افزودن به سبد</a>
+                      </div>
                     </div>
-                    <h6 class="title"><a href="single-product.blade.php">سوپ آماده گانیک</a></h6>
-                    <span class="product-status">موجود در انبار</span>
-                    <div class="sp-cart-wrap">
-                      <form action="#">
-                        <div class="cart-plus-minus">
-                          <input type="text" value="1">
-                        </div>
-                      </form>
-                    </div>
-                    <p>هر 1 کیلو - 1.500 تومان</p>
                   </div>
                 </div>
               </div>
-              <div class="col-xl-3 col-md-4 col-sm-6">
-                <div class="sp-product-item mb-20">
-                  <div class="sp-product-thumb">
-                    <span class="batch discount">15%</span>
-                    <a href="single-product.blade.php"><img src="img/product/sp_products02.png" alt=""></a>
-                  </div>
-                  <div class="sp-product-content">
-                    <div class="rating">
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                    </div>
-                    <h6 class="title"><a href="single-product.blade.php">سوپ آماده گانیک</a></h6>
-                    <span class="product-status">موجود در انبار</span>
-                    <div class="sp-cart-wrap">
-                      <form action="#">
-                        <div class="cart-plus-minus">
-                          <input type="text" value="1">
-                        </div>
-                      </form>
-                    </div>
-                    <p>هر 1 کیلو - 1.500 تومان</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col-xl-3 col-md-4 col-sm-6">
-                <div class="sp-product-item mb-20">
-                  <div class="sp-product-thumb">
-                    <span class="batch discount">25%</span>
-                    <a href="single-product.blade.php"><img src="img/product/sp_products03.png" alt=""></a>
-                  </div>
-                  <div class="sp-product-content">
-                    <div class="rating">
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                    </div>
-                    <h6 class="title"><a href="single-product.blade.php">سوپ آماده گانیک</a></h6>
-                    <span class="product-status">موجود در انبار</span>
-                    <div class="sp-cart-wrap">
-                      <form action="#">
-                        <div class="cart-plus-minus">
-                          <input type="text" value="1">
-                        </div>
-                      </form>
-                    </div>
-                    <p>هر 1 کیلو - 1.500 تومان</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col-xl-3 col-md-4 col-sm-6">
-                <div class="sp-product-item mb-20">
-                  <div class="sp-product-thumb">
-                    <span class="batch">جدید</span>
-                    <a href="single-product.blade.php"><img src="img/product/sp_products04.png" alt=""></a>
-                  </div>
-                  <div class="sp-product-content">
-                    <div class="rating">
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                    </div>
-                    <h6 class="title"><a href="single-product.blade.php">سوپ آماده گانیک</a></h6>
-                    <span class="product-status">موجود در انبار</span>
-                    <div class="sp-cart-wrap">
-                      <form action="#">
-                        <div class="cart-plus-minus">
-                          <input type="text" value="1">
-                        </div>
-                      </form>
-                    </div>
-                    <p>هر 1 کیلو - 1.500 تومان</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col-xl-3 col-md-4 col-sm-6">
-                <div class="sp-product-item mb-20">
-                  <div class="sp-product-thumb">
-                    <span class="batch discount">25%</span>
-                    <a href="single-product.blade.php"><img src="img/product/sp_products05.png" alt=""></a>
-                  </div>
-                  <div class="sp-product-content">
-                    <div class="rating">
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                    </div>
-                    <h6 class="title"><a href="single-product.blade.php">سوپ آماده گانیک</a></h6>
-                    <span class="product-status">موجود در انبار</span>
-                    <div class="sp-cart-wrap">
-                      <form action="#">
-                        <div class="cart-plus-minus">
-                          <input type="text" value="1">
-                        </div>
-                      </form>
-                    </div>
-                    <p>هر 1 کیلو - 1.500 تومان</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col-xl-3 col-md-4 col-sm-6">
-                <div class="sp-product-item mb-20">
-                  <div class="sp-product-thumb">
-                    <span class="batch">جدید</span>
-                    <a href="single-product.blade.php"><img src="img/product/sp_products06.png" alt=""></a>
-                  </div>
-                  <div class="sp-product-content">
-                    <div class="rating">
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                    </div>
-                    <h6 class="title"><a href="single-product.blade.php">سوپ آماده گانیک</a></h6>
-                    <span class="product-status">موجود در انبار</span>
-                    <div class="sp-cart-wrap">
-                      <form action="#">
-                        <div class="cart-plus-minus">
-                          <input type="text" value="1">
-                        </div>
-                      </form>
-                    </div>
-                    <p>هر 1 کیلو - 1.500 تومان</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col-xl-3 col-md-4 col-sm-6">
-                <div class="sp-product-item mb-20">
-                  <div class="sp-product-thumb">
-                    <span class="batch discount">10%</span>
-                    <a href="single-product.blade.php"><img src="img/product/sp_products07.png" alt=""></a>
-                  </div>
-                  <div class="sp-product-content">
-                    <div class="rating">
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                    </div>
-                    <h6 class="title"><a href="single-product.blade.php">سوپ آماده گانیک</a></h6>
-                    <span class="product-status">موجود در انبار</span>
-                    <div class="sp-cart-wrap">
-                      <form action="#">
-                        <div class="cart-plus-minus">
-                          <input type="text" value="1">
-                        </div>
-                      </form>
-                    </div>
-                    <p>هر 1 کیلو - 1.500 تومان</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col-xl-3 col-md-4 col-sm-6">
-                <div class="sp-product-item mb-20">
-                  <div class="sp-product-thumb">
-                    <span class="batch discount">10%</span>
-                    <a href="single-product.blade.php"><img src="img/product/sp_products08.png" alt=""></a>
-                  </div>
-                  <div class="sp-product-content">
-                    <div class="rating">
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                    </div>
-                    <h6 class="title"><a href="single-product.blade.php">سوپ آماده گانیک</a></h6>
-                    <span class="product-status">موجود در انبار</span>
-                    <div class="sp-cart-wrap">
-                      <form action="#">
-                        <div class="cart-plus-minus">
-                          <input type="text" value="1">
-                        </div>
-                      </form>
-                    </div>
-                    <p>هر 1 کیلو - 1.500 تومان</p>
-                  </div>
-                </div>
-              </div>
+              @endforeach
             </div>
           </div>
         </div>
@@ -476,7 +294,7 @@
               <h3 class="title">کد تخفیف 3 هزار تومانی دریافت کنید</h3>
             </div>
             <div class="coupon-code-wrap">
-              <h5 class="code">ganic21abs</h5>
+              <h5 class="code">PRD-SJD</h5>
               <img src="img/images/coupon_code.png" alt="">
             </div>
           </div>
@@ -493,152 +311,54 @@
         <div class="col-md-8 col-sm-9">
           <div class="section-title">
             <span class="sub-title">پرفروش ترین ها</span>
-            <h2 class="title">نمایش بهترین پیشنهادات</h2>
           </div>
         </div>
-        <div class="col-md-4 col-sm-3">
-          <div class="section-btn text-right text-md-left">
-            <a href="shop.html" class="btn">نمایش همه</a>
-          </div>
-        </div>
+
       </div>
       <div class="best-sellers-products">
         <div class="row justify-content-center">
-          <div class="col-3">
-            <div class="sp-product-item mb-20">
-              <div class="sp-product-thumb">
-                <span class="batch">جدید</span>
-                <a href="single-product.blade.php"><img src="img/product/sp_products09.png" alt=""></a>
-              </div>
-              <div class="sp-product-content">
-                <div class="rating">
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
+          @foreach($most_sales as $most_sale)
+            <div class="col-3">
+              <div class="sp-product-item mb-20" style="height: 490px;">
+                <div class="sp-product-thumb">
+                  @if($most_sale->amazing_id != null)
+                    @if($most_sale->amazing->type == 0)
+                      <span class="batch">{{ $most_sale->amazing->amount }}%</span>
+                    @else
+                      <span class="batch">جدید</span>
+                    @endif
+                  @else
+                    <span class="batch">جدید</span>
+                  @endif
+
+                    @php
+                      $primary_image = null;
+
+                      foreach ($most_sale->images as $image) {
+                          if($image->is_primary == 1)
+                              $primary_image = $image;
+                      }
+                    @endphp
+                    <a href="{{\Illuminate\Support\Facades\URL::to("product/$most_sale->slug")}}"><img src="{{$primary_image ? \Illuminate\Support\Facades\URL::to($primary_image->url) : asset('img/product/sp__products04.png')}}" alt=""></a>
                 </div>
-                <h6 class="title"><a href="single-product.blade.php">سوپ آماده گانیک</a></h6>
-                <span class="product-status">موجود در انبار</span>
-                <div class="sp-cart-wrap">
-                  <form action="#">
-                    <div class="cart-plus-minus">
-                      <input type="text" value="1">
+                <div class="sp-product-content">
+                  <h6 class="title">
+                    <a href="single-product.blade.php">
+                      {{ $most_sale->fa_title }}
+                    </a>
+                  </h6>
+                  <span class="product-status">
+                    {{number_format($most_sale->total_price)}} تومان
+                  </span>
+                  <div class="sp-cart-wrap" >
+                    <div class="shop-perched-info">
+                      <a href="{{ \Illuminate\Support\Facades\URL::to("cart/add/$most_sale->id/1") }}" class="btn">افزودن به سبد</a>
                     </div>
-                  </form>
+                  </div>
                 </div>
-                <p>هر 1 کیلو - 1.500 تومان</p>
               </div>
             </div>
-          </div>
-          <div class="col-3">
-            <div class="sp-product-item mb-20">
-              <div class="sp-product-thumb">
-                <span class="batch discount">15%</span>
-                <a href="single-product.blade.php"><img src="img/product/sp_products02.png" alt=""></a>
-              </div>
-              <div class="sp-product-content">
-                <div class="rating">
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                </div>
-                <h6 class="title"><a href="single-product.blade.php">سوپ آماده گانیک</a></h6>
-                <span class="product-status">موجود در انبار</span>
-                <div class="sp-cart-wrap">
-                  <form action="#">
-                    <div class="cart-plus-minus">
-                      <input type="text" value="1">
-                    </div>
-                  </form>
-                </div>
-                <p>هر 1 کیلو - 1.500 تومان</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-3">
-            <div class="sp-product-item mb-20">
-              <div class="sp-product-thumb">
-                <span class="batch discount">25%</span>
-                <a href="single-product.blade.php"><img src="img/product/sp_products03.png" alt=""></a>
-              </div>
-              <div class="sp-product-content">
-                <div class="rating">
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                </div>
-                <h6 class="title"><a href="single-product.blade.php">سوپ آماده گانیک</a></h6>
-                <span class="product-status">موجود در انبار</span>
-                <div class="sp-cart-wrap">
-                  <form action="#">
-                    <div class="cart-plus-minus">
-                      <input type="text" value="1">
-                    </div>
-                  </form>
-                </div>
-                <p>هر 1 کیلو - 1.500 تومان</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-3">
-            <div class="sp-product-item mb-20">
-              <div class="sp-product-thumb">
-                <span class="batch">new</span>
-                <a href="single-product.blade.php"><img src="img/product/sp_products04.png" alt=""></a>
-              </div>
-              <div class="sp-product-content">
-                <div class="rating">
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                </div>
-                <h6 class="title"><a href="single-product.blade.php">سوپ آماده گانیک</a></h6>
-                <span class="product-status">موجود در انبار</span>
-                <div class="sp-cart-wrap">
-                  <form action="#">
-                    <div class="cart-plus-minus">
-                      <input type="text" value="1">
-                    </div>
-                  </form>
-                </div>
-                <p>هر 1 کیلو - 1.500 تومان</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-3">
-            <div class="sp-product-item mb-20">
-              <div class="sp-product-thumb">
-                <span class="batch discount">25%</span>
-                <a href="single-product.blade.php"><img src="img/product/sp_products05.png" alt=""></a>
-              </div>
-              <div class="sp-product-content">
-                <div class="rating">
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                </div>
-                <h6 class="title"><a href="single-product.blade.php">سوپ آماده گانیک</a></h6>
-                <span class="product-status">موجود در انبار</span>
-                <div class="sp-cart-wrap">
-                  <form action="#">
-                    <div class="cart-plus-minus">
-                      <input type="text" value="1">
-                    </div>
-                  </form>
-                </div>
-                <p>هر 1 کیلو - 1.500 تومان</p>
-              </div>
-            </div>
-          </div>
+          @endforeach
         </div>
       </div>
     </div>
@@ -656,9 +376,9 @@
             </div>
             <div class="discount-content">
               <span>غذای سالم</span>
-              <h4 class="title"><a href="shop.html">مزرعه ارگانیک برای گانیک</a></h4>
+              <h4 class="title"><a href="{{ \Illuminate\Support\Facades\URL::to('category/food-beverage') }}">مزرعه ارگانیک برای گانیک</a></h4>
               <p>پیشنهاد فوق العاده تا 50٪ تخفیف</p>
-              <a href="shop.html" class="btn rounded-btn">الان بخرید</a>
+              <a href="{{ \Illuminate\Support\Facades\URL::to('category/food-beverage') }}" class="btn rounded-btn">الان بخرید</a>
             </div>
           </div>
         </div>
@@ -669,9 +389,9 @@
             </div>
             <div class="discount-content">
               <span>غذای سالم</span>
-              <h4 class="title"><a href="shop.html">مزرعه ارگانیک برای گانیک</a></h4>
+              <h4 class="title"><a href="{{ \Illuminate\Support\Facades\URL::to('category/personal-appliance') }}">مزرعه ارگانیک برای گانیک</a></h4>
               <p>پیشنهاد فوق العاده تا 50٪ تخفیف</p>
-              <a href="shop.html" class="btn rounded-btn">الان بخرید</a>
+              <a href="{{ \Illuminate\Support\Facades\URL::to('category/personal-appliance') }}" class="btn rounded-btn">الان بخرید</a>
             </div>
           </div>
         </div>

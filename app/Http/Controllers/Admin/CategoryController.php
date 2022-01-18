@@ -182,8 +182,8 @@ class CategoryController extends Controller
         if ($request->hasFile('file')) {
             $image = $request->file('file');
             $name = "cat-$category->id." . $image->getClientOriginalExtension();
-            $path = $image->storeAs("/categories/images", $name);
-
+            $image->storeAs("/public/categories/images", $name);
+            $path = "/categories/images/" . $name;
             $url = '/storage/' . ($path);
 
             $category->image = $url;

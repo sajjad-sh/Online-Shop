@@ -25,8 +25,13 @@ class HomeController extends Controller
 
         $amazing_products = Product::query()->whereNotNull('amazing_id')->get();
 
+        $most_visits = Product::query()->orderByDesc('visits')->limit(8)->get();
+        $most_sales = Product::query()->orderByDesc('sales')->limit(10)->get();
+
         return view('shop.home')
             ->with('home_sliders', $home_sliders)
-            ->with('amazing_products', $amazing_products);
+            ->with('amazing_products', $amazing_products)
+            ->with('most_sales', $most_sales)
+            ->with('most_visits', $most_visits);
     }
 }

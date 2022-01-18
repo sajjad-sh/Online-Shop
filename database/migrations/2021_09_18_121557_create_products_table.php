@@ -23,6 +23,9 @@ class CreateProductsTable extends Migration
             $table->string('en_title');
             $table->text('description')->nullable();
             $table->string('slug')->nullable();
+            $table->json('atts')->nullable();
+            $table->string('color')->nullable();
+            $table->string('brand')->nullable();
             $table->unsignedDouble('price')->default(0);
             $table->unsignedInteger('inventory')->default(0);
             $table->unsignedInteger('sales')->default(0);

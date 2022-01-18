@@ -420,7 +420,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="active"><a href="{{route('admin.site.sliders.create')}}"><i class="fa fa-circle-o"></i>اسلایدر‌ها</a></li>
+            <li class="active"><a href="{{route('admin.site.sliders.index')}}"><i class="fa fa-circle-o"></i>اسلایدر‌ها</a></li>
           </ul>
         </li>
         @endhasanyrole

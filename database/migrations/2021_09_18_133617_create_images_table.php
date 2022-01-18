@@ -17,7 +17,7 @@ class CreateImagesTable extends Migration
             $table->id();
 
             $table->text('url');
-            $table->text('alt');
+            $table->text('alt')->nullable();
             $table->text('link')->nullable();
             $table->boolean('is_primary')->default(false);
             $table->string('title')->nullable();

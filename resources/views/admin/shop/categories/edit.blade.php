@@ -43,8 +43,8 @@
                     <br>
                     <select name="parent_id" id="parent_id" class="form-select" aria-label="Default select example">
                       <option value="{{$category->parent_id}}" selected>{{$category->parent->name}}</option>
-                      @forelse($categories as $category)
-                        <option value="{{$category->id}}">{{$category->name}}</option>
+                      @forelse($categories as $current_category)
+                        <option value="{{$current_category->id}}">{{$current_category->name}}</option>
                       @empty
                         <p>دسته‌بندی یافت نشد</p>
                       @endforelse

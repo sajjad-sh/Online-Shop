@@ -13,7 +13,7 @@
               <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="home.blade.php">صفحه نخست</a></li>
                 <li class="breadcrumb-item"><a href="shop.html">محصولات</a></li>
-                <li class="breadcrumb-item active" aria-current="page">بستنی طبیعی ویتامینی گانیک</li>
+                <li class="breadcrumb-item active" aria-current="page">{{ $product->fa_title }}</li>
               </ol>
             </nav>
           </div>
@@ -67,25 +67,20 @@
             <h4 class="title">
               {{$product->fa_title}}
             </h4>
+
+
             <div class="mt-2 shop-details-meta">
               {{$product->en_title}}
               <ul>
-                @if($product->brand)
+
+              @if($product->brand)
+
                   <li>برند : <a href="shop.html">{{$product->brand}}</a></li>
+
                 @endif
-                <li class="shop-details-review">
-                  <div class="rating">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                  </div>
-                  <span>4.3 (5955)</span>
-                </li>
-                P
-                <li>تعداد نظرات: <span>{{$product->count_comments}}</span></li>
-                <li>کد محصول : <span>{{strtoupper($product->slug)}}</span></li>
+                  <li>تعداد نظرات: <span>{{$product->count_comments}}</span></li>
+
+                  <li>کد محصول : <span>{{strtoupper($product->slug)}}</span></li>
               </ul>
             </div>
             <div class="shop-details-price">
@@ -96,45 +91,42 @@
                 <h5 class="stock-status">- موجود در انبار</h5>
               @endif
             </div>
-            <h5 style="color: red;" class="price">
-              <del>{{number_format($product->price)}} تومان</del>
-            </h5>
+
+            @if($product->total_price != $product->price)
+              <h5 style="color: red;" class="price">
+                <del>{{number_format($product->price)}} تومان</del>
+              </h5>
+            @endif
+
             <p>
               {{$product->description}}
             </p>
             <div class="shop-details-list">
               <ul>
-                @foreach($product->primary_attributes as $key => $value)
-                  <li>{{$key}}: <span>{{$value}}</span></li>
-                @endforeach
+{{--                @foreach($product->primary_attributes as $key => $value)--}}
+{{--                  <li>{{$key}}: <span>{{$value}}</span></li>--}}
+{{--                @endforeach--}}
               </ul>
             </div>
 
             @php $counter = 0 @endphp
             <div class="form-group">
-              @foreach($product->selective_attributes_name as $name => $array)
-                @php $counter++; @endphp
-                <label for="selective-attributes-name-{{__("numbers.$counter")}}">{{$name}}: </label>
-                <select class="form-control" id="selective-attributes-name-{{__("numbers.$counter")}}" style="display: inline-block; width: fit-content; height: 100%;">
+{{--              @foreach($product->selective_attributes_name as $name => $array)--}}
+{{--                @php $counter++; @endphp--}}
+{{--                <label for="selective-attributes-name-{{__("numbers.$counter")}}">{{$name}}: </label>--}}
+{{--                <select class="form-control" id="selective-attributes-name-{{__("numbers.$counter")}}" style="display: inline-block; width: fit-content; height: 100%;">--}}
 
-                  @foreach($array as $index => $value)
-                    <option>{{$value}}</option>
-                  @endforeach
+{{--                  @foreach($array as $index => $value)--}}
+{{--                    <option>{{$value}}</option>--}}
+{{--                  @endforeach--}}
 
-                </select>
-                &nbsp;&nbsp;
-              @endforeach
+{{--                </select>--}}
+{{--                &nbsp;&nbsp;--}}
+{{--              @endforeach--}}
             </div>
 
             <br>
             <div class="shop-perched-info">
-              <div class="sd-cart-wrap">
-                <form action="#">
-                  <div class="cart-plus-minus">
-                    <input id="countof" type="text" value="1">
-                  </div>
-                </form>
-              </div>
               <a href="{{ \Illuminate\Support\Facades\URL::to("cart/add/$product->id/1") }}" class="btn">افزودن به سبد</a>
             </div>
             <div class="shop-details-bottom">
@@ -152,10 +144,6 @@
                 </a>
               </h5>
               <ul>
-                <li>
-                  <span>برچسب : </span>
-                  <a href="#">بستنی</a>
-                </li>
                 <li>
                   <span>دسته بندیها :</span>
                   @foreach($product->categories as $category)
@@ -228,13 +216,15 @@
                         {{$product->en_title}}
                       </p>
                       <hr>
+                      @if(json_decode($product->atts) != null)
                       <ul class="product-desc-list">
-                        @foreach($product->secondary_attributes as $key => $value)
+                        @foreach(json_decode($product->atts) as $key => $value)
                           <li>
                             <span style="font-weight: bold">{{$key}}: </span> {{$value}}
                           </li>
                         @endforeach
                       </ul>
+                        @endif
                     </div>
                   </div>
                 </div>
@@ -247,7 +237,6 @@
                       <div class="d-flex flex-column comment-section">
 
 
-                        {{--                        //$product->comments()->orderBy('created_at', 'desc')->get()--}}
                         @foreach($product->comments as $comment)
                           <div>
                             <div class="bg-white p-2">
@@ -266,45 +255,28 @@
                                 </p>
                               </div>
                             </div>
-                            <div class="bg-white">
-                              <div class="d-flex flex-row fs-12" style="flex-direction: row-reverse!important;">
-                                <div class="like p-2 cursor"><i class="far fa-thumbs-up"></i></div>
-                                <div class="like p-2 cursor"><i class="far fa-thumbs-down"></i></div>
-                              </div>
-                            </div>
+
                           </div>
                         @endforeach
 
 
                         <div class="bg-light p-2">
-                          <div class="d-flex flex-row align-items-start">
-                            <textarea class="form-control ml-1 shadow-none textarea" style="height: 150px;"></textarea>
-                          </div>
-                          <div class="mt-2 text-right">
-                            <button class="btn btn-primary" type="submit">ارسال دیدگاه</button>
-                          </div>
+
+                          <form action="{{ route('admin.shop.comments.store') }}" method="post">
+                            @csrf
+                            <div class="d-flex flex-row align-items-start">
+                              <input name="product_id" type="hidden" value="{{ $product->id }}">
+                              <textarea name="textComment" class="form-control ml-1 shadow-none textarea" style="height: 150px;"></textarea>
+                            </div>
+                            <div class="mt-2 text-right">
+                              <button class="btn btn-primary" type="submit">ارسال دیدگاه</button>
+                            </div>
+                          </form>
+
                         </div>
                       </div>
                     </div>
                   </div>
-
-                  {{--                  <h4 class="title">Product Details</h4>--}}
-                  {{--                  <div class="row">--}}
-                  {{--                    <div class="col-xl-9 col-md-7">--}}
-                  {{--                      <h5 class="small-title">100% ویتامین طبیعی</h5>--}}
-                  {{--                      <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است.--}}
-                  {{--                        چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی--}}
-                  {{--                        مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد</p>--}}
-                  {{--                      <ul class="product-desc-list">--}}
-                  {{--                        <li>65٪ پلی ، 35٪ ابریشم</li>--}}
-                  {{--                        <li>شستشوی دستی سرد</li>--}}
-                  {{--                        <li>بسته شدن دکمه جلو مخفی با لهجه سوراخ کلید</li>--}}
-                  {{--                        <li>آستین های آستین دار دکمه ای</li>--}}
-                  {{--                        <li>ساخت نیمه شفاف سبک</li>--}}
-                  {{--                        <li>ساخته شده در ایالات متحده آمریکا</li>--}}
-                  {{--                      </ul>--}}
-                  {{--                    </div>--}}
-                  {{--                  </div>--}}
                 </div>
               </div>
             </div>

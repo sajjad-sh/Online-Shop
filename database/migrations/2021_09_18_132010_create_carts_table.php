@@ -19,6 +19,7 @@ class CreateCartsTable extends Migration
             $table->id();
 
             $table->foreignIdFor(Discount::class)->nullable();
+            $table->foreignIdFor(User::class)->nullable();
             $table->unsignedDouble('total_price')->default(0);
             $table->unsignedDouble('net_price')->default(0);
 

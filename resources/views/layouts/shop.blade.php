@@ -59,30 +59,6 @@
         <div class="col-md-7">
           <div class="header-top-left">
             <ul>
-              <li class="header-top-lang">
-                <div class="dropdown">
-                  <button class="dropdown-toggle" type="button" id="dropdownMenuButton2"
-                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">پارسی
-                  </button>
-                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
-                    <a class="dropdown-item" href="home.blade.php">انگلیسی</a>
-                    <a class="dropdown-item" href="home.blade.php">چینی</a>
-                    <a class="dropdown-item" href="home.blade.php">ژاپنی</a>
-                  </div>
-                </div>
-              </li>
-              <li class="header-top-currency">
-                <div class="dropdown">
-                  <button class="dropdown-toggle" type="button" id="dropdownMenuButton3"
-                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">تومان
-                  </button>
-                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton3">
-                    <a class="dropdown-item" href="home.blade.php">دلار</a>
-                    <a class="dropdown-item" href="home.blade.php">یورو</a>
-                    <a class="dropdown-item" href="home.blade.php">پوند</a>
-                  </div>
-                </div>
-              </li>
               <li class="header-work-time">
                 ساعات کاری: <span> شنبه تا چهارشنبه : 8:00 - 21:0</span>
               </li>
@@ -92,10 +68,9 @@
         <div class="col-md-5">
           <div class="header-top-right">
             <ul>
-              <li><a href="#">ارتباط با ما</a></li>
-              <li><a href="#">درباره ما</a></li>
-              <li><a href="#">حساب کاربری</a></li>
-              <li><a href="#">پرسش های متداول</a></li>
+              <li><a href="contact.html">ارتباط با ما</a></li>
+              <li><a href="about-us.html">درباره ما</a></li>
+              <li><a href="{{ route('profile.index') }}">حساب کاربری</a></li>
             </ul>
           </div>
         </div>
@@ -144,11 +119,11 @@
               <ul>
                 <li class="header-phone">
                   <div class="icon"><i class="flaticon-telephone"></i></div>
-                  <a href="tel:1234566789"><span>سوالی دارید، مطرح کنید</span>+185 4124 650</a>
+                  <a href="tel:1234566789"><span>سوالی دارید، مطرح کنید</span><span dir="ltr">+98 933 311 5604</span></a>
                 </li>
-                <li class="header-user"><a href="#"><i class="flaticon-user"></i></a></li>
+                <li class="header-user"><a href="{{ route('profile.index') }}"><i class="flaticon-user"></i></a></li>
                 <li class="header-wishlist">
-                  <a href="#"><i class="flaticon-heart-shape-outline"></i></a>
+                  <a href="{{ route('profile.index') }}"><i class="flaticon-heart-shape-outline"></i></a>
                   <span class="item-count">0</span>
                 </li>
                 <li class="header-cart-action">
@@ -210,7 +185,7 @@
                       <li>
                         <div class="checkout-link">
                           <a href="{{ route('cart.index') }}">سبد خرید</a>
-                          <a class="black-color" href="checkout.html">صورتحساب</a>
+                          <a class="black-color" href="{{ route('checkout') }}">صورتحساب</a>
                         </div>
                       </li>
 
@@ -312,41 +287,16 @@
               </div>
               <div class="navbar-wrap main-menu d-none d-lg-flex">
                 <ul class="navigation">
-                  <li class="menu-item-has-children active"><a href="#">صفحه نخست</a>
-                    <ul class="submenu">
-                      <li class="active"><a href="home.blade.php">صفحه نخست یک</a></li>
-                      <li><a href="index-2.html">صفحه نخست دو</a></li>
-                    </ul>
+                  <li class="active"><a href="{{ route('home') }}">صفحه نخست</a>
                   </li>
                   <li><a href="about-us.html">درباره ما</a></li>
-                  <li><a href="shop.html">محصولات</a></li>
-                  <li><a href="shop-right-sidebar.html">خواربار فروشی و غذاهای اصلی</a></li>
-                  <li class="menu-item-has-children"><a href="#">صفحات</a>
-                    <ul class="submenu">
-                      <li><a href="single-product.blade.php">نمونه محصول</a></li>
-                      <li><a href="cart.html">سبد خرید</a></li>
-                      <li><a href="checkout.html">صورتحساب</a></li>
-                      <li><a href="blog.html">وبلاگ</a></li>
-                      <li><a href="blog-details.html">نوشته وبلاگ</a></li>
-                      <li><a href="404.html">404</a></li>
-                      <li><a href="terms-conditios.html">شرایط و ضوابط</a></li>
-                    </ul>
+                  <li><a href="{{ route('categories.show', 'main') }}">محصولات</a></li>
+                  <li><a href="terms-conditios.html">شرایط و ضوابط</a></li>
                   </li>
                   <li><a href="contact.html">ارتباط با ما</a></li>
+                  <li><a href="{{ route('profile.index') }}"><span style="color: red;">حساب کاربری</span></a></li>
+
                 </ul>
-              </div>
-              <div class="header-super-store d-none d-xl-block d-lg-none d-md-block">
-                <div class="dropdown">
-                  <button class="dropdown-toggle" type="button" id="dropdownMenuButton4"
-                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
-                      class="flaticon-shop"></i> فروشگاه اینترنتی
-                  </button>
-                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton4">
-                    <a class="dropdown-item" href="shop.html">فروشگاه اینترنتی 01</a>
-                    <a class="dropdown-item" href="shop.html">فروشگاه اینترنتی 02</a>
-                    <a class="dropdown-item" href="shop.html">فروشگاه اینترنتی 03</a>
-                  </div>
-                </div>
               </div>
             </nav>
           </div>
@@ -400,16 +350,16 @@
               <ul>
                 <li>
                   <div class="icon"><i class="flaticon-place"></i></div>
-                  <p>ایران، تهران، خیابان یک، کوچه یک</p>
+                  <p>سمنان، سمنان، میدان استاندارد</p>
                 </li>
                 <li>
                   <div class="icon"><i class="flaticon-telephone-1"></i></div>
-                  <h5 class="number"><a href="tel:12027993245">+120 279 932 45</a></h5>
+                    <h5 class="number"><a href="tel:09333115604" dir="ltr">+98 933 311 5604</a></h5>
                 </li>
                 <li>
                   <div class="icon"><i class="flaticon-mail"></i></div>
                   <p><a href=""><span class="__cf_email__"
-                        data-cfemail="70030500001f020430061517151e5e131f1d">[email&#160;protected]</span></a>
+                        data-cfemail="70030500001f020430061517151e5e131f1d">pardisn345@gmail.com</span></a>
                   </p>
                 </li>
                 <li>
@@ -435,13 +385,11 @@
             </div>
             <div class="fw-link">
               <ul>
-                <li><a href="shop.html">امنیت در خرید</a></li>
-                <li><a href="cart.html">وضعیت سفارشات</a></li>
-                <li><a href="shop.html">حمل و نقل بین المللی</a></li>
-                <li><a href="checkout.html">شیوه پرداخت</a></li>
-                <li><a href="blog.html">وبلاگ</a></li>
-                <li><a href="terms-conditios.html">سفارشات و بازگشتی ها</a></li>
-                <li><a href="checkout.html">رهگیری سفارشات</a></li>
+                <li>امنیت در خرید</li>
+                <li>حمل و نقل بین المللی</li>
+                <li>تنوع شیوه پرداخت</li>
+                <li>امکان مرجوعی کالا</li>
+                <li>رهگیری سفارشات</li>
               </ul>
             </div>
           </div>
@@ -453,13 +401,11 @@
             </div>
             <div class="fw-link">
               <ul>
-                <li><a href="checkout.html">تحویل کالا</a></li>
-                <li><a href="terms-conditios.html">اطلاع قانونی</a></li>
                 <li><a href="about-us.html">درباره ما</a></li>
-                <li><a href="contact.html">نقشه سایت</a></li>
-                <li><a href="checkout.html">رهگیری سفارشات</a></li>
-                <li><a href="terms-conditios.html">سفارشات</a></li>
+                <li><a href="{{ route('categories.show', 'main') }}">محصولات</a></li>
+                <li><a href="terms-conditios.html">شرایط و ضوابط</a></li>
                 <li><a href="contact.html">ارتباط با ما</a></li>
+                <li><a href="{{ route('profile.index') }}">حساب کاربری</a></li>
               </ul>
             </div>
           </div>
@@ -471,8 +417,8 @@
                 <h5 class="title">دریافت اپلیکیشن</h5>
               </div>
               <div class="download-btns">
-                <a href="home.blade.php"><img src="{{asset('img/icon/g_play.png')}}" alt=""></a>
-                <a href="home.blade.php"><img src="{{asset('img/icon/app_store.png')}}" alt=""></a>
+                <a href="#"><img src="{{asset('img/icon/g_play.png')}}" alt=""></a>
+                <a href="#"><img src="{{asset('img/icon/app_store.png')}}" alt=""></a>
               </div>
             </div>
             <div class="f-newsletter">

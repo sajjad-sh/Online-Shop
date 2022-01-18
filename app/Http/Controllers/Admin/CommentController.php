@@ -77,7 +77,14 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Comment::query()->create([
+            'user_id' => auth()->id(),
+            'product_id' => $request->product_id,
+            'content' => $request->textComment,
+            'is_verify' => 0,
+        ]);
+
+        return back();
     }
 
     /**

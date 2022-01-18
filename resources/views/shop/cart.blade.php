@@ -67,7 +67,7 @@
                         </a></h4>
                     </td>
                     <td class="product-price">
-                      @price($cart_item->price)
+                      @price($cart_item->total_price)
                     </td>
                     <td class="product-quantity">
                       <div class="cart--plus--minus">
@@ -84,7 +84,7 @@
                     </td>
                     <td class="product-subtotal">
                       <span>
-                        @price($cart_item->price)
+                        @price($cart_item->total_price * $cart_items_counts[$cart_item->id])
                       </span>
                     </td>
                     <td class="product-delete">

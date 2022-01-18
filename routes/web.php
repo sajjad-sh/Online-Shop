@@ -2,6 +2,7 @@
 
 use App\Models\Cart;
 use App\Models\Order;
+use App\Models\Product;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Route;
@@ -37,5 +38,6 @@ require __DIR__ . '/user.php';
 
 
 Route::get('/test', function () {
+
 
 });

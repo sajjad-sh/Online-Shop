@@ -17,7 +17,7 @@ class Comment extends Model
      * @var string[]
      */
     protected $fillable = [
-        'content', 'is_verify', 'likes', 'dislikes'
+        'user_id', 'product_id', 'content', 'is_verify', 'likes', 'dislikes'
     ];
 
     protected $observables = [

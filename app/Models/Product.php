@@ -26,6 +26,9 @@ class Product extends Model
         'amazing_id',
         'description',
         'slug',
+        'atts',
+        'color',
+        'brand',
         'price',
         'inventory',
         'sales',
@@ -99,19 +102,6 @@ class Product extends Model
     public function setSlugAttribute($value)
     {
         $this->attributes['slug'] = strtolower(str_replace(' ', '-', "$value"));
-    }
-
-    # TODO: use accessor, scopes, helpers for user defined function and instead of query in blade
-    /**
-     * a query for fetch brand of product.
-     */
-    public function getBrandAttribute()
-    {
-        foreach ($this->att_values as $att_value) {
-            if (AttTitle::find($att_value->att_title_id)->key == 'brand')
-                return $att_value->value;
-        }
-        return false;
     }
 
     /**

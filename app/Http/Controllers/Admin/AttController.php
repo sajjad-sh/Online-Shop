@@ -103,12 +103,7 @@ class AttController extends Controller
      */
     public function edit($id)
     {
-        $att_titles = AttTitle::all();
-        $att_value = AttValue::query()->find($id);
 
-        return view('admin.shop.attributes.edit')
-            ->with('att_titles', $att_titles)
-            ->with('att_value', $att_value);
     }
 
     /**

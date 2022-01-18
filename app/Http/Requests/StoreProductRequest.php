@@ -25,18 +25,19 @@ class StoreProductRequest extends FormRequest
     {
         return [
             'fa_title' => 'required|min:3|max:255',
-            'en_title' => 'required|min:3|max:255',
+            'en_title' => '',
             'slug' => ['required','min:2', 'max:50'],
-            'description' => 'required|min:3|max:500',
+            'description' => 'required|min:3|max:1000',
             'price' => 'integer',
             'inventory' => 'integer',
             'review' => '',
             'status' => 'required',
-            'amazing_id' => 'integer',
-            'p_titles' => '',
-            'p_values' => '',
-            's_titles' => '',
-            's_values' => '',
+            'amazing_id' => '',
+            'color' => 'string',
+            'brand' => 'string',
+            'mykeys' => '',
+            'myvalues' => '',
+            'categories' => '',
         ];
     }
 }

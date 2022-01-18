@@ -5,12 +5,15 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use App\Models\Category;
 use App\Models\Image;
 use App\Models\AttTitle;
 use App\Models\AttValue;
 use App\Models\Product;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
@@ -45,12 +48,10 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $titles = AttTitle::all();
-        $values = AttValue::all();
+        $categories = Category::all();
 
         return view('admin.shop.products.create')
-            ->with('titles', $titles)
-            ->with('values', $values);
+            ->with('categories', $categories);
     }
 
     /**
@@ -61,28 +62,34 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
-        $special_specifications = json_encode(
-            array_combine($request->validated()['s_titles'], $request->validated()['s_values'])
-        );
+        $special_specifications = null;
+
+        if($request->has('mykeys') && $request->has('myvalues')) {
+            $special_specifications = json_encode(
+                array_combine($request->validated()['mykeys'], $request->validated()['myvalues'])
+            );
+        }
 
         $product = Product::create([
             'fa_title' => $request->validated()['fa_title'],
             'en_title' => $request->validated()['en_title'],
-            'slug' => $request->validated()['slug'],
             'description' => $request->validated()['description'],
+            'slug' => $request->validated()['slug'],
+            'atts' => $special_specifications,
+            'color' => $request->validated()['color'],
+            'brand' =>  $request->validated()['brand'],
             'price' => $request->validated()['price'],
             'inventory' =>  $request->validated()['inventory'],
             'review' =>  $request->validated()['review'],
             'status' =>  $request->validated()['status'],
             'amazing_id' =>  $request->validated()['amazing_id'],
-            'special_specifications' =>  $special_specifications,
         ]);
 
-//        $product->amazing()->associate($request->validated()['amazing_id']);
-
-        if($request->validated()['p_values']) {
-            foreach ($request->validated()['p_values'] as $p_value)
-                $product->att_values()->attach($p_value);
+        foreach ($request->categories as $category_id) {
+            DB::table('category_product')->insert([
+                'category_id' => $category_id,
+                'product_id' => $product->id,
+            ]);
         }
 
         if ($request->hasFile('file')) {
