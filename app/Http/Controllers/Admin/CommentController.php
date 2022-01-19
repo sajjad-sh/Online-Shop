@@ -7,6 +7,7 @@ use App\Models\Comment;
 use Illuminate\Database\Eloquent\Concerns\HasEvents;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 
 class CommentController extends Controller
@@ -53,6 +54,10 @@ class CommentController extends Controller
      */
     public function index()
     {
+        if (! Gate::allows('show-admin-panel', auth()->user())) {
+            abort(403);
+        }
+
         $comments = Comment::latest()->paginate(15);
 
         return view('admin.shop.comments.index')

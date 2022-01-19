@@ -7,6 +7,7 @@ use App\Models\AttTitle;
 use App\Models\AttValue;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\View\View;
 
@@ -19,6 +20,10 @@ class AttController extends Controller
      */
     public function index()
     {
+        if (! Gate::allows('show-admin-panel', auth()->user())) {
+            abort(403);
+        }
+
         $att_titles = AttTitle::with('att_values')
             ->get();
 
@@ -33,6 +38,10 @@ class AttController extends Controller
      */
     public function create()
     {
+        if (! Gate::allows('show-admin-panel', auth()->user())) {
+            abort(403);
+        }
+
         $att_titles = AttTitle::all();
 
         return view('admin.shop.attributes.create')
@@ -46,6 +55,10 @@ class AttController extends Controller
      */
     public function createTitle()
     {
+        if (! Gate::allows('show-admin-panel', auth()->user())) {
+            abort(403);
+        }
+
         return view('admin.shop.attributes.create-title');
     }
 

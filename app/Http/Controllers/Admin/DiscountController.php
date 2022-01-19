@@ -9,6 +9,7 @@ use App\Models\Discount;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
@@ -21,6 +22,10 @@ class DiscountController extends Controller
      */
     public function index()
     {
+        if (! Gate::allows('show-admin-panel', auth()->user())) {
+            abort(403);
+        }
+
         $discounts = Discount::paginate(15);
 
         return view('admin.discounts.index')
@@ -35,6 +40,10 @@ class DiscountController extends Controller
      */
     public function create()
     {
+        if (! Gate::allows('show-admin-panel', auth()->user())) {
+            abort(403);
+        }
+
         return view('admin.discounts.create');
     }
 
@@ -59,6 +68,10 @@ class DiscountController extends Controller
      */
     public function edit(Discount $discount)
     {
+        if (! Gate::allows('show-admin-panel', auth()->user())) {
+            abort(403);
+        }
+
         return view('admin.discounts.edit')
             ->with('discount', $discount);
     }
@@ -80,7 +93,6 @@ class DiscountController extends Controller
             'type' => 'required|integer|between:0,1',
             'amount' => 'required|integer',
             'inventory' => 'required|integer',
-            'sales' => 'required|integer',
         ]);
 
         if($validator)

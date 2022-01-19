@@ -57,12 +57,12 @@
                 @foreach($cart_items as $cart_item)
                   <tr>
                     <td class="product-thumbnail">
-                      <a href="single-product.blade.php">
+                      <a href="{{url("product/$cart_item->slug")}}">
                         <img src="{{$cart_item->primary_image}}" alt="">
                       </a>
                     </td>
                     <td class="product-name">
-                      <h4><a href="single-product.blade.php">
+                      <h4><a href="{{url("product/$cart_item->slug")}}">
                           {{ $cart_item->fa_title }}
                         </a></h4>
                     </td>

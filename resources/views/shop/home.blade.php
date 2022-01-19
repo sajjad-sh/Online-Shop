@@ -376,7 +376,7 @@
             </div>
             <div class="discount-content">
               <span>غذای سالم</span>
-              <h4 class="title"><a href="{{ \Illuminate\Support\Facades\URL::to('category/food-beverage') }}">مزرعه ارگانیک برای گانیک</a></h4>
+              <h4 class="title"><a href="{{ \Illuminate\Support\Facades\URL::to('category/food-beverage') }}">مزرعه ارگانیک برای پارادایس</a></h4>
               <p>پیشنهاد فوق العاده تا 50٪ تخفیف</p>
               <a href="{{ \Illuminate\Support\Facades\URL::to('category/food-beverage') }}" class="btn rounded-btn">الان بخرید</a>
             </div>
@@ -389,7 +389,7 @@
             </div>
             <div class="discount-content">
               <span>غذای سالم</span>
-              <h4 class="title"><a href="{{ \Illuminate\Support\Facades\URL::to('category/personal-appliance') }}">مزرعه ارگانیک برای گانیک</a></h4>
+              <h4 class="title"><a href="{{ \Illuminate\Support\Facades\URL::to('category/personal-appliance') }}">مزرعه ارگانیک برای پارادایس</a></h4>
               <p>پیشنهاد فوق العاده تا 50٪ تخفیف</p>
               <a href="{{ \Illuminate\Support\Facades\URL::to('category/personal-appliance') }}" class="btn rounded-btn">الان بخرید</a>
             </div>

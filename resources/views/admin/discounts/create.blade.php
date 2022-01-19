@@ -16,7 +16,7 @@
             <form class="form-horizontal" method="post" action="{{route('admin.discounts.store')}}">
               @csrf
               <div class="card-body">
-                <h4 class="card-title">New discount</h4>
+                <h4 class="card-title">ایجاد کد تخفیف</h4>
                 <br>
                 @if ($errors->any())
                   @foreach ($errors->all() as $error)
@@ -40,8 +40,8 @@
                     <label for="type">نوع</label>
                     <select id="type" name="type" class="form-select" aria-label="Default select example">
                       <option selected>نوع</option>
-                      <option value="0">مبلغی</option>
-                      <option value="1">درصدی</option>
+                      <option value="0">درصدی</option>
+                      <option value="1">مبلغی</option>
                     </select> <br>
 
                     <!-- TODO: New Field depend on value of previuos select tag -->
@@ -50,10 +50,6 @@
 
                     <label for="inventory">موجودی</label>
                     <input type="number" class="form-control" id="inventory" name="inventory" placeholder="موجودی" />
-
-                    <label for="sales">استفاده شده</label>
-                    <input type="number" class="form-control" id="sales" name="sales" placeholder="استفاده شده" />
-
                   </div>
                 </div>
 

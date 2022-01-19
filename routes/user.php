@@ -16,6 +16,7 @@ Route::resource('/profile', ProfileController::class)
     ->middleware(['auth']);
 
 Route::get('/product/{product:slug}', [ProductController::class, 'show']);
+Route::get('/compare-product/{product1}/{product2}', [ProductController::class, 'compareProduct']);
 
 Route::get('/category/{category:slug}', [CategoryController::class, 'show'])
     ->name('categories.show');
@@ -25,3 +26,7 @@ Route::get('checkout', CheckoutController::class)
     ->name('checkout');
 
 Route::resource('payments', PaymentController::class)->except('index');
+
+Route::view('contact-us', 'shop.contact-us');
+Route::view('about', 'shop.about');
+Route::view('terms-conditions', 'shop.terms-conditions');

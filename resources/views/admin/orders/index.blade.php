@@ -11,15 +11,6 @@
           <br>
           <h3 class="box-title">پنل مدیریت - فهرست سفارشات</h3>
 
-          <div class="box-tools">
-            <div class="input-group input-group-sm" style="width: 150px;">
-              <input type="text" name="table_search" class="form-control pull-right" placeholder="جستجو">
-
-              <div class="input-group-btn">
-                <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-              </div>
-            </div>
-          </div>
         </div>
         <!-- /.box-header -->
         <div class="box-body table-responsive no-padding">
@@ -30,7 +21,6 @@
               <th>شناسه سبد خرید</th>
               <th>وضعیت سفارش</th>
               <th>درگاه پرداختی</th>
-              <th>علت لغو سفارش</th>
               <th>تاریخ ایجاد</th>
               <th>تغییر وضعیت</th>
             </tr>
@@ -44,46 +34,16 @@
                   <span class="label label-{{__("order.label.$order->status")}}">{{__("order.status.$order->status")}}</span>
                 </td>
                 <td>
-                  @if($order->payment)
-                    @if(!in_array($order->payment->payment_method, [0, 1, 2, 3]))
+
+                  @if($order->cart->payment)
+                    @if(!in_array($order->cart->payment->payment_method, [0, 1, 2, 3]))
                       {{"نقدی"}}
 
                     @else
-                      {{__("payment.method.".$order->payment->payment_method)}}
+                      {{__("payment.method.".$order->cart->payment->payment_method)}}
                     @endif
                   @else
                     {{"نقدی"}}
-                  @endif
-                </td>
-                <td style="width: 239px;">
-
-
-
-                  @if($order->status == 0)
-
-                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-danger-{{$order->id}}">
-                      نمایش علت لغو
-                    </button>
-
-                  <div class="modal modal-danger fade" id="modal-danger-{{$order->id}}">
-                    <div class="modal-dialog">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span></button>
-                          <h4 class="modal-title">Danger مدال</h4>
-                        </div>
-                        <div class="modal-body">
-                          <p>{{$order->cancel_reason}}</p>
-                        </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">قبول</button>
-                        </div>
-                      </div>
-                      <!-- /.modal-content -->
-                    </div>
-                    <!-- /.modal-dialog -->
-                  </div>
                   @endif
                 </td>
                 <td>{{verta($order->created_at)}}</td>

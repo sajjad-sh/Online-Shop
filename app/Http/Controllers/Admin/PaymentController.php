@@ -12,6 +12,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
@@ -24,6 +25,10 @@ class PaymentController extends Controller
      */
     public function index()
     {
+        if (! Gate::allows('show-admin-panel', auth()->user())) {
+            abort(403);
+        }
+
         $payments = Payment::paginate(15);
 
         return view('admin.payments.index')
@@ -96,7 +101,7 @@ class PaymentController extends Controller
             if($address_id == 'new') {
                 $new_address_text = $request->new_address;
                 $new_address = Address::create([
-                    'user_id' => $cart_id,
+                    'user_id' => auth()->user()->id,
                     'content' => $new_address_text,
                     'location' => null,
                 ]);

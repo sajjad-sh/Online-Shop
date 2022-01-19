@@ -42,19 +42,11 @@
 
       <br>
 
-        <select name="category_id" class="form-select" id="floatingSelect" aria-label="Floating label select example" >
-          <option selected>انتخاب دسته بندی</option>
-          <option value="0">صفحه اصلی</option>
 
-          @foreach($categories as $category)
-            <option value="{{$category->id}}">{{$category->name}}</option>
-          @endforeach
-        </select>
 
       <br>
 
-      <input name="is_primary" class="form-check-input me-1" type="checkbox" value="1" aria-label="...">
-      عکس اصلی ؟
+
 
       <br><br>
       <button class="btn btn-primary" type="submit">Submit</button>

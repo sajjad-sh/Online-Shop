@@ -70,8 +70,8 @@
         <div class="col-md-5">
           <div class="header-top-right">
             <ul>
-              <li><a href="contact.html">ارتباط با ما</a></li>
-              <li><a href="about-us.html">درباره ما</a></li>
+              <li><a href="{{ url('contact-us') }}">ارتباط با ما</a></li>
+              <li><a href="{{ url('about') }}">درباره ما</a></li>
               <li><a href="{{ route('profile.index') }}">حساب کاربری</a></li>
             </ul>
           </div>
@@ -218,7 +218,7 @@
                 <a href="{{ route('home') }}"><img style="width: 60px; height: 70px;" src="{{asset('img/logo/logo.png')}}" alt=""></a>
               </div>
               <div class="header-category d-none d-lg-block">
-                <a href="/categories/main" class="cat-toggle"><i class="fas fa-bars"></i>همه دسته بندیها<i
+                <a href="{{ url('category/main') }}" class="cat-toggle"><i class="fas fa-bars"></i>همه دسته بندیها<i
                     class="fas fa-angle-down"></i></a>
 
                 <style>
@@ -290,11 +290,11 @@
                 <ul class="navigation">
                   <li class="active"><a href="{{ route('home') }}">صفحه نخست</a>
                   </li>
-                  <li><a href="about-us.html">درباره ما</a></li>
+                  <li><a href="{{ url('about') }}">درباره ما</a></li>
                   <li><a href="{{ route('categories.show', 'main') }}">محصولات</a></li>
-                  <li><a href="terms-conditios.html">شرایط و ضوابط</a></li>
+                  <li><a href="{{ url('terms-conditions') }}">شرایط و ضوابط</a></li>
                   </li>
-                  <li><a href="contact.html">ارتباط با ما</a></li>
+                  <li><a href="{{ url('contact-us') }}">ارتباط با ما</a></li>
                   <li><a href="{{ route('profile.index') }}"><span style="color: red;">حساب کاربری</span></a></li>
 
                 </ul>
@@ -402,10 +402,10 @@
             </div>
             <div class="fw-link">
               <ul>
-                <li><a href="about-us.html">درباره ما</a></li>
+                <li><a href="{{ url('about') }}">درباره ما</a></li>
                 <li><a href="{{ route('categories.show', 'main') }}">محصولات</a></li>
-                <li><a href="terms-conditios.html">شرایط و ضوابط</a></li>
-                <li><a href="contact.html">ارتباط با ما</a></li>
+                <li><a href="{{ url('terms-conditions') }}">شرایط و ضوابط</a></li>
+                <li><a href="{{ url('contact-us') }}">ارتباط با ما</a></li>
                 <li><a href="{{ route('profile.index') }}">حساب کاربری</a></li>
               </ul>
             </div>

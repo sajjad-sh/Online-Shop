@@ -10,10 +10,12 @@ use App\Models\Image;
 use App\Models\AttTitle;
 use App\Models\AttValue;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
@@ -30,6 +32,10 @@ class ProductController extends Controller
      */
     public function index()
     {
+        if (! Gate::allows('show-admin-panel', auth()->user())) {
+            abort(403);
+        }
+
         if(auth()->user()->isWriter())
             $products = auth()->user()->products()->withTrashed();
         else
@@ -48,6 +54,10 @@ class ProductController extends Controller
      */
     public function create()
     {
+        if (! Gate::allows('show-admin-panel', auth()->user())) {
+            abort(403);
+        }
+
         $categories = Category::all();
 
         return view('admin.shop.products.create')
@@ -167,11 +177,39 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
+        if (! Gate::allows('show-admin-panel', auth()->user())) {
+            abort(403);
+        }
+
         $product->visits += 1;
         $product->save();
 
+        $user = User::find(auth()->user()->id);
+
+        $j_latest_products = $user->latest_products;
+        if($j_latest_products != null) {
+            $latest_products = json_decode($j_latest_products, true);
+        } else {
+            $latest_products = [];
+        }
+
+        if(!in_array($product->id, $latest_products)) {
+            if(count($latest_products) >= 5) {
+                array_shift($latest_products);
+            }
+            $latest_products[] = $product->id;
+        }
+
+        $j_latest_products = json_encode($latest_products);
+
+        $user->latest_products = $j_latest_products;
+        $user->save();
+
+        $latest_products = Product::query()->findMany($latest_products);
+
         return view('shop.single-product')
-            ->with('product', $product);
+            ->with('product', $product)
+            ->with('latest_products', $latest_products);
     }
 
     /**
@@ -182,13 +220,12 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        $all_titles = AttTitle::all();
-        $all_values = AttValue::all();
+        if (! Gate::allows('show-admin-panel', auth()->user())) {
+            abort(403);
+        }
 
         return view('admin.shop.products.edit')
-            ->with('product', $product)
-            ->with('all_titles', $all_titles)
-            ->with('all_values', $all_values);
+            ->with('product', $product);
     }
 
     /**
@@ -200,9 +237,6 @@ class ProductController extends Controller
      */
     public function update(UpdateProductRequest $request, Product $product)
     {
-        foreach ($request->att_values as $att_value)
-            $product->att_values()->attach($att_value);
-
         if ($product->update($request->validated()))
             return redirect()->route('admin.shop.products.index');
 
@@ -236,5 +270,16 @@ class ProductController extends Controller
         Product::withTrashed()->find($id)->restore();
 
         return back();
+    }
+
+    public function compareProduct(Product $product1, Product $product2)
+    {
+        if (! Gate::allows('show-admin-panel', auth()->user())) {
+            abort(403);
+        }
+
+        return view('shop.compare-products')
+            ->with('p1', $product1)
+            ->with('p2', $product2);
     }
 }

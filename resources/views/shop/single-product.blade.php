@@ -315,157 +315,58 @@
       <div class="row align-items-end mb-40">
         <div class="col-md-8 col-sm-9">
           <div class="section-title">
-            <span class="sub-title">محصولات مرتبط</span>
-            <h2 class="title">از این مجموعه</h2>
+            <span class="sub-title">کالاهای پیشنهادی</span>
+            <h2 class="title">بر اساس بازدید شما</h2>
           </div>
         </div>
-        <div class="col-md-4 col-sm-3">
-          <div class="section-btn text-right text-md-left">
-            <a href="shop.html" class="btn">نمایش همه</a>
-          </div>
-        </div>
+
       </div>
       <div class="best-sellers-products">
         <div class="row justify-content-center">
 
+          @foreach($latest_products as $latest_product)
 
-          <div class="col-3">
-            <div class="sp-product-item mb-20">
-              <div class="sp-product-thumb">
-                <span class="batch">جدید</span>
-                <a href="single-product.blade.php"><img src="{{asset('img/product/sp_products09.png')}}" alt=""></a>
-              </div>
-              <div class="sp-product-content">
-                <div class="rating">
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                </div>
-                <h6 class="title"><a href="single-product.blade.php">آماده وانیلی نارنجی</a></h6>
-                <span class="product-status">موجود در انبار</span>
-                <div class="sp-cart-wrap">
-                  <form action="#">
-                    <div class="cart-plus-minus">
-                      <input type="text" value="1">
-                    </div>
-                  </form>
-                </div>
-                <p>هر 1 کیلو - 1.500 تومان</p>
-              </div>
-            </div>
-          </div>
+            <div class="col-3">
+              <div class="sp-product-item mb-20" style="height: 490px;">
+                <div class="sp-product-thumb">
+                  @if($latest_product->amazing_id != null)
+                    @if($latest_product->amazing->type == 0)
+                      <span class="batch">{{ $latest_product->amazing->amount }}%</span>
+                    @else
+                      <span class="batch">جدید</span>
+                    @endif
+                  @else
+                    <span class="batch">جدید</span>
+                  @endif
 
+                  @php
+                    $primary_image = null;
 
-          <div class="col-3">
-            <div class="sp-product-item mb-20">
-              <div class="sp-product-thumb">
-                <span class="batch discount">15%</span>
-                <a href="single-product.blade.php"><img src="{{asset('img/product/sp_products02.png')}}" alt=""></a>
-              </div>
-              <div class="sp-product-content">
-                <div class="rating">
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
+                    foreach ($latest_product->images as $image) {
+                        if($image->is_primary == 1)
+                            $primary_image = $image;
+                    }
+                  @endphp
+                  <a href="{{\Illuminate\Support\Facades\URL::to("product/$latest_product->slug")}}"><img src="{{$primary_image ? \Illuminate\Support\Facades\URL::to($primary_image->url) : asset('img/product/sp__products04.png')}}" alt=""></a>
                 </div>
-                <h6 class="title"><a href="single-product.blade.php">آماده وانیلی نارنجی</a></h6>
-                <span class="product-status">موجود در انبار</span>
-                <div class="sp-cart-wrap">
-                  <form action="#">
-                    <div class="cart-plus-minus">
-                      <input type="text" value="1">
+                <div class="sp-product-content">
+                  <h6 class="title">
+                    <a href="{{\Illuminate\Support\Facades\URL::to("product/$latest_product->slug")}}">
+                      {{ $latest_product->fa_title }}
+                    </a>
+                  </h6>
+                  <span class="product-status">
+                    {{number_format($latest_product->total_price)}} تومان
+                  </span>
+                  <div class="sp-cart-wrap" >
+                    <div class="shop-perched-info">
+                      <a href="{{ \Illuminate\Support\Facades\URL::to("cart/add/$latest_product->id/1") }}" class="btn">افزودن به سبد</a>
                     </div>
-                  </form>
+                  </div>
                 </div>
-                <p>هر 1 کیلو - 1.500 تومان</p>
               </div>
             </div>
-          </div>
-          <div class="col-3">
-            <div class="sp-product-item mb-20">
-              <div class="sp-product-thumb">
-                <span class="batch discount">25%</span>
-                <a href="single-product.blade.php"><img src="{{asset('img/product/sp_products03.png')}}" alt=""></a>
-              </div>
-              <div class="sp-product-content">
-                <div class="rating">
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                </div>
-                <h6 class="title"><a href="single-product.blade.php">آماده وانیلی نارنجی</a></h6>
-                <span class="product-status">موجود در انبار</span>
-                <div class="sp-cart-wrap">
-                  <form action="#">
-                    <div class="cart-plus-minus">
-                      <input type="text" value="1">
-                    </div>
-                  </form>
-                </div>
-                <p>هر 1 کیلو - 1.500 تومان</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-3">
-            <div class="sp-product-item mb-20">
-              <div class="sp-product-thumb">
-                <span class="batch">جدید</span>
-                <a href="single-product.blade.php"><img src="{{asset('img/product/sp_products04.png')}}" alt=""></a>
-              </div>
-              <div class="sp-product-content">
-                <div class="rating">
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                </div>
-                <h6 class="title"><a href="single-product.blade.php">آماده وانیلی نارنجی</a></h6>
-                <span class="product-status">موجود در انبار</span>
-                <div class="sp-cart-wrap">
-                  <form action="#">
-                    <div class="cart-plus-minus">
-                      <input type="text" value="1">
-                    </div>
-                  </form>
-                </div>
-                <p>هر 1 کیلو - 1.500 تومان</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-3">
-            <div class="sp-product-item mb-20">
-              <div class="sp-product-thumb">
-                <span class="batch discount">25%</span>
-                <a href="single-product.blade.php"><img src="{{asset('img/product/sp_products05.png')}}" alt=""></a>
-              </div>
-              <div class="sp-product-content">
-                <div class="rating">
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                </div>
-                <h6 class="title"><a href="single-product.blade.php">آماده وانیلی نارنجی</a></h6>
-                <span class="product-status">موجود در انبار</span>
-                <div class="sp-cart-wrap">
-                  <form action="#">
-                    <div class="cart-plus-minus">
-                      <input type="text" value="1">
-                    </div>
-                  </form>
-                </div>
-                <p>هر 1 کیلو - 1.500 تومان</p>
-              </div>
-            </div>
-          </div>
+          @endforeach
         </div>
       </div>
     </div>

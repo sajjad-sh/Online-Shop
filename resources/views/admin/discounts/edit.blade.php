@@ -40,9 +40,9 @@
                     <select id="type" name="type" class="form-select" aria-label="Default select example">
                       <option value="{{$discount->type}}" selected>{{__("discount.type.$discount->type")}}</option>
                       @if($discount->type == 0)
-                        <option value="1">درصدی</option>
+                        <option value="1">مبلغی</option>
                       @else
-                        <option value="0">مبلغی</option>
+                        <option value="0">درصدی</option>
                       @endif
                     </select>
                     <br>
@@ -52,10 +52,6 @@
 
                     <label for="inventory">موجودی</label>
                     <input type="number" class="form-control" id="inventory" name="inventory" placeholder="موجودی" value="{{$discount->inventory}}" />
-
-                    <label for="sales">استفاده شده</label>
-                    <input type="number" class="form-control" id="sales" name="sales" placeholder="استفاده شده" value="{{$discount->sales}}" />
-
                   </div>
                 </div>
 

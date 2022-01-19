@@ -372,6 +372,7 @@ $("#slider-range").slider({
 	values: [100, 480],
 	slide: function (event, ui) {
 		$("#amount").val(ui.values[0] + " هزار تومان " + " تا " + ui.values[1] + " هزار تومان ");
+		//query sql => from - to - category
 	}
 });
 $("#amount").val($("#slider-range").slider("values", 0) + " هزار تومان " + " تا " + $("#slider-range").slider("values", 1) + " هزار تومان ");

@@ -233,8 +233,8 @@ class Product extends Model
     public function getIsInventoryAttribute()
     {
         if($this->inventory == 0 or $this->status == 0)
-            return true;
-        return false;
+            return false;
+        return true;
     }
 
     public function getTotalPriceAttribute()

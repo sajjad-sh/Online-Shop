@@ -9,8 +9,6 @@
       پروفایل کاربری
     </h1>
     <ol class="breadcrumb">
-      <li><a href="#"><i class="fa fa-dashboard"></i> خانه</a></li>
-      <li><a href="#">مثال ها</a></li>
       <li class="active"> پروفایل</li>
     </ol>
   </section>
@@ -228,9 +226,7 @@
                 <div class="form-group">
                   <div class="col-sm-offset-2 col-sm-10">
                     <div class="checkbox">
-                      <label>
-                        <input type="checkbox"> من <a href="#">قوانین و شرایط</a> را قبول میکنم.
-                      </label>
+
                     </div>
                   </div>
                 </div>
@@ -255,7 +251,6 @@
                 @endforeach
                 </ul>
               </ul>
-              {{$addresses->links()}}
             </div>
             <!-- /.tab-pane -->
           </div>

@@ -8,6 +8,7 @@ use App\Models\Image;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 
 class SlideController extends Controller
@@ -19,6 +20,10 @@ class SlideController extends Controller
      */
     public function index()
     {
+        if (! Gate::allows('show-admin-panel', auth()->user())) {
+            abort(403);
+        }
+
         $root_category = Category::find(0);
 
         $home_sliders = array();
@@ -36,6 +41,10 @@ class SlideController extends Controller
      */
     public function create()
     {
+        if (! Gate::allows('show-admin-panel', auth()->user())) {
+            abort(403);
+        }
+
         $categories = Category::all();
 
         return view('admin.site.sliders.create')
@@ -57,17 +66,16 @@ class SlideController extends Controller
             'subtitle' => '',
             'description' => '',
             'file' => 'required',
-            'category_id' => 'integer',
+            'category_id' => '',
         ]);
 
-        $is_primary = isset($request->is_primary);
         $description = $request->description ? $request->description : null;
 
         if ($request->hasFile('file')) {
             $image = $request->file('file');
             $name = time() . '-' . $image->getClientOriginalName();
-            $image->storeAs("/public/categories/cat-$request->category_id", $name);
-            $path = "categories/cat-$request->category_id/" . $name;
+            $image->storeAs("/public/categories/cat-0", $name);
+            $path = "categories/cat-0/" . $name;
 
             $url = '/storage/'.$path;
             $alt = $request->alt;
@@ -82,13 +90,13 @@ class SlideController extends Controller
                 'url' => $url,
                 'alt' => $alt,
                 'link' => $link,
-                'is_primary' => $is_primary,
+                'is_primary' => 0,
                 'title' => $title,
                 'subtitle' => $subtitle,
                 'description' => $description
             ]);
 
-            $category = Category::find($request->category_id);
+            $category = Category::find(0);
             $image = $category->images()->save($image);
         }
 
@@ -114,6 +122,10 @@ class SlideController extends Controller
      */
     public function edit($id)
     {
+        if (! Gate::allows('show-admin-panel', auth()->user())) {
+            abort(403);
+        }
+
         $categories = Category::all();
 
         $slider = DB::table('images')->find($id);
@@ -142,7 +154,6 @@ class SlideController extends Controller
             'category_id' => '',
         ]);
 
-        $is_primary = isset($request->is_primary);
         $description = $request->description ? $request->description : null;
 
         $alt = $request->alt;
@@ -153,8 +164,8 @@ class SlideController extends Controller
         if ($request->hasFile('file')) {
             $image = $request->file('file');
             $name = time() . '-' . $image->getClientOriginalName();
-            $image->storeAs("/public/categories/cat-$request->category_id", $name);
-            $path = "categories/cat-$request->category_id/" . $name;
+            $image->storeAs("/public/categories/cat-0", $name);
+            $path = "categories/cat-0/" . $name;
 
             $url = '/storage/'.$path;
 
@@ -165,7 +176,7 @@ class SlideController extends Controller
                 'url' => $url,
                 'alt' => $alt,
                 'link' => $link,
-                'is_primary' => $is_primary,
+                'is_primary' => 0,
                 'title' => $title,
                 'subtitle' => $subtitle,
                 'description' => $description
@@ -175,7 +186,7 @@ class SlideController extends Controller
             Image::query()->find($id)->update([
                 'alt' => $alt,
                 'link' => $link,
-                'is_primary' => $is_primary,
+                'is_primary' => 0,
                 'title' => $title,
                 'subtitle' => $subtitle,
                 'description' => $description

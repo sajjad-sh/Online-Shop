@@ -114,6 +114,9 @@ class CartController extends Controller
         Cookie::queue('cart_items', json_encode($cart_items));
         Cookie::queue('cart_count', $cart_count);
 
+        if($cart_count == 0)
+            Cookie::queue(Cookie::forget('discount_ids'));
+
         return redirect()->route('cart.index');
     }
 

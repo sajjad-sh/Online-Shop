@@ -182,59 +182,7 @@ $(function () {
   var $demoSettings = $('<div />')
 
   // Layout options
-  $demoSettings.append(
-    '<h4 class="control-sidebar-heading">'
-    + 'تنظیمات قالب'
-    + '</h4>'
-    // Fixed layout
-    + '<div class="form-group">'
-    + '<label class="control-sidebar-subheading">'
-    + '<input type="checkbox"data-layout="fixed"class="pull-right"/> '
-    + 'قالب فیکس'
-    + '</label>'
-    + '<p>فیکس شدن قالب. نمیتوانید قالب فیکس و باکس را همزمان انتخاب کنید</p>'
-    + '</div>'
-    // Boxed layout
-    + '<div class="form-group">'
-    + '<label class="control-sidebar-subheading">'
-    + '<input type="checkbox"data-layout="layout-boxed" class="pull-right"/> '
-    + 'قالب باکس'
-    + '</label>'
-    + '<p>فعال کردن قالب باکسی</p>'
-    + '</div>'
-    // Sidebar Toggle
-    + '<div class="form-group">'
-    + '<label class="control-sidebar-subheading">'
-    + '<input type="checkbox"data-layout="sidebar-collapse"class="pull-right"/> '
-    + 'سایدبار'
-    + '</label>'
-    + '<p>باز و بسته کردن سایدبار</p>'
-    + '</div>'
-    // Sidebar mini expand on hover toggle
-    + '<div class="form-group">'
-    + '<label class="control-sidebar-subheading">'
-    + '<input type="checkbox"data-enable="expandOnHover"class="pull-right"/> '
-    + 'باز شدن سایدبار با هاور'
-    + '</label>'
-    + '<p>ماوس را روی سایدبار ببرید باز می شود</p>'
-    + '</div>'
-    // Control Sidebar Toggle
-    + '<div class="form-group">'
-    + '<label class="control-sidebar-subheading">'
-    + '<input type="checkbox"data-controlsidebar="control-sidebar-open"class="pull-right"/> '
-    + 'سایدبار چپ'
-    + '</label>'
-    + '<p>باز و بسته کردن سایدبار چپ</p>'
-    + '</div>'
-    // Control Sidebar Skin Toggle
-    + '<div class="form-group">'
-    + '<label class="control-sidebar-subheading">'
-    + '<input type="checkbox"data-sidebarskin="toggle"class="pull-right"/> '
-    + 'قالب سایدبار چپ'
-    + '</label>'
-    + '<p>تغییر قالب سایدبار چپ بین روشن و تاریک</p>'
-    + '</div>'
-  )
+
   var $skinsList = $('<ul />', { 'class': 'list-unstyled clearfix' })
 
   // Dark sidebar skins
@@ -337,8 +285,7 @@ $(function () {
             + '<p class="text-center no-margin" style="font-size: 12px">زرد روشن</p>')
   $skinsList.append($skinYellowLight)
 
-  $demoSettings.append('<h4 class="control-sidebar-heading">قالب ها</h4>')
-  $demoSettings.append($skinsList)
+
 
   $tabPane.append($demoSettings)
   $('#control-sidebar-home-tab').after($tabPane)

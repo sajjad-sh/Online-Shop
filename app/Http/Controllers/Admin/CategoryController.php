@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\View\View;
 
@@ -18,6 +19,10 @@ class CategoryController extends Controller
      */
     public function index()
     {
+        if (! Gate::allows('show-admin-panel', auth()->user())) {
+            abort(403);
+        }
+
         $categories = Category::latest()->paginate();
 
         return view('admin.shop.categories.index')
@@ -31,6 +36,10 @@ class CategoryController extends Controller
      */
     public function create()
     {
+        if (! Gate::allows('show-admin-panel', auth()->user())) {
+            abort(403);
+        }
+
         $categories = Category::all();
 
         return view('admin.shop.categories.create')
@@ -51,9 +60,9 @@ class CategoryController extends Controller
         if ($request->hasFile('file')) {
             $image = $request->file('file');
             $name = "cat-$category->id." . $image->getClientOriginalExtension();
-            $path = $image->storeAs("/categories/images", $name);
+            $image->storeAs("public/categories/images", $name);
 
-            $url = '/storage/' . ($path);
+            $url = "/storage/categories/images/$name";
 
             $category->image = $url;
         }
@@ -71,78 +80,120 @@ class CategoryController extends Controller
      */
     public function show(Request $request, Category $category)
     {
-        if ($category->parent->id == 0) {
-            $category_sliders = array();
-            $subcategories = array();
+        if (! Gate::allows('show-admin-panel', auth()->user())) {
+            abort(403);
+        }
 
-            foreach ($category->images as $image)
-                $category_sliders[] = $image;
+        if($category->parent != null) {
+            if ($category->parent->id == 0) {
+                $category_sliders = array();
+                $subcategories = array();
 
-            $amazing_products = $category->products()->whereNotNull('amazing_id')->latest()->take(10)->get();
+                foreach ($category->images as $image)
+                    $category_sliders[] = $image;
 
-            //5 ta subcategory befrest
-            //baraye har kodum 4 mahsul
+                $amazing_products = $category->products()->whereNotNull('amazing_id')->latest()->take(10)->get();
 
-            $subcategories = $category->childrens;
+                //5 ta subcategory befrest
+                //baraye har kodum 4 mahsul
 
-            if($subcategories->count()>4)
-                $subcategories = $subcategories->random(4);
+                $subcategories = $category->childrens;
 
-            $products = array();
+                if($subcategories->count()>4)
+                    $subcategories = $subcategories->random(4);
 
-            $i=0;
-            foreach ($subcategories as $subcategory) {
-                $n = $subcategory->products->count();
+                $products = array();
 
-                if($n<4)
-                    $products[$i] = $subcategory->products;
-                else
-                    $products[$i] = $subcategory->products->random(4);
+                $i=0;
+                foreach ($subcategories as $subcategory) {
+                    $n = $subcategory->products->count();
 
-                $i++;
-            }
+                    if($n<4)
+                        $products[$i] = $subcategory->products;
+                    else
+                        $products[$i] = $subcategory->products->random(4);
 
-            return view('shop.single-category')
-                ->with('category', $category)
-                ->with('category_sliders', $category_sliders)
-                ->with('amazing_products', $amazing_products)
-                ->with('subcategories', $subcategories)
-                ->with('products', $products);
-        } else {
-            $brother_categories = Category::query()->where('parent_id', $category->parent->id)->get();
-            $products = $category->products();
-
-            if(isset($request->orderBy)) {
-                switch ($request->orderBy) {
-                    case 'visits':
-                        $products = $products->orderBy('visits', 'desc');
-                        break;
-                    case 'sales':
-                        $products = $products->orderBy('sales', 'desc');
-                        break;
-                    case 'newest':
-                        $products = $products->latest();
-                        break;
-                    case 'cheapest':
-                        $products = $products->orderBy('price');
-                        break;
-                    case 'expensive':
-                        $products = $products->orderBy('price', 'desc');
-                        break;
+                    $i++;
                 }
 
+                return view('shop.single-category')
+                    ->with('category', $category)
+                    ->with('category_sliders', $category_sliders)
+                    ->with('amazing_products', $amazing_products)
+                    ->with('subcategories', $subcategories)
+                    ->with('products', $products);
             } else {
-                $products = $products->latest();
+                $brother_categories = Category::query()->where('parent_id', $category->parent->id)->get();
+                $products = $category->products();
+
+                if(isset($request->orderBy)) {
+                    switch ($request->orderBy) {
+                        case 'visits':
+                            $products = $products->orderBy('visits', 'desc');
+                            break;
+                        case 'sales':
+                            $products = $products->orderBy('sales', 'desc');
+                            break;
+                        case 'newest':
+                            $products = $products->latest();
+                            break;
+                        case 'cheapest':
+                            $products = $products->orderBy('price');
+                            break;
+                        case 'expensive':
+                            $products = $products->orderBy('price', 'desc');
+                            break;
+                    }
+
+                } else {
+                    $products = $products->latest();
+                }
+                $products = $products->paginate(12);
+                $products->appends(request()->query());
+
+                return view('shop.single-subcategory')
+                    ->with('category', $category)
+                    ->with('brother_categories', $brother_categories)
+                    ->with('products', $products);
             }
-            $products = $products->paginate(12);
-            $products->appends(request()->query());
+        } else {
+                $category_sliders = array();
+                $subcategories = array();
 
+                foreach ($category->images as $image)
+                    $category_sliders[] = $image;
 
+                $amazing_products = $category->products()->whereNotNull('amazing_id')->latest()->take(10)->get();
 
-            return view('shop.single-subcategory')
-                ->with('category', $category)
-                ->with('brother_categories', $brother_categories)
-                ->with('products', $products);
+                //5 ta subcategory befrest
+                //baraye har kodum 4 mahsul
+
+                $subcategories = $category->childrens;
+
+                if($subcategories->count()>4)
+                    $subcategories = $subcategories->random(4);
+
+                $products = array();
+
+                $i=0;
+                foreach ($subcategories as $subcategory) {
+                    $n = $subcategory->products->count();
+
+                    if($n<4)
+                        $products[$i] = $subcategory->products;
+                    else
+                        $products[$i] = $subcategory->products->random(4);
+
+                    $i++;
+                }
+
+                return view('shop.single-category')
+                    ->with('category', $category)
+                    ->with('category_sliders', $category_sliders)
+                    ->with('amazing_products', $amazing_products)
+                    ->with('subcategories', $subcategories)
+                    ->with('products', $products);
+
         }
     }
 
@@ -154,6 +205,10 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
+        if (! Gate::allows('show-admin-panel', auth()->user())) {
+            abort(403);
+        }
+
         return view('admin.shop.categories.edit')
             ->with('category', $category);
     }

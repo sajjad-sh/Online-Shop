@@ -29,7 +29,6 @@ class StoreDiscountRequest extends FormRequest
             'type' => 'required|integer|between:0,1',
             'amount' => 'required|integer',
             'inventory' => 'required|integer',
-            'sales' => 'required|integer',
         ];
     }
 }

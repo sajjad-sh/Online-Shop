@@ -8,12 +8,12 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 # TODO: Add CRUD For all models
 
 class UserController extends Controller
 {
-
     /**
      * Display a listing of the users.
      *
@@ -21,6 +21,10 @@ class UserController extends Controller
      */
     public function index()
     {
+        if (! Gate::allows('show-admin-panel', auth()->user())) {
+            abort(403);
+        }
+
         $users = User::withTrashed()->paginate(15);
 
         return view('admin.users.index')
