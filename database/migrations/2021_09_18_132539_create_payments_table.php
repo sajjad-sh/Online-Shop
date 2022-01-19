@@ -19,7 +19,7 @@ class CreatePaymentsTable extends Migration
 
             $table->foreignIdFor(User::class);
             $table->unsignedDouble('amount');
-            $table->unsignedTinyInteger('payment_gateway');
+            $table->unsignedTinyInteger('payment_method');
 
             $table->timestamps();
         });

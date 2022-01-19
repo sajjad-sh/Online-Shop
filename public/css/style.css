@@ -500,14 +500,7 @@ label {
 }
 
 .header-search-wrap form:before {
-	content: "";
-	position: absolute;
-	right: 185px;
-	top: 50%;
-	transform: translateY(-50%);
-	width: 1px;
-	height: 24px;
-	background: #dbdada;
+
 }
 
 .header-search-wrap form .custom-select {

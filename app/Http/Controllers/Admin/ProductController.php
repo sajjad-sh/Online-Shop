@@ -167,6 +167,9 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
+        $product->visits += 1;
+        $product->save();
+
         return view('shop.single-product')
             ->with('product', $product);
     }

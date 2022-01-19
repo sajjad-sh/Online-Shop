@@ -36,7 +36,7 @@ class CommentPolicy
      */
     public function view(User $user, Comment $comment)
     {
-        //
+        return true;
     }
 
     /**
@@ -47,7 +47,7 @@ class CommentPolicy
      */
     public function create(User $user)
     {
-        //
+        return true;
     }
 
     /**
@@ -59,7 +59,7 @@ class CommentPolicy
      */
     public function update(User $user, Comment $comment)
     {
-        //
+        return true;
     }
 
     /**
@@ -83,7 +83,7 @@ class CommentPolicy
      */
     public function restore(User $user, Comment $comment)
     {
-        //
+        return true;
     }
 
     /**

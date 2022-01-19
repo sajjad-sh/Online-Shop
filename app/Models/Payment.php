@@ -14,7 +14,7 @@ class Payment extends Model
      *
      * @var string[]
      */
-    protected $fillable = ['cart_id', 'amount', 'payment_method'];
+    protected $fillable = ['user_id', 'cart_id', 'amount', 'payment_method'];
 
     /**
      * Get the user that owns the payment.

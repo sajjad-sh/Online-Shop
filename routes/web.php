@@ -39,15 +39,7 @@ require __DIR__ . '/admin.php';
 require __DIR__ . '/user.php';
 
 
-Route::get('addWatermark', function()
+Route::get('test', function()
 {
-
-    dd(Storage::url(storage_path("app/public/products/prd-71/abbas.jpg")));
-
-    /* insert watermark at bottom-right corner with 10px offset */
-    $img->insert(public_path('img/logo/logo.png'), 'bottom-right', 10, 10);
-
-    $img->save(public_path('img/logo/main-new.jpg'));
-
-    dd('saved image successfully.');
+    return view('test');
 });

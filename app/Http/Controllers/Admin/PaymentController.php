@@ -7,6 +7,7 @@ use App\Models\Address;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\Payment;
+use App\Models\Product;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
@@ -67,9 +68,12 @@ class PaymentController extends Controller
             $netprice = cartTotalPriceWithoutDiscount($cart_items, $cart_items_counts);
             $total_price = cartTotalPriceAfterDiscount($netprice, $discount_ids);
 
+            if ($discount_ids != null)
+                $discount_ids = json_encode($discount_ids);
+
             $cart = auth()->user()->carts()->create([
                 'user_id' => auth()->user()->id,
-                'discount_id' => json_encode($discount_ids),
+                'discount_id' => $discount_ids,
                 'count' => $cart_count,
                 'total_price' => $total_price,
                 'net_price' => $netprice,
@@ -111,10 +115,17 @@ class PaymentController extends Controller
 
             if ($status == 2) {
                 $payment = Payment::create([
-                    'cart_id' => auth()->user()->id,
+                    'user_id' => auth()->user()->id,
                     'amount' => cartTotalPrice($cart_items, $cart_items_counts, false),
                     'payment_method' => $request->payment_method
                 ]);
+
+                foreach ($cart_items_counts as $product_id => $quantity) {
+                    $prd = Product::query()->find($product_id);
+                    $prd->sales += $quantity;
+                    $prd->inventory -= $quantity;
+                    $prd->save();
+                }
 
                 Cookie::queue(Cookie::forget('cart_items'));
                 Cookie::queue(Cookie::forget('cart_count'));

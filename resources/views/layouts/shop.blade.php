@@ -13,6 +13,8 @@
   <!-- Place favicon.ico in the root directory -->
 
   <!-- CSS here -->
+  @livewireStyles
+
   <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
   <link rel="stylesheet" href="{{asset('css/animate.min.css')}}">
   <link rel="stylesheet" href="{{asset('css/magnific-popup.css')}}">
@@ -92,23 +94,13 @@
           <div class="d-block d-sm-flex align-items-center justify-content-end">
             <div class="header-search-wrap">
               <form autocomplete="off" action="/action_page.php">
-                <select class="custom-select">
-                  <option selected>همه دسته بندیها</option>
-                  <option>-- مواد غذایی و یخ زده</option>
-                  <option>-- میوه های تازه</option>
-                  <option>-- ماهی تازه</option>
-                  <option>-- آجیل تازه</option>
-                  <option>-- گوشت تازه</option>
-                  <option>-- نان و نانوایی</option>
-                  <option>-- سبزیجات</option>
-                  <option>-- غذای بچه ها</option>
-                  <option>-- میوه های خشک</option>
-                  <option>-- دیگر غذاها</option>
-                </select>
 
 
-                <div class="autocomplete" style="width:350px;">
-                  <input name="searchProducts" id="searchProducts" type="text" placeholder="جستجوی محصول مورد نظر..." style="width:345px;">
+                <div class="autocomplete" style="width:535px;">
+
+                  @livewire('search-products')
+
+
                 </div>
                 <button type="submit"><i class="flaticon-loupe-1"></i></button>
               </form>
@@ -465,6 +457,7 @@
 <!-- footer-area-end -->
 
 <!-- JS here -->
+@livewireScripts
 <script src="{{asset('js/vendor/jquery-3.6.0.min.js')}}"></script>
 <script src="{{asset('js/bootstrap.min.js')}}"></script>
 <script src="{{asset('js/isotope.pkgd.min.js')}}"></script>

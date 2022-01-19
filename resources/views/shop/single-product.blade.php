@@ -238,25 +238,26 @@
 
 
                         @foreach($product->comments as $comment)
-                          <div>
-                            <div class="bg-white p-2">
-                              <div class="d-flex flex-column justify-content-start ml-2">
+                          @if($comment->is_verify == 1)
+                            <div>
+                              <div class="bg-white p-2">
+                                <div class="d-flex flex-column justify-content-start ml-2">
 
-                                <div class="d-flex flex-row user-info">
-                                  <span class="d-block font-weight-bold name">{{$comment->user->full_name}}</span>
+                                  <div class="d-flex flex-row user-info">
+                                    <span class="d-block font-weight-bold name">{{$comment->user->full_name}}</span>
+                                  </div>
+                                  <span class="date text-black-50" style="font-size: 12px">{{verta($comment->created_at)}}</span>
+
                                 </div>
-                                <span class="date text-black-50" style="font-size: 12px">{{verta($comment->created_at)}}</span>
 
-                              </div>
-
-                              <div class="mt-2">
-                                <p class="comment-text">
-                                  {{$comment->content}}
-                                </p>
+                                <div class="mt-2">
+                                  <p class="comment-text">
+                                    {{$comment->content}}
+                                  </p>
+                                </div>
                               </div>
                             </div>
-
-                          </div>
+                        @endif
                         @endforeach
 
 
