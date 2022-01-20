@@ -20,20 +20,6 @@ use Intervention\Image\Facades\Image;
 |
 */
 
-
-# TODO: Refactor route Structures and names
-
-/*
- *
- * which packages ?
- * intervention
- * spotty media library
- * verta
- * switty alert
- * rich text editor
- * shetabi payment
- */
-
 require __DIR__ . '/auth.php';
 require __DIR__ . '/admin.php';
 require __DIR__ . '/user.php';

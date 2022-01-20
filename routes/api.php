@@ -54,10 +54,6 @@ Route::name('products.')->prefix('products')
     });
 
 
-# Profile
-Route::apiResource('profile', App\Http\Controllers\API\ProfileController::class)
-    ->only(['index', 'update']);
-
 
 /**
  * Admin API Routes
@@ -79,15 +75,6 @@ Route::name('admin.')
 
         Route::name('shop.')->prefix('shop')
             ->group(function () {
-                Route::apiResource('attributes', AttController::class);
-                Route::name('attributes.')->prefix('attributes')
-                    ->group(function () {
-                        Route::post('t', [AttController::class, 'storeTitle'])
-                            ->name('storeTitle');
-                        Route::delete('{attributes}/t', [AttController::class, 'destroyTitle'])
-                            ->name('destroyTitle');
-                    });
-
                 Route::resource('comments', CommentController::class);
                 Route::name('comments.')->prefix('comments')
                     ->group(function () {
@@ -97,16 +84,4 @@ Route::name('admin.')
                             ->name('unverify');
                     });
             });
-
-        Route::resource('sliders', SlideController::class);
     });
-
-Route::patch('update-favorites/{user}', [UserController::class, 'updateFavorites'])
-    ->name('updateFavorites');
-
-//Route::resource('cart', CartController::class)
-//    ->only(['index', 'update', 'destroy']);
-//Route::get('cart/add/{product}/{count}', [CartController::class, 'addProduct'])
-//    ->name('cart.addProduct');
-//Route::post('cart/discount/', [CartController::class, 'applyDiscount'])
-//    ->name('cart.applyDiscount');

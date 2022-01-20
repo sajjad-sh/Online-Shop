@@ -177,36 +177,34 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        if (! Gate::allows('show-admin-panel', auth()->user())) {
-            abort(403);
-        }
-
         $product->visits += 1;
         $product->save();
 
-        $user = User::find(auth()->user()->id);
+        $latest_products = [];
+        if(auth()->user() != null) {
+            $user = User::find(auth()->user()->id);
 
-        $j_latest_products = $user->latest_products;
-        if($j_latest_products != null) {
-            $latest_products = json_decode($j_latest_products, true);
-        } else {
-            $latest_products = [];
-        }
-
-        if(!in_array($product->id, $latest_products)) {
-            if(count($latest_products) >= 5) {
-                array_shift($latest_products);
+            $j_latest_products = $user->latest_products;
+            if($j_latest_products != null) {
+                $latest_products = json_decode($j_latest_products, true);
+            } else {
+                $latest_products = [];
             }
-            $latest_products[] = $product->id;
+
+            if(!in_array($product->id, $latest_products)) {
+                if(count($latest_products) >= 5) {
+                    array_shift($latest_products);
+                }
+                $latest_products[] = $product->id;
+            }
+
+            $j_latest_products = json_encode($latest_products);
+
+            $user->latest_products = $j_latest_products;
+            $user->save();
+
+            $latest_products = Product::query()->findMany($latest_products);
         }
-
-        $j_latest_products = json_encode($latest_products);
-
-        $user->latest_products = $j_latest_products;
-        $user->save();
-
-        $latest_products = Product::query()->findMany($latest_products);
-
         return view('shop.single-product')
             ->with('product', $product)
             ->with('latest_products', $latest_products);
@@ -274,10 +272,6 @@ class ProductController extends Controller
 
     public function compareProduct(Product $product1, Product $product2)
     {
-        if (! Gate::allows('show-admin-panel', auth()->user())) {
-            abort(403);
-        }
-
         return view('shop.compare-products')
             ->with('p1', $product1)
             ->with('p2', $product2);

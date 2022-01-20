@@ -19,7 +19,7 @@
     <thead>
     <tr>
       <th scope="col">شناسه</th>
-      <th scope="col">شناسه کاربری</th>
+      <th scope="col">کاربر</th>
       <th scope="col">شناسه محصول</th>
       <th scope="col">متن دیدگاه</th>
       <th scope="col">وضعیت تائید</th>
@@ -34,7 +34,7 @@
     @foreach($comments as $comment)
       <tr>
         <th scope="row">{{$comment->id}}</th>
-        <th scope="row">{{$comment->user_id}}</th>
+        <th scope="row">{{$comment->user->fullname}}</th>
         <td>{{$comment->product_id}}</td>
         <td>{{$comment->content}}</td>
         <td>

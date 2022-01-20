@@ -135,29 +135,6 @@
                     </span>
                   </li>
                 </ul>
-                <div class="payment-method-info">
-                  <div class="paypal-method-flex">
-                    <div class="custom-control custom-checkbox">
-                      <input type="checkbox" class="custom-control-input" id="customCheck5">
-                      <label class="custom-control-label" for="customCheck5">پرداخت حین تحویل</label>
-                      <p>پرداخت به صورت نقدی هنگام تحویل.</p>
-                    </div>
-                  </div>
-                  <div class="paypal-method-flex">
-                    <div class="custom-control custom-checkbox">
-                      <input type="checkbox" class="custom-control-input" id="customCheck6">
-                      <label class="custom-control-label" for="customCheck6">زرین پال</label>
-                    </div>
-                    <div class="paypal-logo"><img src="img/images/card.png" alt=""></div>
-                  </div>
-                </div>
-                <div class="payment-terms">
-                  <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است.</p>
-                  <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="customCheck7">
-                    <label class="custom-control-label" for="customCheck7">من با شرایط و ضوابط وب سایت موافقم</label>
-                  </div>
-                </div>
                 <button href="{{'checkout.html'}}" class="btn" type="submit">پرداخت نهایی</button>
 
               </div>

@@ -80,10 +80,6 @@ class CategoryController extends Controller
      */
     public function show(Request $request, Category $category)
     {
-        if (! Gate::allows('show-admin-panel', auth()->user())) {
-            abort(403);
-        }
-
         if($category->parent != null) {
             if ($category->parent->id == 0) {
                 $category_sliders = array();

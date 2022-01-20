@@ -136,23 +136,9 @@
         </script>
         <div class="col-xl-5 col-lg-12">
           <div class="shop-cart-total">
-            <h3 class="title">مجموع سبد خرید</h3>
             <div class="shop-cart-widget">
               <form action="#">
                 <ul>
-                  <li>
-                    <span>شیوه ارسال</span>
-                    <div class="shop-check-wrap">
-                      <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="customCheck1">
-                        <label class="custom-control-label" for="customCheck1">ارسال رایگان</label>
-                      </div>
-                      <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="customCheck2">
-                        <label class="custom-control-label" for="customCheck2">وانت محلی: 5.000 تومان</label>
-                      </div>
-                    </div>
-                  </li>
                   <li class="cart-total-amount">
                     <span>مجموع کل سبد</span>
                     <span class="amount">

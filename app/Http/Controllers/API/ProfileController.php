@@ -21,10 +21,15 @@ class ProfileController extends Controller
     public function index()
     {
         $user = Auth::user();
+
+        if ($user == null) {
+            return ['message' => "user is not login."];
+        }
+
         $favorites = $user->favorites;
 
         $favorite_products = Product::query()
-            ->whereIn('id', $favorites)
+            ->whereIn("id", $favorites)
             ->paginate(15);
 
         $orders = Order::query()

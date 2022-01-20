@@ -140,6 +140,9 @@ class CartController extends Controller
 //                Cookie::queue('price_discount', $cart_total_price_discount);
                 Cookie::queue('discount_ids', json_encode($discount_ids));
 
+                $discount->inventory -= 1;
+                $discount->sales += 1;
+                $discount->save();
                 $message = ['success' => 'تبریک! کد تخفیف اعمال شد.'];
 
                 if ($discount->inventory == 0)
