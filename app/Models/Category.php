@@ -9,6 +9,14 @@ class Category extends Model
 {
     use HasFactory;
 
+     /**
+     * The products that belong to the category.
+     */
+    public function products()
+    {
+        return $this->belongsToMany(Product::class);
+    }
+
     /**
      * The attributes that are mass assignable.
      *
@@ -25,10 +33,10 @@ class Category extends Model
     /**
      * The products that belong to the category.
      */
-    public function products()
-    {
-        return $this->belongsToMany(Product::class);
-    }
+    // public function products()
+    // {
+    //     return $this->belongsToMany(Product::class);
+    // }
 
     /**
      * Get the parent_category that owns the category.
